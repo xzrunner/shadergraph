@@ -1,0 +1,8 @@
+shadergraph/
+shadergraph_test/
+projects/*
+
+!projects/shadergraph.vcxproj
+!projects/shadergraph.vcxproj.filters
+!projects/shadergraph_test.vcxproj
+!projects/shadergraph_test.vcxproj.filters

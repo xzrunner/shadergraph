@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="dataset">
+      <UniqueIdentifier>{2c5459c7-466e-4900-8e85-5855c7f1311c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dataset\block">
+      <UniqueIdentifier>{1e7c49aa-bc44-4e6e-ac73-b3fefe9c47e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks">
+      <UniqueIdentifier>{af6fcb4f-01f8-4d59-8f8e-d722636451da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\noise">
+      <UniqueIdentifier>{d3bcd1ee-ad66-4beb-b7b8-89a01cd268ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{db35aba8-2e22-415b-91bb-0fdb84ae0975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="parser">
+      <UniqueIdentifier>{9ee21062-82d4-40ae-9d8a-951dcded29ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dataset\var">
+      <UniqueIdentifier>{747be8d2-b1fa-4c82-b770-a8ee0911f5fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\shadergraph\Block.h">
+      <Filter>dataset\block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h">
+      <Filter>blocks\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Worley.h">
+      <Filter>blocks\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\VarType.h">
+      <Filter>dataset\var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\Variant.h">
+      <Filter>dataset\var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\typedef.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\Value.h">
+      <Filter>dataset\var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\ValueImpl.h">
+      <Filter>dataset\var</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\ParserUtility.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\ParserProp.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\Block.cpp">
+      <Filter>dataset\block</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\BlockParser.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CommentParser.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ParserUtility.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ParserProp.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Evaluator.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
