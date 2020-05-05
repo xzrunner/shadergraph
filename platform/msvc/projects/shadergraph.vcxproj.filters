@@ -13,14 +13,35 @@
     <Filter Include="blocks\noise">
       <UniqueIdentifier>{d3bcd1ee-ad66-4beb-b7b8-89a01cd268ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="utility">
-      <UniqueIdentifier>{db35aba8-2e22-415b-91bb-0fdb84ae0975}</UniqueIdentifier>
-    </Filter>
     <Filter Include="parser">
       <UniqueIdentifier>{9ee21062-82d4-40ae-9d8a-951dcded29ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="dataset\var">
       <UniqueIdentifier>{747be8d2-b1fa-4c82-b770-a8ee0911f5fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{0bf5fc7a-ae0c-48cc-aa7f-290f7575fcae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{db35aba8-2e22-415b-91bb-0fdb84ae0975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\rtti">
+      <UniqueIdentifier>{78e405df-7c31-459b-8511-5d469a82acdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\input">
+      <UniqueIdentifier>{56353ac9-fb2e-4ce1-8f10-a265653da8ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\input\geometry">
+      <UniqueIdentifier>{f67b6897-1396-4ca6-9e28-c7aab7ee48b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\utility">
+      <UniqueIdentifier>{755ac0c8-f43a-4741-92d7-f553345f5682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\utility\shader">
+      <UniqueIdentifier>{d043766d-1394-493d-9f2c-b3fc7faaf8b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\channel">
+      <UniqueIdentifier>{d3071854-8e0b-4bcd-aac4-95b2b90606e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,9 +59,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Variant.h">
       <Filter>dataset\var</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\typedef.h">
-      <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\Value.h">
       <Filter>dataset\var</Filter>
@@ -60,8 +78,31 @@
     <ClInclude Include="..\..\..\include\shadergraph\ParserProp.h">
       <Filter>parser</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\typedef.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h">
-      <Filter>utility</Filter>
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node_regist_cfg.h">
+      <Filter>tools\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node_rttr_gen.h">
+      <Filter>tools\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\node_include_gen.h">
+      <Filter>tools\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h">
+      <Filter>blocks\input\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\FragmentShader.h">
+      <Filter>blocks\utility\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\UV.h">
+      <Filter>blocks\input\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h">
+      <Filter>blocks\channel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,8 +121,12 @@
     <ClCompile Include="..\..\..\source\ParserProp.cpp">
       <Filter>parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
     <ClCompile Include="..\..\..\source\Evaluator.cpp">
-      <Filter>utility</Filter>
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
+      <Filter>tools\rtti</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

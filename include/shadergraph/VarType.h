@@ -35,7 +35,6 @@ enum class VarType
 
     Array,
     Struct,
-    //Uniform,
     Function,
 };
 

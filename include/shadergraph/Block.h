@@ -10,13 +10,19 @@ namespace shadergraph
 class Block : public dag::Node<Variant>
 {
 public:
+    Block() {}
     Block(const std::string& str);
 
-    //std::string GetMainCode() const;
+    virtual std::string GetHeader() const { return ""; }
+    virtual std::string GetBody()   const { return ""; }
 
     auto& GetUniforms() const { return m_uniforms; }
     auto& GetFunctions() const { return m_funcs; }
     int GetCurrFuncIdx() const { return m_curr_func; }
+
+protected:
+    void SetupPorts(const std::vector<Variant>& inputs,
+        const std::vector<Variant>& outputs);
 
 private:
     void Parser(const std::string& str);

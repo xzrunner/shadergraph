@@ -13,12 +13,20 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h" />
     <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\FragmentShader.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\UV.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Worley.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node_include_gen.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node_regist_cfg.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\node_rttr_gen.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ParserProp.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ParserUtility.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\typedef.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Value.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Variant.h" />
@@ -32,6 +40,8 @@
     <ClCompile Include="..\..\..\source\Evaluator.cpp" />
     <ClCompile Include="..\..\..\source\ParserProp.cpp" />
     <ClCompile Include="..\..\..\source\ParserUtility.cpp" />
+    <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
+    <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>1.shadergraph</ProjectName>
@@ -76,7 +86,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -90,7 +100,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

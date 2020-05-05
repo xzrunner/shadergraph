@@ -12,6 +12,10 @@ class Worley : public Block
 public:
     Worley() : Block(CODE) {}
 
+    virtual std::string GetBody() const override {
+        return "float #ret# = worley_cells(#st#);";
+    }
+
 private:
     static constexpr char* const CODE = R"(
 

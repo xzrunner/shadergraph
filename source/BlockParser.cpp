@@ -266,6 +266,8 @@ Variant BlockParser::ParseVariable()
         m_desc.clear();
 
         val->output.type = var.type;
+        val->output.name = "ret";
+
         var.type = VarType::Function;
 
         token = m_tokenizer.NextToken();

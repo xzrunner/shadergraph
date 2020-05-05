@@ -12,6 +12,7 @@ struct Variant
 {
     VarType     type = VarType::Invalid;
     std::string name;
+    std::string default_name;
 
     std::shared_ptr<Value> val = nullptr;
 

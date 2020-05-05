@@ -7,45 +7,27 @@ namespace shadergraph
 {
 
 Block::Block(const std::string& str)
-//    : m_code(str)
 {
-    Parser(str);
+    if (!str.empty()) {
+        Parser(str);
+    }
 }
 
-//std::string Block::GetMainCode() const
-//{
-//    std::string ret;
-//    if (m_curr_func == -1) {
-//        return ret;
-//    }
-//
-//    assert(m_curr_func >= 0
-//        && m_curr_func < static_cast<int>(m_funcs.size()));
-//
-//    auto func = m_funcs[m_curr_func];
-//
-//    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
-//
-//    ret += "    ";
-//
-//    if (f_val->output.type != VarType::Void)
-//    {
-//        ret += TypeToString(f_val->output.type);
-//        ret += " " + func.name + "_ret = ";
-//    }
-//    ret += func.name + "(";
-//    for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
-//    {
-//        auto var = f_val->inputs[i];
-//        ret += var.name;
-//        if (i != n - 1) {
-//            ret += ", ";
-//        }
-//    }
-//    ret += ");\n";
-//
-//    return ret;
-//}
+void Block::SetupPorts(const std::vector<Variant>& inputs,
+                       const std::vector<Variant>& outputs)
+{
+    m_imports.resize(inputs.size());
+    for (size_t i = 0, n = inputs.size(); i < n; ++i) {
+        m_imports[i].var.type = inputs[i];
+        m_imports[i].var.full_name = inputs[i].name;
+    }
+
+    m_exports.resize(outputs.size());
+    for (size_t i = 0, n = outputs.size(); i < n; ++i) {
+        m_exports[i].var.type = outputs[i];
+        m_exports[i].var.full_name = outputs[i].name;
+    }
+}
 
 void Block::Parser(const std::string& str)
 {
