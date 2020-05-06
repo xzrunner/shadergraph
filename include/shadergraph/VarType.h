@@ -7,6 +7,8 @@ enum class VarType
 {
     Invalid,
 
+    Dynamic,
+
     Void,
 
     Bool,

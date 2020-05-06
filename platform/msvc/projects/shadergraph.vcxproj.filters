@@ -43,6 +43,15 @@
     <Filter Include="blocks\channel">
       <UniqueIdentifier>{d3071854-8e0b-4bcd-aac4-95b2b90606e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\math">
+      <UniqueIdentifier>{dfcc0d06-fc51-46a9-b5cb-f8afc7c4904b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\math\basic">
+      <UniqueIdentifier>{441af1c4-6e40-49c5-ab2a-18b2aec47bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\input\basic">
+      <UniqueIdentifier>{c68a517c-b944-4c9a-b045-0b78aa8b9412}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -104,6 +113,12 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h">
       <Filter>blocks\channel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h">
+      <Filter>blocks\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
@@ -128,5 +143,10 @@
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
       <Filter>tools\rtti</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\shadergraph\block\Float.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </None>
   </ItemGroup>
 </Project>
