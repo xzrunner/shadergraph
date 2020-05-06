@@ -119,6 +119,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Float.h">
       <Filter>blocks\input\basic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h">
+      <Filter>dataset\block</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
       <Filter>tools\rtti</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\BlockHelper.cpp">
+      <Filter>dataset\block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

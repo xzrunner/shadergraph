@@ -1,6 +1,8 @@
 #pragma once
 
 #include "shadergraph/Block.h"
+#include "shadergraph/BlockHelper.h"
+#include "shadergraph/ParserUtility.h"
 
 #include <cpputil/StringHelper.h>
 
@@ -35,7 +37,12 @@ public:
             }
         }
 
-        return cpputil::StringHelper::Format("vec2 #out# = %s;", str_sum.c_str());
+        auto type = BlockHelper::ResolveBinOpRetType(m_imports[0], m_imports[1]);
+        assert(type != VarType::Invalid);
+        return cpputil::StringHelper::Format("%s #mul# = %s;",
+            TypeToString(type).c_str(),
+            str_sum.c_str()
+        );
     }
 
     RTTR_ENABLE(Block)

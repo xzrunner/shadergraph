@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h" />
@@ -37,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp" />
+    <ClCompile Include="..\..\..\source\BlockHelper.cpp" />
     <ClCompile Include="..\..\..\source\BlockParser.cpp" />
     <ClCompile Include="..\..\..\source\CommentParser.cpp" />
     <ClCompile Include="..\..\..\source\Evaluator.cpp" />
