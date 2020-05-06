@@ -22,10 +22,12 @@ private:
     void Sort(const std::vector<BlockPtr>& blocks);
     void Resolve();
 
-    void Rename();
     void Concatenate();
 
     void ResolveFunctions();
+    void ResolveVariants();
+
+    void Rename(std::string& str, const Block& block) const;
 
     static void GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& dst);
     static bool IsFuncNotExport(const Block& block, int func_idx);
