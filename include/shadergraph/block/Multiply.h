@@ -20,10 +20,9 @@ public:
             { VarType::Dynamic, "a" },
             { VarType::Dynamic, "b" }
         }, {
-            { VarType::Dynamic, "out" }
+            { VarType::Dynamic, "mul" }
         });
     }
-
     virtual std::string GetBody() const
     {
         std::string str_sum;

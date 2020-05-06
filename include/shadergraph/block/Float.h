@@ -17,7 +17,7 @@ public:
     {
         SetupPorts({
         }, {
-            { VarType::Float, "out" }
+            { VarType::Float, "flt" }
         });
     }
 
