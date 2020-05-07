@@ -116,10 +116,6 @@ Evaluator::GetUniformValues() const
         auto& unifs = b->GetUniforms();
         for (auto& src : unifs)
         {
-            if (src.type == VarType::Invalid) {
-                int zz = 0;
-            }
-
             Uniform dst;
             dst.name = src.name;
             dst.type = src.type;
