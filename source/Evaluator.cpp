@@ -37,8 +37,11 @@ std::string Evaluator::GenShaderCode() const
     for (auto& b : m_blocks)
     {
         auto& unifs = b->GetUniforms();
-        for (auto& u : unifs) {
-            ret += "uniform " + TypeToString(u.type) + " " + u.name + ";\n";
+        for (auto& u : unifs)
+        {
+            assert(u.type == VarType::Uniform);
+            auto u_var = std::static_pointer_cast<shadergraph::UniformVal>(u.val)->var;
+            ret += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
         }
     }
     if (!ret.empty()) {
@@ -98,6 +101,31 @@ void main()
     // version
     if (!ret.empty()) {
         ret = "#version 330 core\n" + ret;
+    }
+
+    return ret;
+}
+
+std::vector<Evaluator::Uniform>
+Evaluator::GetUniformValues() const
+{
+    std::vector<Uniform> ret;
+
+    for (auto& b : m_blocks)
+    {
+        auto& unifs = b->GetUniforms();
+        for (auto& src : unifs)
+        {
+            if (src.type == VarType::Invalid) {
+                int zz = 0;
+            }
+
+            Uniform dst;
+            dst.name = src.name;
+            dst.type = src.type;
+            dst.val  = src.val;
+            ret.push_back(dst);
+        }
     }
 
     return ret;

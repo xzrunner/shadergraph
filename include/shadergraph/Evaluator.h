@@ -1,6 +1,8 @@
 #pragma once
 
 #include "shadergraph/typedef.h"
+#include "shadergraph/VarType.h"
+#include "shadergraph/Value.h"
 
 #include <vector>
 #include <set>
@@ -14,9 +16,18 @@ struct Variant;
 class Evaluator
 {
 public:
+    struct Uniform
+    {
+        std::string name;
+        VarType     type;
+        ValPtr      val = nullptr;
+    };
+
+public:
     Evaluator(const BlockPtr& block);
 
     std::string GenShaderCode() const;
+    std::vector<Uniform> GetUniformValues() const;
 
 private:
     void Sort(const std::vector<BlockPtr>& blocks);

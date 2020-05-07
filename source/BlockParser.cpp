@@ -217,15 +217,19 @@ void BlockParser::ParseUniform()
     Expect(BlockToken::String, token = m_tokenizer.NextToken());
     assert(token.Data() == "uniform");
 
+    Variant u_var;
+    u_var.type = VarType::Uniform;
+
     auto var = ParseVariable();
+    u_var.name = var.name;
 
     auto unif = std::make_shared<UniformVal>();
     unif->desc = m_desc;
     m_desc.clear();
     unif->var = var;
-    var.val = unif;
+    u_var.val = unif;
 
-    m_uniforms.push_back(var);
+    m_uniforms.push_back(u_var);
 }
 
 Variant BlockParser::ParseVariable()
