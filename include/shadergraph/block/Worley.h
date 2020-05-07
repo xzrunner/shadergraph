@@ -19,15 +19,19 @@ public:
 private:
     static constexpr char* const CODE = R"(
 
+/// @default 0
 uniform int u_seed;
 
 /// @enum Euclideanm, Manhattan, Chebyshev
+/// @default 0
 uniform int u_dist_op;
 
 /// @enum F1, F2, F1_ADD_F2, F2_SUB_F1, F1_MUL_F2, F1_DIV_F2
+/// @default 0
 uniform int u_features_mode;
 
 /// @region 0.01, 0.5
+/// @default 0.5
 uniform float u_manhattan_scale;
 
 vec2 _random2(vec2 p)

@@ -1,5 +1,6 @@
 #include "shadergraph/CommentParser.h"
 #include "shadergraph/ParserUtility.h"
+#include "shadergraph/ValueImpl.h"
 
 #include <lexer/Exception.h>
 
@@ -202,6 +203,28 @@ void CommentParser::Parse(std::vector<std::shared_ptr<ParserProp>>& props)
                 } while (token.GetType() != CommentToken::Eof);
 
                 props.push_back(e);
+            }
+            else if (type == "default")
+            {
+                auto def = std::make_shared<PropDefault>();
+                token = m_tokenizer.NextToken();
+                if (token.HasType(CommentToken::Integer))
+                {
+                    auto v = std::make_shared<IntVal>();
+                    v->x = token.ToInteger<int>();
+                    def->val = v;
+                }
+                else if (token.HasType(CommentToken::Decimal))
+                {
+                    auto v = std::make_shared<FloatVal>();
+                    v->x = token.ToFloat<float>();
+                    def->val = v;
+                }
+                else
+                {
+                    assert(0);
+                }
+                props.push_back(def);
             }
             else if (type == "region")
             {

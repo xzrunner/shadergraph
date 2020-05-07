@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/VarType.h"
+#include "shadergraph/Value.h"
 
 #include <string>
 #include <vector>
@@ -15,6 +16,7 @@ struct ParserProp
         Uniform,
         Function,
         Enum,
+        Default,
         Region,
         Export,
     };
@@ -48,6 +50,13 @@ struct PropEnum : public ParserProp
     virtual Type GetType() const override { return Type::Enum; }
 
     std::vector<std::string> types;
+};
+
+struct PropDefault : public ParserProp
+{
+    virtual Type GetType() const override { return Type::Default; }
+
+    ValPtr val = nullptr;
 };
 
 struct PropRegion : public ParserProp

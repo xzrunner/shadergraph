@@ -61,6 +61,18 @@ void Block::Parser(const std::string& str)
             }
         }
     }
+
+    // setup uniform default value
+    for (auto& u : m_uniforms)
+    {
+        auto u_val = std::static_pointer_cast<UniformVal>(u.val);
+        for (auto& d : u_val->desc) {
+            if (d->GetType() == ParserProp::Type::Default) {
+                u_val->var.val = std::static_pointer_cast<PropDefault>(d)->val;
+                break;
+            }
+        }
+    }
 }
 
 void Block::SetupPorts()
