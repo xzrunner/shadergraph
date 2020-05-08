@@ -122,6 +122,12 @@
     <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h">
       <Filter>dataset\block</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Int.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Int.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
