@@ -4,6 +4,8 @@
 #include "shadergraph/VarType.h"
 #include "shadergraph/Value.h"
 
+#include <dag/Node.h>
+
 #include <vector>
 #include <set>
 #include <unordered_map>
@@ -42,6 +44,8 @@ private:
 
     static void GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& dst);
     static bool IsFuncNotExport(const Block& block, int func_idx);
+
+    static Variant CalcValue(const dag::Node<Variant>::PortAddr& conn);
 
 private:
     std::vector<BlockPtr> m_blocks;

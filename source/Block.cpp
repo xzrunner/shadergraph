@@ -98,6 +98,21 @@ void Block::SetupPorts()
         }
     }
 
+    for (auto& u : m_uniforms)
+    {
+        dag::Node<Variant>::PortVar port;
+
+        port.full_name = u.name;
+        port.type.name = u.name;
+
+        assert(u.type == VarType::Uniform);
+        auto u_val = std::static_pointer_cast<UniformVal>(u.val);
+        port.type.type = u_val->var.type;
+        port.type.val  = u_val->var.val;
+
+        m_imports.push_back(port);
+    }
+
     if (f_val->output.type == VarType::Void) {
         m_exports.clear();
     } else {

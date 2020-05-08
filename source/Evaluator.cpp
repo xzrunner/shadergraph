@@ -4,6 +4,8 @@
 #include "shadergraph/ParserUtility.h"
 #include "shadergraph/ValueImpl.h"
 
+#include "shadergraph/block/Int.h"
+
 #include <dag/Graph.h>
 #include <cpputil/StringHelper.h>
 
@@ -117,9 +119,24 @@ Evaluator::GetUniformValues() const
         for (auto& src : unifs)
         {
             Uniform dst;
+
             dst.name = src.name;
             dst.type = src.type;
-            dst.val  = src.val;
+
+            // read default value
+            dst.val = src.val;
+
+            // calc input value
+            assert(dst.type == VarType::Uniform);
+            auto u_val = std::static_pointer_cast<UniformVal>(dst.val);
+            for (auto& input : b->GetImports()) {
+                if (input.var.full_name == src.name && !input.conns.empty()) {
+                    assert(input.conns.size() == 1);
+                    u_val->var = CalcValue(input.conns[0]);
+                    break;
+                }
+            }
+
             ret.push_back(dst);
         }
     }
@@ -328,6 +345,27 @@ bool Evaluator::IsFuncNotExport(const Block& block, int func_idx)
     }
 
     return ex && block.GetCurrFuncIdx() != func_idx;
+}
+
+Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)
+{
+    Variant ret;
+
+    auto node = conn.node.lock();
+    auto node_type = node->get_type();
+    if (node_type == rttr::type::get<block::Int>())
+    {
+        ret.type = VarType::Int;
+
+        auto val = std::make_shared<IntVal>();
+
+        auto i_node = std::static_pointer_cast<block::Int>(node);
+        val->x = i_node->GetValue();
+
+        ret.val = val;
+    }
+
+    return ret;
 }
 
 }
