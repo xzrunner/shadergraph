@@ -3,24 +3,29 @@
 namespace shadergraph
 {
 
+VarType BlockHelper::ResolveType(const dag::Node<Variant>::Port& p)
+{
+    if (p.conns.empty()) {
+        return VarType::Invalid;
+    }
+
+    assert(p.conns.size() == 1);
+    auto node = p.conns[0].node.lock();
+    int idx = p.conns[0].idx;
+    return node ? node->GetExports()[idx].var.type.type : VarType::Invalid;
+}
+
 VarType BlockHelper::ResolveBinOpRetType(const dag::Node<Variant>::Port& a,
                                          const dag::Node<Variant>::Port& b)
 {
-    if (a.conns.empty() || b.conns.empty()) {
+    auto type_a = ResolveType(a);
+    auto type_b = ResolveType(b);
+    if (type_a == VarType::Invalid ||
+        type_b == VarType::Invalid) {
         return VarType::Invalid;
+    } else {
+        return static_cast<int>(type_a) > static_cast<int>(type_b) ? type_a : type_b;
     }
-
-    assert(a.conns.size() == 1
-        && b.conns.size() == 1);
-    auto node_a = a.conns[0].node.lock();
-    auto node_b = b.conns[0].node.lock();
-    if (!node_a || !node_b) {
-        return VarType::Invalid;
-    }
-
-    auto type_a = node_a->GetExports()[a.conns[0].idx].var.type.type;
-    auto type_b = node_b->GetExports()[b.conns[0].idx].var.type.type;
-    return static_cast<int>(type_a) > static_cast<int>(type_b) ? type_a : type_b;
 }
 
 }

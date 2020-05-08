@@ -25,6 +25,22 @@ public:
     }
     virtual std::string GetBody() const
     {
+        if (m_imports.size() < 2 || (m_imports[0].conns.empty()
+            && m_imports[1].conns.empty())) {
+            return "";
+        }
+
+        if (m_imports[0].conns.empty()) {
+            return cpputil::StringHelper::Format("%s #mul# = #b#;",
+                TypeToString(BlockHelper::ResolveType(m_imports[1])).c_str()
+            );
+        }
+        if (m_imports[1].conns.empty()) {
+            return cpputil::StringHelper::Format("%s #mul# = #a#;",
+                TypeToString(BlockHelper::ResolveType(m_imports[0])).c_str()
+            );
+        }
+
         std::string str_sum;
         for (int i = 0, n = m_imports.size(); i < n; ++i)
         {
