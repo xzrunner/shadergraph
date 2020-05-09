@@ -13,10 +13,7 @@ public:
     FragmentShader()
     {
         SetupPorts({
-            { VarType::Float, "r", "0.0" },
-            { VarType::Float, "g", "0.0" },
-            { VarType::Float, "b", "0.0" },
-            { VarType::Float, "a", "1.0" }
+            { VarType::Float4, "rgba", "vec4(0, 0, 0, 1)" }
         }, {
             { VarType::Float4, "col", "FragColor" }
         });
@@ -26,7 +23,7 @@ public:
         return "out vec4 #col#;";
     }
     virtual std::string GetBody() const override {
-        return "#col# = vec4(#r#, #g#, #b#, #a#);";
+        return "#col# = vec4(#rgba#);";
     }
 
     RTTR_ENABLE(Block)
