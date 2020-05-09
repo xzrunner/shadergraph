@@ -134,6 +134,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Split.h">
       <Filter>blocks\channel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
@@ -160,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\BlockHelper.cpp">
       <Filter>dataset\block</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\GlobalClock.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\block\Time.cpp">
+      <Filter>blocks\input\basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

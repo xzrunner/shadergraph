@@ -15,8 +15,10 @@
 namespace shadergraph
 {
 
-Evaluator::Evaluator(const BlockPtr& block)
+void Evaluator::Rebuild(const BlockPtr& block)
 {
+    Clear();
+
     std::vector<BlockPtr> blocks;
     GetAntecedentNodes(block, blocks);
 
@@ -46,7 +48,9 @@ std::string Evaluator::GenShaderCode() const
         {
             assert(u.type == VarType::Uniform);
             auto u_var = std::static_pointer_cast<shadergraph::UniformVal>(u.val)->var;
-            ret += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
+            if (u_var.type != VarType::Invalid) {
+                ret += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
+            }
         }
     }
     if (!ret.empty()) {
@@ -112,7 +116,7 @@ void main()
 }
 
 std::vector<Evaluator::Uniform>
-Evaluator::GetUniformValues() const
+Evaluator::CalcUniformValues() const
 {
     std::vector<Uniform> ret;
 
@@ -145,6 +149,13 @@ Evaluator::GetUniformValues() const
     }
 
     return ret;
+}
+
+void Evaluator::Clear()
+{
+    m_blocks.clear();
+    m_symbols.clear();
+    m_real_names.clear();
 }
 
 void Evaluator::Sort(const std::vector<BlockPtr>& blocks)
@@ -378,16 +389,31 @@ Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)
 
         ret.val = val;
     }
-    else if (node_type == rttr::type::get<block::Time>())
+    else if (node_type == rttr::type::get<block::Split>())
     {
-        ret.type = VarType::Float;
+        auto& in_conns = node->GetImports()[0].conns;
+        if (!in_conns.empty())
+        {
+            assert(in_conns.size() == 1);
+            auto in_conn = in_conns[0];
+            auto input = CalcValue(in_conn);
+            if (input.val && input.type == VarType::Float4)
+            {
+                ret.type = VarType::Float;
 
-        auto val = std::make_shared<FloatVal>();
-
-        auto f_node = std::static_pointer_cast<block::Float>(node);
-        val->x = f_node->GetValue();
-
-        ret.val = val;
+                auto val = std::make_shared<FloatVal>();
+                auto v_f4 = std::static_pointer_cast<Float4Val>(input.val);
+                assert(in_conn.idx >= 0 && in_conn.idx < 4);
+                val->x = v_f4->xyzw[conn.idx];
+                ret.val = val;
+            }
+        }
+    }
+    else
+    {
+        auto& exports = node->GetExports();
+        assert(conn.idx >= 0 && conn.idx < exports.size());
+        ret = exports[conn.idx].var.type;
     }
 
     return ret;

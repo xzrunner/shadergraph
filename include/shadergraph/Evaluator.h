@@ -26,12 +26,16 @@ public:
     };
 
 public:
-    Evaluator(const BlockPtr& block);
+    Evaluator() {}
+
+    void Rebuild(const BlockPtr& block);
 
     std::string GenShaderCode() const;
-    std::vector<Uniform> GetUniformValues() const;
+    std::vector<Uniform> CalcUniformValues() const;
 
 private:
+    void Clear();
+
     void Sort(const std::vector<BlockPtr>& blocks);
     void Resolve();
 

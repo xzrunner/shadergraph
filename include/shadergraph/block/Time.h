@@ -4,6 +4,8 @@
 #include "shadergraph/BlockHelper.h"
 #include "shadergraph/ParserUtility.h"
 
+#include <boost/signals2.hpp>
+
 namespace shadergraph
 {
 namespace block
@@ -27,7 +29,10 @@ public:
             { VarType::Float4, COS_TIME_STR },
             { VarType::Float4, DELTA_TIME_STR }
         });
+
+        Init();
     }
+    virtual ~Time();
 
     virtual std::string GetHeader() const
     {
@@ -38,6 +43,18 @@ uniform vec4 #%s#;
 uniform vec4 #%s#;
 )", TIME_STR, SIN_TIME_STR, COS_TIME_STR, DELTA_TIME_STR);
     }
+
+private:
+    void Init();
+
+    void UpdateTime(float t, float dt, float smooth_dt);
+
+private:
+    boost::signals2::connection m_conn_tick;
+
+    float m_t         = 0;
+    float m_dt        = 0;
+    float m_smooth_dt = 0;
 
     RTTR_ENABLE(Block)
 
