@@ -13,10 +13,10 @@ public:
     Combine()
     {
         SetupPorts({
-            { VarType::Float, "r" },
-            { VarType::Float, "g" },
-            { VarType::Float, "b" },
-            { VarType::Float, "a" }
+            { VarType::Float, "r", "0" },
+            { VarType::Float, "g", "0" },
+            { VarType::Float, "b", "0" },
+            { VarType::Float, "a", "1" }
         }, {
             { VarType::Float4, "rgba" },
             { VarType::Float3, "rgb" },
