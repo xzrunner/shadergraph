@@ -35,13 +35,13 @@ public:
     {
         std::string ret;
         if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
-            ret += "#rgba# = vec4(#r#, #g#, #b#, #a#);";
+            ret += "vec4 #rgba# = vec4(#r#, #g#, #b#, #a#);";
         }
         if (!m_exports[static_cast<int>(Output::RGB)].conns.empty()) {
-            ret += "#rgb# = vec3(#r#, #g#, #b#);";
+            ret += "vec3 #rgb# = vec3(#r#, #g#, #b#);";
         }
         if (!m_exports[static_cast<int>(Output::RG)].conns.empty()) {
-            ret += "#rg# = vec2(#r#, #g#);";
+            ret += "vec2 #rg# = vec2(#r#, #g#);";
         }
         return ret;
     }
