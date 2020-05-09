@@ -5,6 +5,9 @@
 #include "shadergraph/ValueImpl.h"
 
 #include "shadergraph/block/Int.h"
+#include "shadergraph/block/Float.h"
+#include "shadergraph/block/Split.h"
+#include "shadergraph/block/Time.h"
 
 #include <dag/Graph.h>
 #include <cpputil/StringHelper.h>
@@ -361,6 +364,28 @@ Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)
 
         auto i_node = std::static_pointer_cast<block::Int>(node);
         val->x = i_node->GetValue();
+
+        ret.val = val;
+    }
+    else if (node_type == rttr::type::get<block::Float>())
+    {
+        ret.type = VarType::Float;
+
+        auto val = std::make_shared<FloatVal>();
+
+        auto f_node = std::static_pointer_cast<block::Float>(node);
+        val->x = f_node->GetValue();
+
+        ret.val = val;
+    }
+    else if (node_type == rttr::type::get<block::Time>())
+    {
+        ret.type = VarType::Float;
+
+        auto val = std::make_shared<FloatVal>();
+
+        auto f_node = std::static_pointer_cast<block::Float>(node);
+        val->x = f_node->GetValue();
 
         ret.val = val;
     }

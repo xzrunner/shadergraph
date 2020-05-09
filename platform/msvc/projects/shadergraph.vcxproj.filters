@@ -128,6 +128,12 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.parm.h">
       <Filter>blocks\input\basic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Time.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Split.h">
+      <Filter>blocks\channel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

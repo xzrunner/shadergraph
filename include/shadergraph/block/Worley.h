@@ -20,7 +20,7 @@ private:
     static constexpr char* const CODE = R"(
 
 /// @default 0
-uniform int u_seed;
+uniform float u_seed;
 
 /// @enum Euclideanm, Manhattan, Chebyshev
 /// @default 0

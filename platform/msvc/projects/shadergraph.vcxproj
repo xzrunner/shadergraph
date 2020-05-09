@@ -21,7 +21,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Split.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\UV.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Worley.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
