@@ -23,7 +23,7 @@ public:
             { VarType::Dynamic, "mul" }
         });
     }
-    virtual std::string GetBody() const
+    virtual std::string GetBody() const override
     {
         std::string str_sum;
         for (int i = 0, n = m_imports.size(); i < n; ++i)

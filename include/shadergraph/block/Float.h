@@ -21,7 +21,7 @@ public:
         });
     }
 
-    virtual std::string GetBody() const
+    virtual std::string GetBody() const override
     {
         auto& exports = GetExports();
         assert(exports.size() == 1);
