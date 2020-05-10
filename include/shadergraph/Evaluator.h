@@ -34,6 +34,11 @@ public:
     std::vector<Uniform> CalcUniformValues() const;
 
 private:
+    std::string GenShaderHeaderCode() const;
+    std::string GenShaderUniformsCode() const;
+    std::string GenShaderFuncsCode() const;
+    std::string GenShaderMainCode() const;
+
     void Clear();
 
     void Sort(const std::vector<BlockPtr>& blocks);
@@ -52,6 +57,7 @@ private:
     static Variant CalcValue(const dag::Node<Variant>::PortAddr& conn);
 
 private:
+    BlockPtr m_block = nullptr;
     std::vector<BlockPtr> m_blocks;
 
     std::set<std::string> m_symbols;

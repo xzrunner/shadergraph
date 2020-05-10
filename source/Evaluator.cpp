@@ -19,6 +19,8 @@ void Evaluator::Rebuild(const BlockPtr& block)
 {
     Clear();
 
+    m_block = block;
+
     std::vector<BlockPtr> blocks;
     GetAntecedentNodes(block, blocks);
 
@@ -32,85 +34,23 @@ std::string Evaluator::GenShaderCode() const
     std::string ret;
 
     // header
-    for (auto& b : m_blocks) {
-        auto str = b->GetHeader();
-        if (!str.empty()) {
-            Rename(str, *b);
-            ret += str + "\n";
-        }
-    }
+    ret += GenShaderHeaderCode();
 
     // uniforms
-    for (auto& b : m_blocks)
-    {
-        auto& unifs = b->GetUniforms();
-        for (auto& u : unifs)
-        {
-            assert(u.type == VarType::Uniform);
-            auto u_var = std::static_pointer_cast<shadergraph::UniformVal>(u.val)->var;
-            if (u_var.type != VarType::Invalid) {
-                ret += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
-            }
-        }
-    }
-    if (!ret.empty()) {
-        ret += "\n";
-    }
+    ret += GenShaderUniformsCode();
 
     // functions
-    for (auto& b : m_blocks)
-    {
-        auto& funcs = b->GetFunctions();
-        for (size_t i = 0, n = funcs.size(); i < n; ++i)
-        {
-            if (IsFuncNotExport(*b, i)) {
-                continue;
-            }
-
-            std::string params;
-
-            auto f = funcs[i];
-            auto f_val = std::static_pointer_cast<FunctionVal>(f.val);
-            for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
-            {
-                auto var = f_val->inputs[i];
-                params += TypeToString(var.type) + " " + var.name;
-                if (i != n - 1) {
-                    params += ", ";
-                }
-            }
-
-            ret += cpputil::StringHelper::Format(R"(
-%s %s(%s)
-{
-%s
-}
-
-)", TypeToString(f_val->output.type).c_str(), f.name.c_str(), params.c_str(), f_val->code.c_str());
-        }
-    }
+    ret += GenShaderFuncsCode();
 
     // main()
-    std::string main;
-    for (auto& b : m_blocks)
-    {
-        auto str = b->GetBody();
-        if (!str.empty()) {
-            Rename(str, *b);
-            main += str + "\n";
-        }
-    }
-    ret += cpputil::StringHelper::Format(R"(
-void main()
-{
-%s
-}
-	)", main.c_str());
+    ret += GenShaderMainCode();
 
     // version
     if (!ret.empty()) {
         ret = "#version 330 core\n" + ret;
     }
+
+    printf("%s\n", ret.c_str());
 
     return ret;
 }
@@ -151,8 +91,124 @@ Evaluator::CalcUniformValues() const
     return ret;
 }
 
+std::string Evaluator::GenShaderHeaderCode() const
+{
+    std::string code;
+    for (auto& b : m_blocks) {
+        auto str = b->GetHeader();
+        if (!str.empty()) {
+            Rename(str, *b);
+            code += str + "\n";
+        }
+    }
+    return code;
+}
+
+std::string Evaluator::GenShaderUniformsCode() const
+{
+    std::string code;
+    for (auto& b : m_blocks)
+    {
+        auto& unifs = b->GetUniforms();
+        for (auto& u : unifs)
+        {
+            assert(u.type == VarType::Uniform);
+            auto u_var = std::static_pointer_cast<shadergraph::UniformVal>(u.val)->var;
+            if (u_var.type != VarType::Invalid) {
+                code += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
+            }
+        }
+    }
+    if (!code.empty()) {
+        code += "\n";
+    }
+    return code;
+}
+
+std::string Evaluator::GenShaderFuncsCode() const
+{
+    std::string code;
+
+    for (auto& b : m_blocks)
+    {
+        auto& funcs = b->GetFunctions();
+        for (size_t i = 0, n = funcs.size(); i < n; ++i)
+        {
+            if (IsFuncNotExport(*b, i)) {
+                continue;
+            }
+
+            std::string params;
+
+            auto f = funcs[i];
+            auto f_val = std::static_pointer_cast<FunctionVal>(f.val);
+            for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
+            {
+                auto var = f_val->inputs[i];
+                params += TypeToString(var.type) + " " + var.name;
+                if (i != n - 1) {
+                    params += ", ";
+                }
+            }
+
+            code += cpputil::StringHelper::Format(R"(
+%s %s(%s)
+{
+%s
+}
+
+)", TypeToString(f_val->output.type).c_str(), f.name.c_str(), params.c_str(), f_val->code.c_str());
+        }
+    }
+
+    return code;
+}
+
+std::string Evaluator::GenShaderMainCode() const
+{
+    std::string code;
+    std::queue<BlockPtr> buf;
+    buf.push(m_block);
+    std::set<BlockPtr> unique;
+    while (!buf.empty())
+    {
+        auto b = buf.front(); buf.pop();
+        if (unique.find(b) != unique.end()) {
+            continue;
+        }
+        unique.insert(b);
+
+        auto str = b->GetBody();
+        if (!str.empty()) {
+            Rename(str, *b);
+            code = str + "\n" + code;
+        }
+
+        for (auto& port : b->GetImports()) {
+            for (auto& conn : port.conns) {
+                if (port.var.type.type == VarType::Uniform) {
+                    continue;
+                }
+                if (port.var.type.type == VarType::Function &&
+                    b != m_block) {
+                    continue;
+                }
+                buf.push(std::static_pointer_cast<Block>(conn.node.lock()));
+            }
+        }
+    }
+
+    return cpputil::StringHelper::Format(R"(
+void main()
+{
+%s
+}
+	)", code.c_str());
+}
+
 void Evaluator::Clear()
 {
+    m_block.reset();
     m_blocks.clear();
     m_symbols.clear();
     m_real_names.clear();
