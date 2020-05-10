@@ -15,8 +15,21 @@ class fBm : public Block
 public:
     fBm() : Block(CODE) {}
 
+    virtual std::string GetBody() const override {
+        return "float #ret# = fBm(#st#);";
+    }
+
 private:
     static constexpr char* const CODE = R"(
+
+/// @default 0
+uniform int u_octaves;
+
+/// @default 2
+uniform float u_lacunarity;
+
+/// @default 0.5
+uniform float u_gain;
 
 /////////////////////////////////////////////////
 /// @uniform   u_octaves     int            Octaves
