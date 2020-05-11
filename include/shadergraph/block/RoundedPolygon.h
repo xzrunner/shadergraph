@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class RoundedPolygon : public Block
 {
 public:
-    RoundedPolygon() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = rounded_polygon(#uv#, #width#, #height#, #sides#, #roundness#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    RoundedPolygon() : Block(R"(
 
 // proposed solution from
 // http://stackoverflow.com/questions/26070410/robust-atany-x-on-glsl-for-converting-xy-coordinate-to-angle
@@ -102,7 +92,7 @@ float rounded_polygon(vec2 uv, float width, float height, float sides, float rou
     return ret;
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

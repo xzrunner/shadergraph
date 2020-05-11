@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class Rectangle : public Block
 {
 public:
-    Rectangle() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = rectangle(#uv#, #width#, #height#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    Rectangle() : Block(R"(
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Rectangle-Node.html
 float rectangle(vec2 uv, float width, float height)
@@ -30,7 +20,7 @@ float rectangle(vec2 uv, float width, float height)
     return clamp(min(d.x, d.y), 0.0, 1.0);
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

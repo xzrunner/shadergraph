@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class RoundedRectangle : public Block
 {
 public:
-    RoundedRectangle() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = rounded_rectangle(#uv#, #width#, #height#, #radius#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    RoundedRectangle() : Block(R"(
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Rounded-Rectangle-Node.html
 float rounded_rectangle(vec2 uv, float width, float height, float radius)
@@ -31,7 +21,7 @@ float rounded_rectangle(vec2 uv, float width, float height, float radius)
     return clamp((1 - d) / fwidth(d), 0.0, 1.0);
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class Voronoi : public Block
 {
 public:
-    Voronoi() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = voronoi(#uv#, #angle_offset#, #cell_density#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    Voronoi() : Block(R"(
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Voronoi-Node.html
 
@@ -61,7 +51,7 @@ float voronoi(vec2 uv, float angle_offset, float cell_density)
     return ret;
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

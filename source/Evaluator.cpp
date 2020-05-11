@@ -167,19 +167,54 @@ std::string Evaluator::GenShaderFuncsCode() const
 std::string Evaluator::GenShaderMainCode() const
 {
     std::string code;
-    std::queue<BlockPtr> buf;
-    buf.push(m_block);
+    std::queue<dag::Node<Variant>::PortAddr> buf;
+    buf.push({ m_block, -1 });
     std::set<BlockPtr> unique;
     while (!buf.empty())
     {
-        auto b = buf.front(); buf.pop();
+        auto c = buf.front(); buf.pop();
+        auto b = std::static_pointer_cast<Block>(c.node.lock());
+        assert(b);
         if (unique.find(b) != unique.end()) {
             continue;
         }
         unique.insert(b);
 
         auto str = b->GetBody();
-        if (!str.empty()) {
+        if (str.empty() && c.idx >= 0)
+        {
+            auto& outputs = b->GetExports();
+            assert(c.idx >= 0 && c.idx < outputs.size());
+            auto& var = outputs[c.idx].var.type;
+            if (var.type != VarType::Function)
+            {
+                auto& funcs = b->GetFunctions();
+                auto func_idx = b->GetCurrFuncIdx();
+                if (func_idx >= 0 && func_idx < funcs.size())
+                {
+                    auto func = funcs[func_idx];
+                    assert(func.type == VarType::Function);
+                    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
+
+                    auto& outputs = b->GetExports();
+                    assert(c.idx >= 0 && c.idx < outputs.size());
+                    auto& output = outputs[c.idx];
+                    str += TypeToString(var.type) + " #" + output.var.type.name + "# = ";
+                    str += func.name + "(";
+                    for (int i = 0, n = f_val->inputs.size(); i < n; ++i) {
+                        auto param = f_val->inputs[i];
+                        str += "#" + param.name + "#";
+                        if (i != n - 1) {
+                            str += ", ";
+                        }
+                    }
+                    str += ");\n";
+                }
+            }
+        }
+
+        if (!str.empty())
+        {
             Rename(str, *b);
             code = str + "\n" + code;
         }
@@ -193,7 +228,7 @@ std::string Evaluator::GenShaderMainCode() const
                     b != m_block) {
                     continue;
                 }
-                buf.push(std::static_pointer_cast<Block>(conn.node.lock()));
+                buf.push(conn);
             }
         }
     }

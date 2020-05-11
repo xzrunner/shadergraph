@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class GradientNoise : public Block
 {
 public:
-    GradientNoise() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = gradient_noise(#p#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    GradientNoise() : Block(R"(
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Gradient-Noise-Node.html
 
@@ -48,7 +38,7 @@ float gradient_noise(vec2 p)
     return mix(mix(d00, d01, fp.y), mix(d10, d11, fp.y), fp.x);
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

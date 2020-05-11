@@ -10,14 +10,7 @@ namespace block
 class WorleyNoise : public Block
 {
 public:
-    WorleyNoise() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = worley_cells(#st#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    WorleyNoise() : Block(R"(
 
 /// @default 0
 uniform float u_seed;
@@ -158,7 +151,7 @@ float worley_no_cells(vec2 st, float frequency)
     return min_dist;
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

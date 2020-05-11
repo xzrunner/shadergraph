@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class Polygon : public Block
 {
 public:
-    Polygon() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = polygon(#uv#, #sides#, #width#, #height#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    Polygon() : Block(R"(
 
 // proposed solution from
 // http://stackoverflow.com/questions/26070410/robust-atany-x-on-glsl-for-converting-xy-coordinate-to-angle
@@ -48,7 +38,7 @@ float polygon(vec2 uv, float sides, float width, float height)
     return clamp((1 - distance) / fwidth(distance), 0.0, 1.0);
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

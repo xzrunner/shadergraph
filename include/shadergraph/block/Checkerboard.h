@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class Checkerboard : public Block
 {
 public:
-    Checkerboard() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "vec3 #ret# = checkerboard(#st#, #col_a#, #col_b#, #freq#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    Checkerboard() : Block(R"(
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Checkerboard-Node.html
 vec3 checkerboard(vec2 st, vec3 col_a, vec3 col_b, vec2 freq)
@@ -37,7 +27,7 @@ vec3 checkerboard(vec2 st, vec3 col_a, vec3 col_b, vec2 freq)
     return mix(col_a, col_b, alpha);
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 

@@ -2,9 +2,6 @@
 
 #include "shadergraph/Block.h"
 
-#include <string>
-#include <vector>
-
 namespace shadergraph
 {
 namespace block
@@ -13,14 +10,7 @@ namespace block
 class SimpleNoise : public Block
 {
 public:
-    SimpleNoise() : Block(CODE) {}
-
-    virtual std::string GetBody() const override {
-        return "float #ret# = simple_noise(#uv#, #scale#);";
-    }
-
-private:
-    static constexpr char* const CODE = R"(
+    SimpleNoise() : Block(R"(
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Simple-Noise-Node.html
 
@@ -78,7 +68,7 @@ float simple_noise(vec2 uv, float scale)
     return t;
 }
 
-)";
+)") {}
 
     RTTR_ENABLE(Block)
 
