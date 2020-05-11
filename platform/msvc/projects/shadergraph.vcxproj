@@ -14,14 +14,25 @@
     <ClInclude Include="..\..\..\include\shadergraph\Block.h" />
     <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Add.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Checkerboard.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Divide.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Float.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float2.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float2.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float3.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float3.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float4.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float4.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\FragmentShader.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\GradientNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Split.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Subtract.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\UV.h" />
@@ -100,7 +111,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -114,7 +125,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

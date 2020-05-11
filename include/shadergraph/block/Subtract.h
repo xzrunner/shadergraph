@@ -11,16 +11,16 @@ namespace shadergraph
 namespace block
 {
 
-class Multiply : public Block
+class Subtract : public Block
 {
 public:
-    Multiply()
+    Subtract()
     {
         SetupPorts({
-            { VarType::Dynamic, "a", "1" },
-            { VarType::Dynamic, "b", "1" }
+            { VarType::Dynamic, "a", "0" },
+            { VarType::Dynamic, "b", "0" }
         }, {
-            { VarType::Dynamic, "mul" }
+            { VarType::Dynamic, "sub" }
         });
     }
     virtual std::string GetBody() const override
@@ -32,13 +32,13 @@ public:
             ret.push_back(static_cast<char>('a' + i));
             ret.push_back('#');
             if (i != n - 1) {
-                ret += " * ";
+                ret += " - ";
             }
         }
 
         auto type = BlockHelper::ResolveBinOpRetType(m_imports[0], m_imports[1]);
         assert(type != VarType::Invalid);
-        return cpputil::StringHelper::Format("%s #mul# = %s;",
+        return cpputil::StringHelper::Format("%s #sub# = %s;",
             TypeToString(type).c_str(),
             ret.c_str()
         );
@@ -46,7 +46,7 @@ public:
 
     RTTR_ENABLE(Block)
 
-}; // Multiply
+}; // Subtract
 
 }
 }

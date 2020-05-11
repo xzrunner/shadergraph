@@ -10,9 +10,6 @@
     <Filter Include="blocks">
       <UniqueIdentifier>{af6fcb4f-01f8-4d59-8f8e-d722636451da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="blocks\noise">
-      <UniqueIdentifier>{d3bcd1ee-ad66-4beb-b7b8-89a01cd268ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="parser">
       <UniqueIdentifier>{9ee21062-82d4-40ae-9d8a-951dcded29ca}</UniqueIdentifier>
     </Filter>
@@ -52,16 +49,25 @@
     <Filter Include="blocks\input\basic">
       <UniqueIdentifier>{c68a517c-b944-4c9a-b045-0b78aa8b9412}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\procedural">
+      <UniqueIdentifier>{40822e47-448b-4536-83d3-5e0c1f00c4e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\procedural\noise">
+      <UniqueIdentifier>{d3bcd1ee-ad66-4beb-b7b8-89a01cd268ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\procedural\shapes">
+      <UniqueIdentifier>{e22decaa-6b98-46da-ade1-c796d8f43116}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
       <Filter>dataset\block</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h">
-      <Filter>blocks\noise</Filter>
+      <Filter>blocks\procedural\noise</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Worley.h">
-      <Filter>blocks\noise</Filter>
+      <Filter>blocks\procedural\noise</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\VarType.h">
       <Filter>dataset\var</Filter>
@@ -113,10 +119,28 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h">
       <Filter>blocks\channel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Add.h">
+      <Filter>blocks\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Subtract.h">
+      <Filter>blocks\math\basic</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h">
       <Filter>blocks\math\basic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Divide.h">
+      <Filter>blocks\math\basic</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Float.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float2.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float3.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float4.h">
       <Filter>blocks\input\basic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h">
@@ -136,6 +160,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float2.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float3.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Float4.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Checkerboard.h">
+      <Filter>blocks\procedural\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\GradientNoise.h">
+      <Filter>blocks\procedural\noise</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
