@@ -18,6 +18,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Checkerboard.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Divide.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Ellipse.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Float.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Float2.h" />
@@ -31,12 +32,18 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Polygon.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Rectangle.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\RoundedPolygon.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\RoundedRectangle.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SimpleNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Split.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Subtract.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\UV.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\block\Worley.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h" />
     <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h" />

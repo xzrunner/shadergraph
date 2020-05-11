@@ -7,10 +7,10 @@ namespace shadergraph
 namespace block
 {
 
-class Worley : public Block
+class WorleyNoise : public Block
 {
 public:
-    Worley() : Block(CODE) {}
+    WorleyNoise() : Block(CODE) {}
 
     virtual std::string GetBody() const override {
         return "float #ret# = worley_cells(#st#);";
@@ -162,7 +162,7 @@ float worley_no_cells(vec2 st, float frequency)
 
     RTTR_ENABLE(Block)
 
-}; // Worley
+}; // WorleyNoise
 
 }
 }

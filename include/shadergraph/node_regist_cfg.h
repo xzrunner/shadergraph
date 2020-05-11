@@ -100,8 +100,18 @@
 #include EXE_FILEPATH
 
 #define NO_PARM_FILEPATH
-#define PARM_NODE_TYPE Worley
-#define PARM_NODE_NAME worley
+#define PARM_NODE_TYPE SimpleNoise
+#define PARM_NODE_NAME simple_noise
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Voronoi
+#define PARM_NODE_NAME voronoi
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE WorleyNoise
+#define PARM_NODE_NAME worley_noise
 #include EXE_FILEPATH
 
 // shapes
@@ -109,6 +119,31 @@
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE Checkerboard
 #define PARM_NODE_NAME checkerboard
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Ellipse
+#define PARM_NODE_NAME ellipse
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Polygon
+#define PARM_NODE_NAME polygon
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Rectangle
+#define PARM_NODE_NAME rectangle
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE RoundedPolygon
+#define PARM_NODE_NAME rounded_polygon
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE RoundedRectangle
+#define PARM_NODE_NAME rounded_rectangle
 #include EXE_FILEPATH
 
 //////////////////////////////////////////////////////////////////////////

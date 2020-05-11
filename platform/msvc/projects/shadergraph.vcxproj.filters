@@ -66,9 +66,6 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h">
       <Filter>blocks\procedural\noise</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\block\Worley.h">
-      <Filter>blocks\procedural\noise</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\VarType.h">
       <Filter>dataset\var</Filter>
     </ClInclude>
@@ -175,6 +172,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\GradientNoise.h">
       <Filter>blocks\procedural\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h">
+      <Filter>blocks\procedural\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SimpleNoise.h">
+      <Filter>blocks\procedural\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h">
+      <Filter>blocks\procedural\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\RoundedPolygon.h">
+      <Filter>blocks\procedural\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Ellipse.h">
+      <Filter>blocks\procedural\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Polygon.h">
+      <Filter>blocks\procedural\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Rectangle.h">
+      <Filter>blocks\procedural\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\RoundedRectangle.h">
+      <Filter>blocks\procedural\shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
