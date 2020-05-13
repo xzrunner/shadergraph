@@ -50,7 +50,9 @@ std::string Evaluator::GenShaderCode() const
         ret = "#version 330 core\n" + ret;
     }
 
+#ifdef _DEBUG
     printf("%s\n", ret.c_str());
+#endif // _DEBUG
 
     return ret;
 }
