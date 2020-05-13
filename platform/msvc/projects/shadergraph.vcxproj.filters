@@ -58,6 +58,9 @@
     <Filter Include="blocks\procedural\shapes">
       <UniqueIdentifier>{e22decaa-6b98-46da-ade1-c796d8f43116}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\uv">
+      <UniqueIdentifier>{ea9523fb-aa64-4c64-ba7c-2a116b98f5d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -196,6 +199,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\RoundedRectangle.h">
       <Filter>blocks\procedural\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Flipbook.h">
+      <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\PolarCoordinates.h">
+      <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\RadialShear.h">
+      <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Rotate.h">
+      <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Spherize.h">
+      <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\TilingAndOffset.h">
+      <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Twirl.h">
+      <Filter>blocks\uv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
