@@ -22,14 +22,18 @@ namespace CommentToken
 
 	static const Type OParenthesis  = 1 <<  4; // opening parenthesis: (
 	static const Type CParenthesis  = 1 <<  5; // closing parenthesis: )
+	static const Type OBracket      = 1 <<  6; // opening bracket: [
+	static const Type CBracket      = 1 <<  7; // closing bracket: ]
 
-    static const Type At            = 1 <<  6; // @
-    static const Type Ret           = 1 <<  7; // ->
+    static const Type At            = 1 <<  8; // @
+    static const Type Ret           = 1 <<  9; // ->
+    static const Type Equal         = 1 << 10; // =
 
-    static const Type Comma         = 1 <<  8; // ,
+    static const Type Comma         = 1 << 11; // ,
+    static const Type Ellipsis      = 1 << 12; // ...
 
-	static const Type Eof           = 1 <<  9; // end of file
-	static const Type Eol           = 1 << 10; // end of line
+	static const Type Eof           = 1 << 13; // end of file
+	static const Type Eol           = 1 << 14; // end of line
 }
 
 class CommentTokenizer : public lexer::Tokenizer<CommentToken::Type>
@@ -61,6 +65,8 @@ public:
 private:
     virtual std::map<CommentToken::Type, std::string>
         TokenNames() const override;
+
+    std::shared_ptr<Value> ParserValue();
 
 private:
     CommentTokenizer m_tokenizer;

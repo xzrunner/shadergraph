@@ -60,6 +60,12 @@ CommentTokenizer::EmitToken()
             case ')':
                 Advance();
                 return Token(CommentToken::CParenthesis, c, c+1, Offset(c), start_line, start_column);
+            case '[':
+                Advance();
+                return Token(CommentToken::OBracket, c, c+1, Offset(c), start_line, start_column);
+            case ']':
+                Advance();
+                return Token(CommentToken::CBracket, c, c+1, Offset(c), start_line, start_column);
             case '@':
                 Advance();
                 return Token(CommentToken::At, c, c + 1, Offset(c), start_line, start_column);
@@ -74,6 +80,9 @@ CommentTokenizer::EmitToken()
                 {
                     return Token(0, c, c + 1, Offset(c), start_line, start_column);
                 }
+            case '=':
+                Advance();
+                return Token(CommentToken::Equal, c, c + 1, Offset(c), start_line, start_column);
             case ',':
                 Advance();
                 return Token(CommentToken::Comma, c, c + 1, Offset(c), start_line, start_column);
@@ -92,6 +101,18 @@ CommentTokenizer::EmitToken()
                 DiscardWhile(whitespace);
             }
                 break;
+            case '.':
+                Advance();
+                if (CurChar() == '.')
+                {
+                    Advance();
+                    if (CurChar() == '.')
+                    {
+                        Advance();
+                        return Token(CommentToken::Ellipsis, c, c + 3, Offset(c), start_line, start_column);
+                    }
+                }
+                return Token(0, c, c + 1, Offset(c), start_line, start_column);
             default: { // whitespace, integer, decimal or word
                 const char* e = ReadInteger(NumberDelim());
 				if (e != nullptr) {
@@ -174,8 +195,13 @@ void CommentParser::Parse(std::vector<std::shared_ptr<ParserProp>>& props)
                     if (token.HasType(CommentToken::CParenthesis)) {
                         break;
                     }
-                    if (!token.HasType(CommentToken::Comma)) {
-                        func->inputs.push_back(StringToType(token.Data()));
+                    if (!token.HasType(CommentToken::Comma))
+                    {
+                        if (token.HasType(CommentToken::Ellipsis)) {
+                            func->defalut_params = true;
+                        } else {
+                            func->inputs.push_back(StringToType(token.Data()));
+                        }
                     }
                 } while (true);
 
@@ -207,23 +233,7 @@ void CommentParser::Parse(std::vector<std::shared_ptr<ParserProp>>& props)
             else if (type == "default")
             {
                 auto def = std::make_shared<PropDefault>();
-                token = m_tokenizer.NextToken();
-                if (token.HasType(CommentToken::Integer))
-                {
-                    auto v = std::make_shared<IntVal>();
-                    v->x = token.ToInteger<int>();
-                    def->val = v;
-                }
-                else if (token.HasType(CommentToken::Decimal))
-                {
-                    auto v = std::make_shared<FloatVal>();
-                    v->x = token.ToFloat<float>();
-                    def->val = v;
-                }
-                else
-                {
-                    assert(0);
-                }
+                def->val = ParserValue();
                 props.push_back(def);
             }
             else if (type == "region")
@@ -249,6 +259,28 @@ void CommentParser::Parse(std::vector<std::shared_ptr<ParserProp>>& props)
 
                 props.push_back(exp);
             }
+            else if (type == "param")
+            {
+                token = m_tokenizer.NextToken();
+                do {
+                    Expect(CommentToken::OBracket, token);
+
+                    auto def = std::make_shared<PropDefault>();
+
+                    Expect(CommentToken::String, token = m_tokenizer.NextToken());
+                    def->name = token.Data();
+
+                    Expect(CommentToken::Equal, token = m_tokenizer.NextToken());
+
+                    def->val = ParserValue();
+
+                    props.push_back(def);
+
+                    Expect(CommentToken::CBracket, token = m_tokenizer.NextToken());
+
+                    token = m_tokenizer.NextToken();
+                } while (token.GetType() != CommentToken::Eof);
+            }
             else
             {
                 assert(0);
@@ -267,6 +299,32 @@ CommentParser::TokenNames() const
 {
 	std::map<CommentToken::Type, std::string> names;
 	return names;
+}
+
+std::shared_ptr<Value>
+CommentParser::ParserValue()
+{
+    std::shared_ptr<Value> ret = nullptr;
+
+    auto token = m_tokenizer.NextToken();
+    if (token.HasType(CommentToken::Integer))
+    {
+        auto v = std::make_shared<IntVal>();
+        v->x = token.ToInteger<int>();
+        ret = v;
+    }
+    else if (token.HasType(CommentToken::Decimal))
+    {
+        auto v = std::make_shared<FloatVal>();
+        v->x = token.ToFloat<float>();
+        ret = v;
+    }
+    else
+    {
+        assert(0);
+    }
+
+    return ret;
 }
 
 }

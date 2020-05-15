@@ -43,6 +43,8 @@ struct PropFunction : public ParserProp
 
     std::vector<VarType> inputs;
     VarType output;
+
+    bool defalut_params = false;
 };
 
 struct PropEnum : public ParserProp
@@ -56,6 +58,7 @@ struct PropDefault : public ParserProp
 {
     virtual Type GetType() const override { return Type::Default; }
 
+    std::string name;
     ValPtr val = nullptr;
 };
 

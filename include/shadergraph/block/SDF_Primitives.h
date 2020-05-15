@@ -12,15 +12,16 @@ class SDF_Primitives : public Block
 public:
     SDF_Primitives() : Block(R"(
 
-//float sdSphere(vec3 p, float s)
-//{
-//    return length(p) - s;
-//}
-
-float sdSphere(vec3 p)
+/////////////////////////////////////////////////
+/// @export sdSphere
+/// @param [s=0.5]
+/////////////////////////////////////////////////
+float sdSphere(vec3 p, float s)
 {
-    return length(p) - 0.5;
+    return length(p) - s;
 }
+
+
 
 )") {}
 

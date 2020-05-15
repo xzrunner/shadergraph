@@ -51,7 +51,7 @@ mat3 viewMatrix(vec3 eye, vec3 center, vec3 up)
 
 /////////////////////////////////////////////////
 /// @export Raymarching
-/// @function  f_scene (vec3)->float  Scene
+/// @function  f_scene (vec3, ...)->float  Scene
 /// @function  f_lighting (vec3, vec3, vec3, float, vec3, vec3)->vec3  Lighting
 /////////////////////////////////////////////////
 vec3 raymarching(vec2 st)
