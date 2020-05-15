@@ -65,6 +65,7 @@ private:
     std::set<std::string> m_symbols;
 
     std::unordered_map<const Variant*, std::string> m_real_names;
+    std::unordered_map<const Variant*, std::string> m_real_funcs;
 
 }; // Evaluator
 

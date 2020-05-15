@@ -142,7 +142,7 @@ std::string Evaluator::GenShaderFuncsCode() const
 
             std::string params;
 
-            auto f = funcs[i];
+            auto& f = funcs[i];
             auto f_val = std::static_pointer_cast<FunctionVal>(f.val);
             for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
             {
@@ -153,13 +153,21 @@ std::string Evaluator::GenShaderFuncsCode() const
                 }
             }
 
+            std::string f_code;
+            auto itr = m_real_funcs.find(&f);
+            if (itr != m_real_funcs.end()) {
+                f_code = itr->second;
+            } else {
+                f_code = f_val->code;
+            }
+
             code += cpputil::StringHelper::Format(R"(
 %s %s(%s)
 {
 %s
 }
 
-)", TypeToString(f_val->output.type).c_str(), f.name.c_str(), params.c_str(), f_val->code.c_str());
+)", TypeToString(f_val->output.type).c_str(), f.name.c_str(), params.c_str(), f_code.c_str());
         }
     }
 
@@ -356,11 +364,24 @@ void Evaluator::ResolveFunctions()
 
                 auto prop_f = std::static_pointer_cast<PropFunction>(d);
                 std::string from = prop_f->name;
-
                 std::string to = prev_node->GetExports()[conn.idx].var.type.name;
-                for (auto& func : funcs) {
-                    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
-                    cpputil::StringHelper::ReplaceAll(f_val->code, from, to);
+                for (auto& func : funcs)
+                {
+                    std::string f_code;
+                    auto itr = m_real_funcs.find(&func);
+                    if (itr != m_real_funcs.end()) {
+                        f_code = itr->second;;
+                    } else {
+                        auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
+                        f_code = f_val->code;
+                    }
+                    cpputil::StringHelper::ReplaceAll(f_code, from, to);
+
+                    if (itr != m_real_funcs.end()) {
+                        itr->second = f_code;
+                    } else {
+                        m_real_funcs.insert({ &func, f_code });
+                    }
                 }
 
                 ++idx;
