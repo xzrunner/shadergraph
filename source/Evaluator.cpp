@@ -358,7 +358,10 @@ void Evaluator::ResolveFunctions()
                 std::string from = prop_f->name;
 
                 std::string to = prev_node->GetExports()[conn.idx].var.type.name;
-                cpputil::StringHelper::ReplaceAll(f_val->code, from, to);
+                for (auto& func : funcs) {
+                    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
+                    cpputil::StringHelper::ReplaceAll(f_val->code, from, to);
+                }
 
                 ++idx;
             }
