@@ -61,6 +61,15 @@
     <Filter Include="blocks\uv">
       <UniqueIdentifier>{ea9523fb-aa64-4c64-ba7c-2a116b98f5d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\procedural\sdf">
+      <UniqueIdentifier>{975f2c30-090e-49b5-ad30-df8097dfe32e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\master">
+      <UniqueIdentifier>{04de6559-b2da-4747-95e6-d122507fdc0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\utility\Illumination">
+      <UniqueIdentifier>{88acf6d8-64b7-4fa7-8641-c7113c11b455}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -220,6 +229,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Twirl.h">
       <Filter>blocks\uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Primitives.h">
+      <Filter>blocks\procedural\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Raymarching.h">
+      <Filter>blocks\master</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Phong.h">
+      <Filter>blocks\utility\Illumination</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,13 +33,16 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Phong.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\PolarCoordinates.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Polygon.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\RadialShear.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Raymarching.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Rectangle.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Rotate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\RoundedPolygon.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\RoundedRectangle.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Primitives.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SimpleNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Spherize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Split.h" />
