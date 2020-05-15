@@ -17,6 +17,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Add.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Checkerboard.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Divide.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Ellipse.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h" />

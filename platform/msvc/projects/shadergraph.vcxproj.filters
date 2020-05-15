@@ -70,6 +70,9 @@
     <Filter Include="blocks\utility\Illumination">
       <UniqueIdentifier>{88acf6d8-64b7-4fa7-8641-c7113c11b455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\utility\tools">
+      <UniqueIdentifier>{c878d77f-c61d-423f-aaac-aa42a8804ecf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -238,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Phong.h">
       <Filter>blocks\utility\Illumination</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.h">
+      <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.parm.h">
+      <Filter>blocks\utility\tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

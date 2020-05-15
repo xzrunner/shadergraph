@@ -24,9 +24,9 @@ protected:
     void SetupPorts(const std::vector<Variant>& inputs,
         const std::vector<Variant>& outputs);
 
-private:
     void Parser(const std::string& str);
 
+private:
     void SetupPorts();
 
     static dag::Node<Variant>::PortVar PortFromVar(const Variant& var);
