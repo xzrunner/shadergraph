@@ -14,6 +14,8 @@ struct Variant
     std::string name;
     std::string default_name;
 
+    bool is_const = false;
+
     std::shared_ptr<Value> val = nullptr;
 
 }; // Variant

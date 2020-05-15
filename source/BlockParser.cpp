@@ -135,7 +135,7 @@ BlockTokenizer::EmitToken()
 
 const std::string& BlockTokenizer::NumberDelim()
 {
-    static const std::string number_delim(Whitespace() + ")]}");
+    static const std::string number_delim(Whitespace() + ")]};");
     return number_delim;
 }
 
@@ -238,6 +238,11 @@ Variant BlockParser::ParseVariable()
 
     Token token;
     Expect(BlockToken::String, token = m_tokenizer.NextToken());
+    // todo: const
+    if (token.Data() == "const") {
+        var.is_const = true;
+        Expect(BlockToken::String, token = m_tokenizer.NextToken());
+    }
     var.type = StringToType(token.Data());
 
     Expect(BlockToken::String, token = m_tokenizer.NextToken());
@@ -326,6 +331,32 @@ Variant BlockParser::ParseVariable()
         func_var.name = var.name;
         func_var.val = val;
         m_funcs.push_back(var);
+    }
+    // assign
+    else if (token.GetType() == BlockToken::Equal)
+    {
+        m_tokenizer.NextToken();    // skip equal
+        switch (var.type)
+        {
+        case VarType::Int:
+        {
+            Expect(BlockToken::Integer, token = m_tokenizer.NextToken());
+            auto val = std::make_shared<IntVal>();
+            val->x = token.ToInteger<int>();
+            var.val = val;
+        }
+            break;
+        case VarType::Float:
+        {
+            Expect(BlockToken::Decimal, token = m_tokenizer.NextToken());
+            auto val = std::make_shared<FloatVal>();
+            val->x = token.ToFloat<float>();
+            var.val = val;
+        }
+            break;
+        default:
+            assert(0);
+        }
     }
 
     assert(var.type != VarType::Invalid);
