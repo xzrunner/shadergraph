@@ -56,6 +56,8 @@ private:
 
     static Variant CalcValue(const dag::Node<Variant>::PortAddr& conn);
 
+    static std::string GetDefaultValueString(VarType type);
+
 private:
     BlockPtr m_block = nullptr;
     std::vector<BlockPtr> m_blocks;

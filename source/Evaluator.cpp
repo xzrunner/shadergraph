@@ -198,14 +198,22 @@ std::string Evaluator::GenShaderMainCode() const
                     assert(func.type == VarType::Function);
                     auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
 
+                    auto& inputs = b->GetImports();
+
                     auto& outputs = b->GetExports();
                     assert(c.idx >= 0 && c.idx < outputs.size());
                     auto& output = outputs[c.idx];
                     str += TypeToString(var.type) + " #" + output.var.type.name + "# = ";
                     str += func.name + "(";
-                    for (int i = 0, n = f_val->inputs.size(); i < n; ++i) {
-                        auto param = f_val->inputs[i];
-                        str += "#" + param.name + "#";
+                    for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
+                    {
+                        auto& param = f_val->inputs[i];
+                        if (!inputs[i].conns.empty()) {
+                            str += "#" + param.name + "#";
+                        } else {
+                            str += GetDefaultValueString(param.type);
+                        }
+
                         if (i != n - 1) {
                             str += ", ";
                         }
@@ -510,6 +518,46 @@ Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)
     }
 
     return ret;
+}
+
+std::string Evaluator::GetDefaultValueString(VarType type)
+{
+    switch (type)
+    {
+    case VarType::Bool:
+        return "false";
+    case VarType::Bool2:
+        return "bvec2(false, false)";
+    case VarType::Bool3:
+        return "bvec3(false, false, false)";
+    case VarType::Bool4:
+        return "bvec4(false, false, false, false)";
+    case VarType::UInt:
+    case VarType::Int:
+        return "0";
+    case VarType::Int2:
+        return "ivec2(0, 0)";
+    case VarType::Int3:
+        return "ivec3(0, 0, 0)";
+    case VarType::Int4:
+        return "ivec4(0, 0, 0, 0)";
+    case VarType::Float:
+        return "0.0";
+    case VarType::Float2:
+        return "vec2(0.0, 0.0)";
+    case VarType::Float3:
+        return "vec3(0.0, 0.0, 0.0)";
+    case VarType::Float4:
+        return "vec4(0.0, 0.0, 0.0, 0.0)";
+    case VarType::Matrix2:
+        return "mat2()";
+    case VarType::Matrix3:
+        return "mat3()";
+    case VarType::Matrix4:
+        return "mat4()";
+    default:
+        return "";
+    }
 }
 
 }
