@@ -77,6 +77,21 @@ void Block::Parser(const std::string& str)
 
 void Block::SetupPorts()
 {
+    // clear connections
+    for (int i = 0, n = m_imports.size(); i < n; ++i) {
+        for (auto& c : m_imports[i].conns) {
+            dag::disconnect<Variant>(*c.node.lock(), c.idx, *this, i);
+        }
+    }
+    for (int i = 0, n = m_exports.size(); i < n; ++i) {
+        for (auto& c : m_exports[i].conns) {
+            dag::disconnect<Variant>(*this, i, *c.node.lock(), c.idx);
+        }
+    }
+
+    m_imports.clear();
+    m_exports.clear();
+
     assert(m_curr_func >= 0 && m_curr_func < static_cast<int>(m_funcs.size()));
     auto func = m_funcs[m_curr_func];
     auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
