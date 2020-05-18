@@ -396,6 +396,10 @@ void Evaluator::ResolveVariants()
     {
         for (auto& o : b->GetExports())
         {
+            if (o.conns.empty()) {
+                continue;
+            }
+
             auto& var = o.var.type;
             std::string name = var.default_name.empty() ? var.name : var.default_name;
             auto itr = m_symbols.find(name);
