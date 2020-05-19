@@ -12,6 +12,7 @@ class Saturation : public Block
 public:
     Saturation() : Block(R"(
 
+// https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Saturation-Node.html
 vec3 saturation(vec3 rgb, float saturation)
 {
     float luma = dot(rgb, vec3(0.2126729, 0.7151522, 0.0721750));
