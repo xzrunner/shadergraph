@@ -297,6 +297,7 @@ void Evaluator::Concatenate()
             if (conns.empty()) {
                 continue;
             }
+
             assert(conns.size() == 1);
             auto& conn = conns[0];
             auto from = conn.node.lock();
@@ -312,6 +313,96 @@ void Evaluator::Concatenate()
                 t_itr->second = f_itr->second;
             } else {
                 m_real_names.insert({ &t_var, f_itr->second });
+            }
+
+            if (f_var.type != t_var.type && f_var.type != VarType::Dynamic && t_var.type != VarType::Dynamic)
+            {
+                int f_idx = -1, t_idx = -1;
+                if (f_var.type >= VarType::Bool && f_var.type <= VarType::Bool4)
+                {
+                    assert(t_var.type >= VarType::Bool && t_var.type <= VarType::Bool4);
+                    f_idx = static_cast<int>(f_var.type) - static_cast<int>(VarType::Bool);
+                    t_idx = static_cast<int>(t_var.type) - static_cast<int>(VarType::Bool);
+                }
+                else if (f_var.type >= VarType::Int && f_var.type <= VarType::Int4)
+                {
+                    assert(t_var.type >= VarType::Int && t_var.type <= VarType::Int4);
+                    f_idx = static_cast<int>(f_var.type) - static_cast<int>(VarType::Int);
+                    t_idx = static_cast<int>(t_var.type) - static_cast<int>(VarType::Int);
+                }
+                else if (f_var.type >= VarType::Float && f_var.type <= VarType::Float4)
+                {
+                    assert(t_var.type >= VarType::Float && t_var.type <= VarType::Float4);
+                    f_idx = static_cast<int>(f_var.type) - static_cast<int>(VarType::Float);
+                    t_idx = static_cast<int>(t_var.type) - static_cast<int>(VarType::Float);
+                }
+
+                if (f_idx >= 0 && t_idx >= 0)
+                {
+                    auto itr = m_real_names.find(&t_var);
+                    assert(itr != m_real_names.end());
+                    if (f_idx > t_idx)
+                    {
+                        assert(t_idx >= 0 && t_idx <= 2);
+                        switch (t_idx)
+                        {
+                        case 0:
+                            itr->second = itr->second + ".x";
+                            break;
+                        case 1:
+                            itr->second = itr->second + ".xy";
+                            break;
+                        case 2:
+                            itr->second = itr->second + ".xyz";
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        assert(f_idx < t_idx);;
+                        assert(t_idx >= 1 && t_idx <= 3);
+                        switch (t_idx)
+                        {
+                        case 1:
+                            assert(f_idx == 0);
+                            itr->second = cpputil::StringHelper::Format("%s(%s, %s)",
+                                TypeToString(t_var.type).c_str(), itr->second.c_str(), itr->second.c_str());
+                            break;
+                        case 2:
+                            assert(f_idx >= 0 && f_idx <= 1);
+                            switch (f_idx)
+                            {
+                            case 0:
+                                itr->second = cpputil::StringHelper::Format("%s(%s, %s, %s)",
+                                    TypeToString(t_var.type).c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str());
+                                break;
+                            case 1:
+                                itr->second = cpputil::StringHelper::Format("%s(%s, 0)",
+                                    TypeToString(t_var.type).c_str(), itr->second.c_str());
+                                break;
+                            }
+                            break;
+                        case 3:
+                            assert(f_idx >= 0 && f_idx <= 2);
+                            switch (f_idx)
+                            {
+                            case 0:
+                                itr->second = cpputil::StringHelper::Format("%s(%s, %s, %s, %s)",
+                                    TypeToString(t_var.type).c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str());
+                                break;
+                            case 1:
+                                itr->second = cpputil::StringHelper::Format("%s(%s, 0, 0)",
+                                    TypeToString(t_var.type).c_str(), itr->second.c_str());
+                                break;
+                            case 2:
+                                itr->second = cpputil::StringHelper::Format("%s(%s, 0)",
+                                    TypeToString(t_var.type).c_str(), itr->second.c_str());
+                                break;
+                            }
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
