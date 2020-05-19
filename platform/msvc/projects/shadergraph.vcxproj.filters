@@ -73,6 +73,18 @@
     <Filter Include="blocks\utility\tools">
       <UniqueIdentifier>{c878d77f-c61d-423f-aaac-aa42a8804ecf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\artistic">
+      <UniqueIdentifier>{1a893980-b02c-4777-ad82-826f723dd296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\artistic\adjustment">
+      <UniqueIdentifier>{a7d73ed1-e4ce-45dd-8f2e-ed734c849a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\artistic\blend">
+      <UniqueIdentifier>{0f06fc91-b023-4d38-a80d-5b82761d3460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\artistic\filter">
+      <UniqueIdentifier>{821e28d3-985c-4a35-ad16-c416fb73e03b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -247,6 +259,42 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.parm.h">
       <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMixer.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMixer.parm.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Contrast.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Dither.h">
+      <Filter>blocks\artistic\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Hue.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\InvertColors.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\InvertColors.parm.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ReplaceColor.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Saturation.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h">
+      <Filter>blocks\artistic\adjustment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Blend.h">
+      <Filter>blocks\artistic\blend</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Blend.parm.h">
+      <Filter>blocks\artistic\blend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,53 @@
 #error "You must define EXE_FILEPATH macro before include this file"
 #endif
 
+#undef NO_PARM_FILEPATH
+
+//////////////////////////////////////////////////////////////////////////
+// artistic
+//////////////////////////////////////////////////////////////////////////
+
+// adjustment
+
+#define PARM_NODE_TYPE ChannelMixer
+#define PARM_NODE_NAME channel_mixer
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Contrast
+#define PARM_NODE_NAME contrast
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Hue
+#define PARM_NODE_NAME hue
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE InvertColors
+#define PARM_NODE_NAME invert_colors
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE ReplaceColor
+#define PARM_NODE_NAME replace_color
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Saturation
+#define PARM_NODE_NAME saturation
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE WhiteBalance
+#define PARM_NODE_NAME white_balance
+#include EXE_FILEPATH
+
+// blend
+
+#define PARM_NODE_TYPE Blend
+#define PARM_NODE_NAME blend
+#include EXE_FILEPATH
+
 //////////////////////////////////////////////////////////////////////////
 // channel
 //////////////////////////////////////////////////////////////////////////
