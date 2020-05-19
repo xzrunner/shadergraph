@@ -611,21 +611,60 @@ Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)
     }
     else if (node_type == rttr::type::get<block::Split>())
     {
-        auto& in_conns = node->GetImports()[0].conns;
-        if (!in_conns.empty())
+        int input_idx = -1;
+        for (int i = 0; i <= static_cast<int>(block::Split::Input::RGBA); ++i) {
+            if (!node->GetImports()[i].conns.empty()) {
+                input_idx = i;
+                break;
+            }
+        }
+
+        if (input_idx >= 0)
         {
+            auto& in_conns = node->GetImports()[input_idx].conns;
             assert(in_conns.size() == 1);
             auto in_conn = in_conns[0];
             auto input = CalcValue(in_conn);
-            if (input.val && input.type == VarType::Float4)
+            if (input.val)
             {
-                ret.type = VarType::Float;
+                switch (input.type)
+                {
+                case VarType::Float4:
+                {
+                    ret.type = VarType::Float;
 
-                auto val = std::make_shared<FloatVal>();
-                auto v_f4 = std::static_pointer_cast<Float4Val>(input.val);
-                assert(in_conn.idx >= 0 && in_conn.idx < 4);
-                val->x = v_f4->xyzw[conn.idx];
-                ret.val = val;
+                    auto val = std::make_shared<FloatVal>();
+                    auto v_f4 = std::static_pointer_cast<Float4Val>(input.val);
+                    assert(in_conn.idx >= 0 && in_conn.idx < 4);
+                    val->x = v_f4->xyzw[conn.idx];
+                    ret.val = val;
+                }
+                    break;
+                case VarType::Float3:
+                {
+                    ret.type = VarType::Float;
+
+                    auto val = std::make_shared<FloatVal>();
+                    auto v_f3 = std::static_pointer_cast<Float3Val>(input.val);
+                    assert(in_conn.idx >= 0 && in_conn.idx < 3);
+                    val->x = v_f3->xyz[conn.idx];
+                    ret.val = val;
+                }
+                    break;
+                case VarType::Float2:
+                {
+                    ret.type = VarType::Float;
+
+                    auto val = std::make_shared<FloatVal>();
+                    auto v_f2 = std::static_pointer_cast<Float2Val>(input.val);
+                    assert(in_conn.idx >= 0 && in_conn.idx < 2);
+                    val->x = v_f2->xy[conn.idx];
+                    ret.val = val;
+                }
+                    break;
+                default:
+                    assert(0);
+                }
             }
         }
     }
