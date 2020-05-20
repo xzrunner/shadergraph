@@ -23,7 +23,7 @@ public:
             { VarType::Dynamic, "add" }
         });
     }
-    virtual std::string GetBody() const override
+    virtual std::string GetBody(const Evaluator& eval) const override
     {
         std::string ret;
         for (int i = 0, n = m_imports.size(); i < n; ++i)

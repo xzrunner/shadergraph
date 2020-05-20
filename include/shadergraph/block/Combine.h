@@ -31,7 +31,7 @@ public:
         RG,
     };
 
-    virtual std::string GetBody() const override
+    virtual std::string GetBody(const Evaluator& eval) const override
     {
         std::string ret;
         if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {

@@ -30,10 +30,10 @@ public:
         Grey,
     };
 
-    virtual std::string GetHeader() const override {
+    virtual std::string GetHeader(const Evaluator& eval) const override {
         return "out vec4 #col#;";
     }
-    virtual std::string GetBody() const override
+    virtual std::string GetBody(const Evaluator& eval) const override
     {
         std::string ret;
         if (!m_imports[static_cast<int>(Input::RGBA)].conns.empty()) {

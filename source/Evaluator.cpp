@@ -93,11 +93,17 @@ Evaluator::CalcUniformValues() const
     return ret;
 }
 
+VarType Evaluator::QueryRealType(const Variant* var) const
+{
+    auto itr = m_real_types.find(var);
+    return itr == m_real_types.end() ? var->type : itr->second;
+}
+
 std::string Evaluator::GenShaderHeaderCode() const
 {
     std::string code;
     for (auto& b : m_blocks) {
-        auto str = b->GetHeader();
+        auto str = b->GetHeader(*this);
         if (!str.empty()) {
             Rename(str, *b);
             code += str + "\n";
@@ -190,7 +196,7 @@ std::string Evaluator::GenShaderMainCode() const
         }
         unique.insert(b);
 
-        auto str = b->GetBody();
+        auto str = b->GetBody(*this);
         if (str.empty() && c.idx >= 0)
         {
             auto& outputs = b->GetExports();
@@ -289,6 +295,72 @@ void Evaluator::Resolve()
 
 void Evaluator::Concatenate()
 {
+    // for dynamic
+    for (auto& b : m_blocks)
+    {
+        bool has_dynamic = false;
+        VarType max_type = VarType::Invalid;
+        for (auto& i : b->GetImports())
+        {
+            if (i.var.type.type == VarType::Dynamic)
+            {
+                has_dynamic = true;
+                if (!i.conns.empty())
+                {
+                    assert(i.conns.size() == 1);
+                    auto& conn = i.conns[0];
+                    auto real_type = conn.node.lock()->GetExports()[conn.idx].var.type.type;
+                    //m_real_types.insert({ &i.var.type, real_type });
+                    m_real_types[&i.var.type] = real_type;
+                    if (real_type > max_type) {
+                        max_type = real_type;
+                    }
+                }
+            }
+            if (i.var.type.type > max_type) {
+                max_type = i.var.type.type;
+            }
+        }
+        for (auto& o : b->GetExports())
+        {
+            if (o.var.type.type == VarType::Dynamic)
+            {
+                has_dynamic = true;
+                if (!o.conns.empty())
+                {
+                    assert(o.conns.size() == 1);
+                    auto& conn = o.conns[0];
+                    auto real_type = conn.node.lock()->GetImports()[conn.idx].var.type.type;
+                    //m_real_types.insert({ &o.var.type, real_type });
+                    m_real_types[&o.var.type] = real_type;
+                    if (real_type > max_type) {
+                        max_type = real_type;
+                    }
+                }
+            }
+            if (o.var.type.type > max_type) {
+                max_type = o.var.type.type;
+            }
+        }
+        if (has_dynamic)
+        {
+            for (auto& i : b->GetImports()) {
+                if (i.var.type.type == VarType::Dynamic) {
+                    assert(!i.var.type.val);
+                    //m_real_types.insert({ &i.var.type, max_type });
+                    m_real_types[&i.var.type] = max_type;
+                }
+            }
+            for (auto& o : b->GetExports()) {
+                if (o.var.type.type == VarType::Dynamic) {
+                    assert(!o.var.type.val);
+                    //m_real_types.insert({ &o.var.type, max_type });
+                    m_real_types[&o.var.type] = max_type;
+                }
+            }
+        }
+    }
+
     for (auto& b : m_blocks)
     {
         for (auto& i : b->GetImports())
@@ -315,26 +387,41 @@ void Evaluator::Concatenate()
                 m_real_names.insert({ &t_var, f_itr->second });
             }
 
-            if (f_var.type != t_var.type && f_var.type != VarType::Dynamic && t_var.type != VarType::Dynamic)
+            auto f_type = f_var.type;
+            auto t_type = t_var.type;
+            if (f_type == VarType::Dynamic) {
+                auto itr = m_real_types.find(&f_var);
+                if (itr != m_real_types.end()) {
+                    f_type = itr->second;
+                }
+            }
+            if (t_type == VarType::Dynamic) {
+                auto itr = m_real_types.find(&t_var);
+                if (itr != m_real_types.end()) {
+                    t_type = itr->second;
+                }
+            }
+
+            if (f_type != t_type && f_type != VarType::Dynamic && t_type != VarType::Dynamic)
             {
                 int f_idx = -1, t_idx = -1;
-                if (f_var.type >= VarType::Bool && f_var.type <= VarType::Bool4)
+                if (f_type >= VarType::Bool && f_type <= VarType::Bool4)
                 {
-                    assert(t_var.type >= VarType::Bool && t_var.type <= VarType::Bool4);
-                    f_idx = static_cast<int>(f_var.type) - static_cast<int>(VarType::Bool);
-                    t_idx = static_cast<int>(t_var.type) - static_cast<int>(VarType::Bool);
+                    assert(t_type >= VarType::Bool && t_type <= VarType::Bool4);
+                    f_idx = static_cast<int>(f_type) - static_cast<int>(VarType::Bool);
+                    t_idx = static_cast<int>(t_type) - static_cast<int>(VarType::Bool);
                 }
-                else if (f_var.type >= VarType::Int && f_var.type <= VarType::Int4)
+                else if (f_type >= VarType::Int && f_type <= VarType::Int4)
                 {
-                    assert(t_var.type >= VarType::Int && t_var.type <= VarType::Int4);
-                    f_idx = static_cast<int>(f_var.type) - static_cast<int>(VarType::Int);
-                    t_idx = static_cast<int>(t_var.type) - static_cast<int>(VarType::Int);
+                    assert(t_type >= VarType::Int && t_type <= VarType::Int4);
+                    f_idx = static_cast<int>(f_type) - static_cast<int>(VarType::Int);
+                    t_idx = static_cast<int>(t_type) - static_cast<int>(VarType::Int);
                 }
-                else if (f_var.type >= VarType::Float && f_var.type <= VarType::Float4)
+                else if (f_type >= VarType::Float && f_type <= VarType::Float4)
                 {
-                    assert(t_var.type >= VarType::Float && t_var.type <= VarType::Float4);
-                    f_idx = static_cast<int>(f_var.type) - static_cast<int>(VarType::Float);
-                    t_idx = static_cast<int>(t_var.type) - static_cast<int>(VarType::Float);
+                    assert(t_type >= VarType::Float && t_type <= VarType::Float4);
+                    f_idx = static_cast<int>(f_type) - static_cast<int>(VarType::Float);
+                    t_idx = static_cast<int>(t_type) - static_cast<int>(VarType::Float);
                 }
 
                 if (f_idx >= 0 && t_idx >= 0)
@@ -366,7 +453,7 @@ void Evaluator::Concatenate()
                         case 1:
                             assert(f_idx == 0);
                             itr->second = cpputil::StringHelper::Format("%s(%s, %s)",
-                                TypeToString(t_var.type).c_str(), itr->second.c_str(), itr->second.c_str());
+                                TypeToString(t_type).c_str(), itr->second.c_str(), itr->second.c_str());
                             break;
                         case 2:
                             assert(f_idx >= 0 && f_idx <= 1);
@@ -374,11 +461,11 @@ void Evaluator::Concatenate()
                             {
                             case 0:
                                 itr->second = cpputil::StringHelper::Format("%s(%s, %s, %s)",
-                                    TypeToString(t_var.type).c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str());
+                                    TypeToString(t_type).c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str());
                                 break;
                             case 1:
                                 itr->second = cpputil::StringHelper::Format("%s(%s, 0)",
-                                    TypeToString(t_var.type).c_str(), itr->second.c_str());
+                                    TypeToString(t_type).c_str(), itr->second.c_str());
                                 break;
                             }
                             break;
@@ -388,15 +475,15 @@ void Evaluator::Concatenate()
                             {
                             case 0:
                                 itr->second = cpputil::StringHelper::Format("%s(%s, %s, %s, %s)",
-                                    TypeToString(t_var.type).c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str());
+                                    TypeToString(t_type).c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str(), itr->second.c_str());
                                 break;
                             case 1:
                                 itr->second = cpputil::StringHelper::Format("%s(%s, 0, 0)",
-                                    TypeToString(t_var.type).c_str(), itr->second.c_str());
+                                    TypeToString(t_type).c_str(), itr->second.c_str());
                                 break;
                             case 2:
                                 itr->second = cpputil::StringHelper::Format("%s(%s, 0)",
-                                    TypeToString(t_var.type).c_str(), itr->second.c_str());
+                                    TypeToString(t_type).c_str(), itr->second.c_str());
                                 break;
                             }
                             break;

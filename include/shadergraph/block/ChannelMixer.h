@@ -22,7 +22,7 @@ public:
         });
     }
 
-    virtual std::string GetHeader() const
+    virtual std::string GetHeader(const Evaluator& eval) const
     {
         return cpputil::StringHelper::Format(R"(
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Channel-Mixer-Node.html
@@ -37,7 +37,7 @@ vec3 channel_mixer(vec3 rgb)
 )", m_r.x, m_r.y, m_r.z, m_g.x, m_g.y, m_g.z, m_b.x, m_b.y, m_b.z);
     }
 
-    virtual std::string GetBody() const override
+    virtual std::string GetBody(const Evaluator& eval) const override
     {
         return "vec3 #_out# = channel_mixer(#_in#);";
     }

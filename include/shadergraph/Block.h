@@ -7,14 +7,16 @@
 namespace shadergraph
 {
 
+class Evaluator;
+
 class Block : public dag::Node<Variant>
 {
 public:
     Block() {}
     Block(const std::string& str);
 
-    virtual std::string GetHeader() const { return ""; }
-    virtual std::string GetBody()   const { return ""; }
+    virtual std::string GetHeader(const Evaluator& eval) const { return ""; }
+    virtual std::string GetBody(const Evaluator& eval)   const { return ""; }
 
     auto& GetUniforms() const { return m_uniforms; }
     auto& GetFunctions() const { return m_funcs; }

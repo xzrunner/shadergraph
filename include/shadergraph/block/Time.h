@@ -34,7 +34,7 @@ public:
     }
     virtual ~Time();
 
-    virtual std::string GetHeader() const
+    virtual std::string GetHeader(const Evaluator& eval) const
     {
         return BlockHelper::StringFormat(R"(
 uniform vec4 #%s#;

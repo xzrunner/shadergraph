@@ -80,7 +80,7 @@ vec3 raymarching(vec2 st)
 
 )") {}
 
-    virtual std::string GetHeader() const { return R"(
+    virtual std::string GetHeader(const Evaluator& eval) const { return R"(
 
 const int MAX_MARCHING_STEPS = 255;
 const float MIN_DIST = 0.0;

@@ -18,7 +18,7 @@ public:
         });
     }
 
-    virtual std::string GetHeader() const override {
+    virtual std::string GetHeader(const Evaluator& eval) const override {
         return "in vec2 #uv#;";
     }
 

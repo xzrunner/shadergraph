@@ -50,7 +50,7 @@ public:
         });
     }
 
-    virtual std::string GetHeader() const
+    virtual std::string GetHeader(const Evaluator& eval) const
     {
         return R"(
 
@@ -229,7 +229,7 @@ vec3 blend_overwrite(vec3 base, vec3 blend, float opacity)
 )";
     }
 
-    virtual std::string GetBody() const override
+    virtual std::string GetBody(const Evaluator& eval) const override
     {
         std::string func;
         switch (m_mode)

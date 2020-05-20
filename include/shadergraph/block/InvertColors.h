@@ -22,7 +22,7 @@ public:
         });
     }
 
-    virtual std::string GetHeader() const
+    virtual std::string GetHeader(const Evaluator& eval) const
     {
         return cpputil::StringHelper::Format(R"(
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Invert-Colors-Node.html
@@ -33,7 +33,7 @@ vec4 invert_colors(vec4 rgba)
 )", m_inv_col.x, m_inv_col.y, m_inv_col.z, m_inv_col.w);
     }
 
-    virtual std::string GetBody() const override
+    virtual std::string GetBody(const Evaluator& eval) const override
     {
         return "vec4 #_out# = invert_colors(#_in#);";
     }

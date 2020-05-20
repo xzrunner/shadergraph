@@ -33,6 +33,8 @@ public:
     std::string GenShaderCode() const;
     std::vector<Uniform> CalcUniformValues() const;
 
+    VarType QueryRealType(const Variant* var) const;
+
 private:
     std::string GenShaderHeaderCode() const;
     std::string GenShaderUniformsCode() const;
@@ -66,6 +68,8 @@ private:
 
     std::unordered_map<const Variant*, std::string> m_real_names;
     std::unordered_map<const Variant*, std::string> m_real_funcs;
+
+    std::unordered_map<const Variant*, VarType> m_real_types;
 
 }; // Evaluator
 
