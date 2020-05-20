@@ -85,6 +85,15 @@
     <Filter Include="blocks\artistic\filter">
       <UniqueIdentifier>{821e28d3-985c-4a35-ad16-c416fb73e03b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\artistic\mask">
+      <UniqueIdentifier>{82ec74bd-9a9b-4acf-b05a-23e3b53bd5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\artistic\normal">
+      <UniqueIdentifier>{46cd653f-d700-4099-a4e6-463cbedb0a82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\artistic\utility">
+      <UniqueIdentifier>{c048fc1c-8af0-4b63-aae3-174d4c1ff2d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -295,6 +304,48 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.parm.h">
       <Filter>blocks\artistic\blend</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.h">
+      <Filter>blocks\artistic\mask</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.parm.h">
+      <Filter>blocks\artistic\mask</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorMask.h">
+      <Filter>blocks\artistic\mask</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalBlend.h">
+      <Filter>blocks\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalBlend.parm.h">
+      <Filter>blocks\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalReconstructZ.h">
+      <Filter>blocks\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalStrength.h">
+      <Filter>blocks\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalUnpack.h">
+      <Filter>blocks\artistic\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorspaceConversion.h">
+      <Filter>blocks\artistic\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorspaceConversion.parm.h">
+      <Filter>blocks\artistic\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Flip.h">
+      <Filter>blocks\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Flip.parm.h">
+      <Filter>blocks\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.h">
+      <Filter>blocks\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.parm.h">
+      <Filter>blocks\channel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

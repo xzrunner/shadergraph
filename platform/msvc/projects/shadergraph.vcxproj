@@ -17,9 +17,14 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Add.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMixer.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMixer.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Checkerboard.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorMask.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorspaceConversion.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorspaceConversion.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Contrast.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.h" />
@@ -28,6 +33,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Divide.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Ellipse.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\fBm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Flip.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Flip.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Flipbook.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Float.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Float2.h" />
@@ -44,6 +51,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\InvertColors.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\InvertColors.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Multiply.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalBlend.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalBlend.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalReconstructZ.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalStrength.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalUnpack.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Phong.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\PolarCoordinates.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Polygon.h" />
@@ -60,6 +72,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Spherize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Split.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Subtract.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TilingAndOffset.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />

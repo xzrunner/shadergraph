@@ -49,6 +49,44 @@
 #define PARM_NODE_NAME blend
 #include EXE_FILEPATH
 
+// mask
+
+#define PARM_NODE_TYPE ChannelMask
+#define PARM_NODE_NAME channel_mask
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE ColorMask
+#define PARM_NODE_NAME color_mask
+#include EXE_FILEPATH
+
+// normal
+
+#define PARM_NODE_TYPE NormalBlend
+#define PARM_NODE_NAME normal_blend
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE NormalReconstructZ
+#define PARM_NODE_NAME normal_reconstruct_z
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE NormalStrength
+#define PARM_NODE_NAME normal_strength
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE NormalUnpack
+#define PARM_NODE_NAME normal_unpack
+#include EXE_FILEPATH
+
+// utility
+
+#define PARM_NODE_TYPE ColorspaceConversion
+#define PARM_NODE_NAME colorspace_conversion
+#include EXE_FILEPATH
+
 //////////////////////////////////////////////////////////////////////////
 // channel
 //////////////////////////////////////////////////////////////////////////
@@ -58,9 +96,17 @@
 #define PARM_NODE_NAME combine
 #include EXE_FILEPATH
 
+#define PARM_NODE_TYPE Flip
+#define PARM_NODE_NAME flip
+#include EXE_FILEPATH
+
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE Split
 #define PARM_NODE_NAME split
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE Swizzle
+#define PARM_NODE_NAME swizzle
 #include EXE_FILEPATH
 
 //////////////////////////////////////////////////////////////////////////

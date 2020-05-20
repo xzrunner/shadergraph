@@ -60,6 +60,27 @@ rttr::registration::enumeration<shadergraph::block::Blend::Mode>("sg_blend_mode"
     REGIST_ENUM_ITEM(shadergraph::block::Blend::Mode::Overwrite,         "overwrite",            "Overwrite")
 );
 
+rttr::registration::enumeration<shadergraph::block::NormalBlend::Mode>("sg_normal_blend_mode")
+(
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Default,    "default",    "Default"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Reoriented, "reoriented", "Reoriented")
+);
+
+rttr::registration::enumeration<shadergraph::block::ColorspaceConversion::ColorType>("sg_normal_colorspace_conversion_color_type")
+(
+    REGIST_ENUM_ITEM(shadergraph::block::ColorspaceConversion::ColorType::RGB,    "rgb",    "RGB"),
+    REGIST_ENUM_ITEM(shadergraph::block::ColorspaceConversion::ColorType::Linear, "linear", "Linear"),
+    REGIST_ENUM_ITEM(shadergraph::block::ColorspaceConversion::ColorType::HSV,    "hsv",    "HSV")
+);
+
+rttr::registration::enumeration<shadergraph::block::Swizzle::Channel>("sg_swizzle_channel")
+(
+    REGIST_ENUM_ITEM(shadergraph::block::Swizzle::Channel::Red,   "r", "R"),
+    REGIST_ENUM_ITEM(shadergraph::block::Swizzle::Channel::Green, "g", "G"),
+    REGIST_ENUM_ITEM(shadergraph::block::Swizzle::Channel::Blue,  "b", "B"),
+    REGIST_ENUM_ITEM(shadergraph::block::Swizzle::Channel::Alpha, "a", "A")
+);
+
 }
 
 namespace shadergraph
