@@ -200,13 +200,13 @@ std::string Evaluator::GenShaderMainCode() const
         if (str.empty() && c.idx >= 0)
         {
             auto& outputs = b->GetExports();
-            assert(c.idx >= 0 && c.idx < outputs.size());
+            assert(c.idx >= 0 && c.idx < static_cast<int>(outputs.size()));
             auto& var = outputs[c.idx].var.type;
             if (var.type != VarType::Function)
             {
                 auto& funcs = b->GetFunctions();
                 auto func_idx = b->GetCurrFuncIdx();
-                if (func_idx >= 0 && func_idx < funcs.size())
+                if (func_idx >= 0 && func_idx < static_cast<int>(funcs.size()))
                 {
                     auto func = funcs[func_idx];
                     assert(func.type == VarType::Function);
@@ -215,7 +215,7 @@ std::string Evaluator::GenShaderMainCode() const
                     auto& inputs = b->GetImports();
 
                     auto& outputs = b->GetExports();
-                    assert(c.idx >= 0 && c.idx < outputs.size());
+                    assert(c.idx >= 0 && c.idx < static_cast<int>(outputs.size()));
                     auto& output = outputs[c.idx];
                     str += TypeToString(var.type) + " #" + output.var.type.name + "# = ";
                     str += func.name + "(";
@@ -758,7 +758,7 @@ Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)
     else
     {
         auto& exports = node->GetExports();
-        assert(conn.idx >= 0 && conn.idx < exports.size());
+        assert(conn.idx >= 0 && conn.idx < static_cast<int>(exports.size()));
         ret = exports[conn.idx].var.type;
     }
 
