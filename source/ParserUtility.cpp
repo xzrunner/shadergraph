@@ -123,6 +123,10 @@ std::string TypeToString(VarType type)
         ret = "samplerCube";
         break;
 
+    case VarType::Array:
+        // todo
+        break;
+
     default:
         assert(0);
     }

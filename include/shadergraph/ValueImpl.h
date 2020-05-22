@@ -86,6 +86,7 @@ struct Matrix4Val : public Value
 
 struct ArrayVal : public Value
 {
+    VarType type = VarType::Invalid;
     std::vector<ValPtr> items;
 };
 

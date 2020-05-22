@@ -255,12 +255,13 @@ Variant BlockParser::ParseVariable()
         m_tokenizer.NextToken();    // skip open bracket
         Expect(BlockToken::Integer, token = m_tokenizer.NextToken());
 
-        var.type = VarType::Array;
-
         auto val = std::make_shared<ArrayVal>();
         const int num = token.ToInteger<int>();
+        val->type = var.type;
         val->items.resize(num);
         var.val = val;
+
+        var.type = VarType::Array;
 
         Expect(BlockToken::CBracket, token = m_tokenizer.NextToken());
     }

@@ -122,7 +122,20 @@ std::string Evaluator::GenShaderUniformsCode() const
         {
             assert(u.type == VarType::Uniform);
             auto u_var = std::static_pointer_cast<shadergraph::UniformVal>(u.val)->var;
-            if (u_var.type != VarType::Invalid) {
+            if (u_var.type == VarType::Invalid) {
+                continue;
+            }
+            if (u_var.type == VarType::Array)
+            {
+                auto v_array = std::static_pointer_cast<ArrayVal>(u_var.val);
+                int num = v_array->items.size();
+                if (num > 0) {
+                    code += cpputil::StringHelper::Format("uniform %s %s[%d];",
+                        TypeToString(v_array->type).c_str(), u.name.c_str(), num);
+                }
+            }
+            else
+            {
                 code += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
             }
         }
