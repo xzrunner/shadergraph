@@ -34,6 +34,7 @@ public:
     std::vector<Uniform> CalcUniformValues() const;
 
     VarType QueryRealType(const Variant* var) const;
+    std::string QueryRealName(const Variant* var) const;
 
 private:
     std::string GenShaderHeaderCode() const;

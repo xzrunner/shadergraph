@@ -99,6 +99,12 @@ VarType Evaluator::QueryRealType(const Variant* var) const
     return itr == m_real_types.end() ? var->type : itr->second;
 }
 
+std::string Evaluator::QueryRealName(const Variant* var) const
+{
+    auto itr = m_real_names.find(var);
+    return itr == m_real_names.end() ? var->name : itr->second;
+}
+
 std::string Evaluator::GenShaderHeaderCode() const
 {
     std::string code;

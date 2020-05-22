@@ -359,6 +359,24 @@ Variant BlockParser::ParseVariable()
             assert(0);
         }
     }
+    // default value
+    else
+    {
+        switch (var.type)
+        {
+        case VarType::Int:
+            var.val = std::make_shared<IntVal>();
+            break;
+        case VarType::Float:
+            var.val = std::make_shared<FloatVal>();
+            break;
+        case VarType::Float3:
+            var.val = std::make_shared<Float3Val>();
+            break;
+        default:
+            assert(0);
+        }
+    }
 
     assert(var.type != VarType::Invalid);
 

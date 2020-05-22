@@ -15,8 +15,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Add.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Blackbody.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Bool.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Bool.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMixer.h" />
@@ -26,6 +29,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\ColorspaceConversion.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ColorspaceConversion.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Combine.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Constant.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Constant.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Contrast.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\CustomBlock.parm.h" />
@@ -56,6 +61,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalReconstructZ.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalStrength.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalUnpack.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\PBR.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Phong.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\PolarCoordinates.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Polygon.h" />
@@ -66,6 +72,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Rotate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\RoundedPolygon.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\RoundedRectangle.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleGradient.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexture2D.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Saturation.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Primitives.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SimpleNoise.h" />
@@ -75,6 +83,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TexCoords.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Texture2DAsset.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Texture2DAsset.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\TilingAndOffset.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Twirl.h" />
@@ -82,6 +92,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h" />
     <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h" />
@@ -102,12 +113,16 @@
     <ClCompile Include="..\..\..\source\BlockHelper.cpp" />
     <ClCompile Include="..\..\..\source\BlockParser.cpp" />
     <ClCompile Include="..\..\..\source\block\Time.cpp" />
+    <ClCompile Include="..\..\..\source\CodeParser.cpp" />
     <ClCompile Include="..\..\..\source\CommentParser.cpp" />
     <ClCompile Include="..\..\..\source\Evaluator.cpp" />
     <ClCompile Include="..\..\..\source\GlobalClock.cpp" />
     <ClCompile Include="..\..\..\source\ParserProp.cpp" />
     <ClCompile Include="..\..\..\source\ParserUtility.cpp" />
-    <ClCompile Include="..\..\..\source\RegistRTTR.cpp" />
+    <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
   </ItemGroup>
   <ItemGroup>

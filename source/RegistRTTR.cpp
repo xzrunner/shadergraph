@@ -81,6 +81,15 @@ rttr::registration::enumeration<shadergraph::block::Swizzle::Channel>("sg_swizzl
     REGIST_ENUM_ITEM(shadergraph::block::Swizzle::Channel::Alpha, "a", "A")
 );
 
+rttr::registration::enumeration<shadergraph::block::Constant::Mode>("sg_normal_constant_mode")
+(
+    REGIST_ENUM_ITEM(shadergraph::block::Constant::Mode::PI,    "pi",    "PI"),
+    REGIST_ENUM_ITEM(shadergraph::block::Constant::Mode::TAU,   "tau",   "TAU"),
+    REGIST_ENUM_ITEM(shadergraph::block::Constant::Mode::PHI,   "phi",   "PHI"),
+    REGIST_ENUM_ITEM(shadergraph::block::Constant::Mode::E,     "e",     "E"),
+    REGIST_ENUM_ITEM(shadergraph::block::Constant::Mode::SQRT2, "sqrt2", "SQRT2")
+);
+
 }
 
 namespace shadergraph

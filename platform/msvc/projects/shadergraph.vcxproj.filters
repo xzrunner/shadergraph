@@ -94,6 +94,18 @@
     <Filter Include="blocks\artistic\utility">
       <UniqueIdentifier>{c048fc1c-8af0-4b63-aae3-174d4c1ff2d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\input\gradient">
+      <UniqueIdentifier>{e36a3f6f-5abf-4364-903f-05d271bfbf27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\input\matrix">
+      <UniqueIdentifier>{212ce048-a0ed-4d96-bb53-1b84e69746d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\input\texture">
+      <UniqueIdentifier>{fed04059-8dce-479c-8c04-6ae9125f5d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glsl-parser">
+      <UniqueIdentifier>{fea50f78-d0cb-4fce-bbb6-442fb82902a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -346,6 +358,36 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Swizzle.parm.h">
       <Filter>blocks\channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Bool.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Bool.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Constant.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Constant.parm.h">
+      <Filter>blocks\input\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Blackbody.h">
+      <Filter>blocks\input\gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleGradient.h">
+      <Filter>blocks\input\gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexture2D.h">
+      <Filter>blocks\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Texture2DAsset.h">
+      <Filter>blocks\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Texture2DAsset.parm.h">
+      <Filter>blocks\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\PBR.h">
+      <Filter>blocks\master</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

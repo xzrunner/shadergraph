@@ -115,6 +115,14 @@
 
 // basic
 
+#define PARM_NODE_TYPE Bool
+#define PARM_NODE_NAME bool
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE Constant
+#define PARM_NODE_NAME constant
+#include EXE_FILEPATH
+
 #define PARM_NODE_TYPE Float
 #define PARM_NODE_NAME float1
 #include EXE_FILEPATH
@@ -152,9 +160,32 @@
 #define PARM_NODE_NAME uv
 #include EXE_FILEPATH
 
+// gradient
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Blackbody
+#define PARM_NODE_NAME blackbody
+#include EXE_FILEPATH
+
+// texture
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SampleTexture2D
+#define PARM_NODE_NAME sample_texture2d
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE Texture2DAsset
+#define PARM_NODE_NAME texture2d_asset
+#include EXE_FILEPATH
+
 //////////////////////////////////////////////////////////////////////////
 // master
 //////////////////////////////////////////////////////////////////////////
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE PBR
+#define PARM_NODE_NAME pbr
+#include EXE_FILEPATH
 
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE Raymarching
