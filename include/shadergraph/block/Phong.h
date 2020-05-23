@@ -12,6 +12,8 @@ class Phong : public Block
 public:
     Phong() : Block(R"(
 
+const float EPSILON = 0.0001;
+
 vec3 estimateNormal(vec3 p) {
     return normalize(vec3(
         f_scene(vec3(p.x + EPSILON, p.y, p.z)) - f_scene(vec3(p.x - EPSILON, p.y, p.z)),
@@ -44,7 +46,7 @@ vec3 phongContribForLight(vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye,
 }
 
 /////////////////////////////////////////////////
-/// @export Phong
+/// @export phongIllumination
 /// @function  f_scene (vec3)->float  Scene
 /////////////////////////////////////////////////
 vec3 phongIllumination(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye) {

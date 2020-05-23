@@ -38,7 +38,7 @@ public:
 
 private:
     std::string GenShaderHeaderCode() const;
-    std::string GenShaderUniformsCode() const;
+    std::string GenShaderGlobalVarsCode() const;
     std::string GenShaderFuncsCode() const;
     std::string GenShaderMainCode() const;
 
@@ -55,7 +55,6 @@ private:
     void Rename(std::string& str, const Block& block) const;
 
     static void GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& dst);
-    static bool IsFuncNotExport(const Block& block, int func_idx);
 
     static Variant CalcValue(const dag::Node<Variant>::PortAddr& conn);
 

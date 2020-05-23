@@ -23,7 +23,7 @@ float atan2(float y, float x)
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Polygon-Node.html
 /////////////////////////////////////////////////
-/// @export Polygon
+/// @export polygon
 /////////////////////////////////////////////////
 float polygon(vec2 uv, float sides, float width, float height)
 {

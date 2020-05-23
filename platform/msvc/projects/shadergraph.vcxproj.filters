@@ -103,7 +103,7 @@
     <Filter Include="blocks\input\texture">
       <UniqueIdentifier>{fed04059-8dce-479c-8c04-6ae9125f5d75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="glsl-parser">
+    <Filter Include="parser\glsl-parser">
       <UniqueIdentifier>{fea50f78-d0cb-4fce-bbb6-442fb82902a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -127,9 +127,6 @@
       <Filter>dataset\var</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h">
-      <Filter>parser</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h">
       <Filter>parser</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\ParserUtility.h">
@@ -389,21 +386,33 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\PBR.h">
       <Filter>blocks\master</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\glsl-parser\ast.h">
+      <Filter>parser\glsl-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\glsl-parser\lexemes.h">
+      <Filter>parser\glsl-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\glsl-parser\lexer.h">
+      <Filter>parser\glsl-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\glsl-parser\parser.h">
+      <Filter>parser\glsl-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\glsl-parser\util.h">
+      <Filter>parser\glsl-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h">
+      <Filter>parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
       <Filter>dataset\block</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\BlockParser.cpp">
-      <Filter>parser</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\CommentParser.cpp">
       <Filter>parser</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ParserUtility.cpp">
-      <Filter>parser</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ParserProp.cpp">
       <Filter>parser</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
@@ -421,6 +430,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\block\Time.cpp">
       <Filter>blocks\input\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\glsl-parser\ast.cpp">
+      <Filter>parser\glsl-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\glsl-parser\lexer.cpp">
+      <Filter>parser\glsl-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\glsl-parser\parser.cpp">
+      <Filter>parser\glsl-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\glsl-parser\util.cpp">
+      <Filter>parser\glsl-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CodeParser.cpp">
+      <Filter>parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

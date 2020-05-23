@@ -36,8 +36,8 @@ std::string Evaluator::GenShaderCode() const
     // header
     ret += GenShaderHeaderCode();
 
-    // uniforms
-    ret += GenShaderUniformsCode();
+    // global variants
+    ret += GenShaderGlobalVarsCode();
 
     // functions
     ret += GenShaderFuncsCode();
@@ -64,9 +64,13 @@ Evaluator::CalcUniformValues() const
 
     for (auto& b : m_blocks)
     {
-        auto& unifs = b->GetUniforms();
-        for (auto& src : unifs)
+        auto& vars = b->GetVariants();
+        for (auto& src : vars)
         {
+            if (src.type != VarType::Uniform) {
+                continue;
+            }
+
             Uniform dst;
 
             dst.name = src.name;
@@ -118,31 +122,42 @@ std::string Evaluator::GenShaderHeaderCode() const
     return code;
 }
 
-std::string Evaluator::GenShaderUniformsCode() const
+std::string Evaluator::GenShaderGlobalVarsCode() const
 {
     std::string code;
     for (auto& b : m_blocks)
     {
-        auto& unifs = b->GetUniforms();
-        for (auto& u : unifs)
+        auto& vars = b->GetVariants();
+        for (auto& var : vars)
         {
-            assert(u.type == VarType::Uniform);
-            auto u_var = std::static_pointer_cast<shadergraph::UniformVal>(u.val)->var;
-            if (u_var.type == VarType::Invalid) {
+            bool uniform = false;
+            Variant v;
+            if (var.type == VarType::Uniform) {
+                v = std::static_pointer_cast<shadergraph::UniformVal>(var.val)->var;
+                uniform = true;
+            } else {
+                v = var;
+            }
+            if (v.type == VarType::Invalid) {
                 continue;
             }
-            if (u_var.type == VarType::Array)
+
+            if (uniform) {
+                code += "uniform ";
+            }
+
+            if (v.type == VarType::Array)
             {
-                auto v_array = std::static_pointer_cast<ArrayVal>(u_var.val);
+                auto v_array = std::static_pointer_cast<ArrayVal>(v.val);
                 int num = v_array->items.size();
                 if (num > 0) {
-                    code += cpputil::StringHelper::Format("uniform %s %s[%d];",
-                        TypeToString(v_array->type).c_str(), u.name.c_str(), num);
+                    code += cpputil::StringHelper::Format("%s %s[%d];",
+                        TypeToString(v_array->type).c_str(), v.name.c_str(), num);
                 }
             }
             else
             {
-                code += "uniform " + TypeToString(u_var.type) + " " + u.name + ";\n";
+                code += TypeToString(v.type) + " " + v.name + ";\n";
             }
         }
     }
@@ -161,38 +176,22 @@ std::string Evaluator::GenShaderFuncsCode() const
         auto& funcs = b->GetFunctions();
         for (size_t i = 0, n = funcs.size(); i < n; ++i)
         {
-            if (IsFuncNotExport(*b, i)) {
+            if (funcs[i].second && b->GetCurrFuncIdx() != i) {
                 continue;
             }
 
-            std::string params;
-
             auto& f = funcs[i];
-            auto f_val = std::static_pointer_cast<FunctionVal>(f.val);
-            for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
-            {
-                auto var = f_val->inputs[i];
-                params += TypeToString(var.type) + " " + var.name;
-                if (i != n - 1) {
-                    params += ", ";
-                }
-            }
+            auto f_val = std::static_pointer_cast<FunctionVal>(f.first.val);
 
             std::string f_code;
-            auto itr = m_real_funcs.find(&f);
+            auto itr = m_real_funcs.find(&f.first);
             if (itr != m_real_funcs.end()) {
                 f_code = itr->second;
             } else {
                 f_code = f_val->code;
             }
 
-            code += cpputil::StringHelper::Format(R"(
-%s %s(%s)
-{
-%s
-}
-
-)", TypeToString(f_val->output.type).c_str(), f.name.c_str(), params.c_str(), f_code.c_str());
+            code += f_code;
         }
     }
 
@@ -228,8 +227,8 @@ std::string Evaluator::GenShaderMainCode() const
                 if (func_idx >= 0 && func_idx < static_cast<int>(funcs.size()))
                 {
                     auto func = funcs[func_idx];
-                    assert(func.type == VarType::Function);
-                    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
+                    assert(func.first.type == VarType::Function);
+                    auto f_val = std::static_pointer_cast<FunctionVal>(func.first.val);
 
                     auto& inputs = b->GetImports();
 
@@ -237,7 +236,7 @@ std::string Evaluator::GenShaderMainCode() const
                     assert(c.idx >= 0 && c.idx < static_cast<int>(outputs.size()));
                     auto& output = outputs[c.idx];
                     str += TypeToString(var.type) + " #" + output.var.type.name + "# = ";
-                    str += func.name + "(";
+                    str += func.first.name + "(";
                     for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
                     {
                         auto& param = f_val->inputs[i];
@@ -526,16 +525,16 @@ void Evaluator::ResolveFunctions()
         auto& funcs = b->GetFunctions();
 
         auto curr_func = funcs[func_idx];
-        size_t input_idx = std::static_pointer_cast<FunctionVal>(curr_func.val)->inputs.size();
+        size_t input_idx = std::static_pointer_cast<FunctionVal>(curr_func.first.val)->inputs.size();
 
         for (size_t i = 0, n = funcs.size(); i < n; ++i)
         {
-            if (IsFuncNotExport(*b, i)) {
+            if (funcs[i].second && b->GetCurrFuncIdx() != i) {
                 continue;
             }
 
             auto f = funcs[i];
-            auto f_val = std::static_pointer_cast<FunctionVal>(f.val);
+            auto f_val = std::static_pointer_cast<FunctionVal>(f.first.val);
             int idx = input_idx;
             for (auto& d : f_val->desc)
             {
@@ -565,11 +564,11 @@ void Evaluator::ResolveFunctions()
                 for (auto& func : funcs)
                 {
                     std::string f_code;
-                    auto itr = m_real_funcs.find(&func);
+                    auto itr = m_real_funcs.find(&func.first);
                     if (itr != m_real_funcs.end()) {
                         f_code = itr->second;;
                     } else {
-                        auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
+                        auto f_val = std::static_pointer_cast<FunctionVal>(func.first.val);
                         f_code = f_val->code;
                     }
                     cpputil::StringHelper::ReplaceAll(f_code, from, to);
@@ -577,7 +576,7 @@ void Evaluator::ResolveFunctions()
                     if (itr != m_real_funcs.end()) {
                         itr->second = f_code;
                     } else {
-                        m_real_funcs.insert({ &func, f_code });
+                        m_real_funcs.insert({ &func.first, f_code });
                     }
                 }
 
@@ -669,22 +668,6 @@ void Evaluator::GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& d
             }
         }
     }
-}
-
-bool Evaluator::IsFuncNotExport(const Block& block, int func_idx)
-{
-    auto func = block.GetFunctions()[func_idx];
-    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
-
-    bool ex = false;
-    for (auto& d : f_val->desc) {
-        if (d->GetType() == ParserProp::Type::Export) {
-            ex = true;
-            break;
-        }
-    }
-
-    return ex && block.GetCurrFuncIdx() != func_idx;
 }
 
 Variant Evaluator::CalcValue(const dag::Node<Variant>::PortAddr& conn)

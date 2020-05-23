@@ -47,7 +47,7 @@ float simple_noise_value(vec2 uv)
 }
 
 /////////////////////////////////////////////////
-/// @export Simple
+/// @export simple_noise
 /////////////////////////////////////////////////
 float simple_noise(vec2 uv, float scale)
 {

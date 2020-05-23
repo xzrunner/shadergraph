@@ -73,7 +73,7 @@ struct PropExport : public ParserProp
 {
     virtual Type GetType() const override { return Type::Export; }
 
-    std::string display_name;
+    std::string func_name;
 };
 
 }

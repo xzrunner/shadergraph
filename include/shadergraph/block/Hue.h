@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Block.h"
+#include "shadergraph/CodeParser.h"
 
 namespace shadergraph
 {
@@ -36,7 +37,6 @@ vec3 hue(vec3 rgb, float offset)
 }
 
 )") {}
-
 
     RTTR_ENABLE(Block)
 

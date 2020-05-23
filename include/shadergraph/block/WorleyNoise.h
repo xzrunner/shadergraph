@@ -27,6 +27,8 @@ uniform int u_features_mode;
 /// @default 0.5
 uniform float u_manhattan_scale;
 
+uniform vec2 u_poisson_random_offset;
+
 vec2 _random2(vec2 p)
 {
     return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
@@ -50,7 +52,7 @@ float _chebyshev_dist(vec2 diff)
 }
 
 /////////////////////////////////////////////////
-/// @export Cells
+/// @export worley_cells
 /////////////////////////////////////////////////
 float worley_cells(vec2 st)
 {
@@ -110,7 +112,7 @@ float worley_cells(vec2 st)
 }
 
 /////////////////////////////////////////////////
-/// @export NoCells
+/// @export worley_no_cells
 /// @uniform  u_poisson_random_offset vec2
 /// @function poisson_number          (float)->uint
 /// @function poisson_uniform_0_1     ()->float

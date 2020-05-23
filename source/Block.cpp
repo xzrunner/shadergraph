@@ -1,7 +1,10 @@
 #include "shadergraph/Block.h"
-#include "shadergraph/BlockParser.h"
 #include "shadergraph/ValueImpl.h"
 #include "shadergraph/ParserProp.h"
+#include "shadergraph/CodeParser.h"
+#include "shadergraph/CommentParser.h"
+
+#include <glsl-parser/parser.h>
 
 namespace shadergraph
 {
@@ -31,47 +34,69 @@ void Block::SetupPorts(const std::vector<Variant>& inputs,
 
 void Block::Parser(const std::string& str)
 {
-    BlockParser parser(str);
-    parser.Parse();
+    std::vector<std::shared_ptr<ParserProp>> props;
+    CommentParser parser(str);
+    parser.Parse(props);
 
-    m_uniforms = parser.GetUniforms();
+    m_parser = std::make_shared<glsl::parser>(str.c_str(), "");
+    m_parser_root = m_parser->parse(glsl::astTU::kFragment);
 
-    m_funcs = parser.GetFunctions();
-    if (m_funcs.size() == 1)
+    m_global_vars.clear();
+    m_global_vars.reserve(m_parser_root->globals.size());
+    for (auto& var : m_parser_root->globals)
     {
+        assert(var->type == glsl::astVariable::kGlobal);
+        if (var->baseType->builtin) {
+            m_global_vars.push_back(CodeParser::ToVariant(var));
+        }
+    }
+
+    m_funcs.clear();
+    m_funcs.reserve(m_parser_root->functions.size());
+    for (auto& func : m_parser_root->functions) {
+        m_funcs.push_back({ CodeParser::ToVariant(func), false });
+    }
+    m_curr_func = m_funcs.empty() ? -1 : 0;
+
+    SetupCurrFunc(props);
+    SetupPorts();
+}
+
+void Block::SetupCurrFunc(const std::vector<std::shared_ptr<ParserProp>>& props)
+{
+    if (m_funcs.empty()) {
+        return;
+    }
+
+    if (m_funcs.size() == 1) {
         m_curr_func = 0;
-        SetupPorts();
+        return;
     }
-    else if (m_funcs.size() > 1)
+
+    std::vector<std::string> exports;
+    for (auto& prop : props)
     {
-        for (size_t i = 0, n = m_funcs.size(); i < n; ++i)
+        if (prop->GetType() == ParserProp::Type::Export)
         {
-            auto f_val = std::static_pointer_cast<FunctionVal>(m_funcs[i].val);
-            bool exp = false;
-            for (auto& desc : f_val->desc) {
-                if (desc->GetType() == ParserProp::Type::Export) {
-                    exp = true;
-                    break;
-                }
-            }
-            if (exp) {
-                m_curr_func = i;
-                SetupPorts();
-                break;
-            }
+            auto exp = std::static_pointer_cast<PropExport>(prop);
+            exports.push_back(exp->func_name);
         }
     }
 
-    // setup uniform default value
-    for (auto& u : m_uniforms)
+    m_curr_func = -1;
+    for (int i = 0, n = m_funcs.size(); i < n; ++i)
     {
-        auto u_val = std::static_pointer_cast<UniformVal>(u.val);
-        for (auto& d : u_val->desc) {
-            if (d->GetType() == ParserProp::Type::Default) {
-                u_val->var.val = std::static_pointer_cast<PropDefault>(d)->val;
+        bool is_export = false;
+        for (auto& name : exports) {
+            if (m_funcs[i].first.name == name) {
+                is_export = true;
                 break;
             }
         }
+        if (is_export && m_curr_func < 0) {
+            m_curr_func = i;
+        }
+        m_funcs[i].second = is_export;
     }
 }
 
@@ -92,9 +117,31 @@ void Block::SetupPorts()
     m_imports.clear();
     m_exports.clear();
 
+    for (auto& var : m_global_vars)
+    {
+        dag::Node<Variant>::PortVar port;
+
+        port.full_name = var.name;
+        port.type.name = var.name;
+
+        if (var.type == VarType::Uniform)
+        {
+            auto u_val = std::static_pointer_cast<UniformVal>(var.val);
+            port.type.type = u_val->var.type;
+            port.type.val  = u_val->var.val;
+        }
+        else
+        {
+            port.type.type = var.type;
+            port.type.val  = var.val;
+        }
+
+        m_imports.push_back(port);
+    }
+
     assert(m_curr_func >= 0 && m_curr_func < static_cast<int>(m_funcs.size()));
     auto func = m_funcs[m_curr_func];
-    auto f_val = std::static_pointer_cast<FunctionVal>(func.val);
+    auto f_val = std::static_pointer_cast<FunctionVal>(func.first.val);
     m_imports.reserve(f_val->inputs.size());
     for (auto& input : f_val->inputs) {
         m_imports.push_back(PortFromVar(input));
@@ -113,27 +160,12 @@ void Block::SetupPorts()
         }
     }
 
-    for (auto& u : m_uniforms)
-    {
-        dag::Node<Variant>::PortVar port;
-
-        port.full_name = u.name;
-        port.type.name = u.name;
-
-        assert(u.type == VarType::Uniform);
-        auto u_val = std::static_pointer_cast<UniformVal>(u.val);
-        port.type.type = u_val->var.type;
-        port.type.val  = u_val->var.val;
-
-        m_imports.push_back(port);
-    }
-
     if (f_val->output.type == VarType::Void) {
         m_exports.clear();
     } else {
         m_exports.push_back(PortFromVar(f_val->output));
     }
-    m_exports.push_back(PortFromVar(func));
+    m_exports.push_back(PortFromVar(func.first));
 }
 
 dag::Node<Variant>::PortVar

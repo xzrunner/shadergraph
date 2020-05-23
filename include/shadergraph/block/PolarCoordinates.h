@@ -23,7 +23,7 @@ float atan2(float y, float x)
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Polar-Coordinates-Node.html
 /////////////////////////////////////////////////
-/// @export PolarCoordinates
+/// @export polar_coordinates
 /////////////////////////////////////////////////
 vec2 polar_coordinates(vec2 uv, vec2 center, float radial_scale, float length_scale)
 {

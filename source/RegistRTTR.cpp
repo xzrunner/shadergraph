@@ -25,7 +25,7 @@ rttr::registration::class_<dag::Node<shadergraph::Variant>::Port>("shadergraph::
 rttr::registration::class_<shadergraph::Block>("shadergraph::Block")
 	.method("GetImports",     &shadergraph::Block::GetImports)
 	.method("GetExports",     &shadergraph::Block::GetExports)
-    .method("GetUniforms",    &shadergraph::Block::GetUniforms)
+    .method("GetVariants",    &shadergraph::Block::GetVariants)
     .method("GetFunctions",   &shadergraph::Block::GetFunctions)
     .method("GetCurrFuncIdx", &shadergraph::Block::GetCurrFuncIdx)
 ;

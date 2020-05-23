@@ -4,10 +4,13 @@
 
 #include <dag/Node.h>
 
+namespace glsl { struct parser; struct astTU; }
+
 namespace shadergraph
 {
 
 class Evaluator;
+struct ParserProp;
 
 class Block : public dag::Node<Variant>
 {
@@ -18,7 +21,7 @@ public:
     virtual std::string GetHeader(const Evaluator& eval) const { return ""; }
     virtual std::string GetBody(const Evaluator& eval)   const { return ""; }
 
-    auto& GetUniforms() const { return m_uniforms; }
+    auto& GetVariants() const { return m_global_vars; }
     auto& GetFunctions() const { return m_funcs; }
     int GetCurrFuncIdx() const { return m_curr_func; }
 
@@ -29,15 +32,20 @@ protected:
     void Parser(const std::string& str);
 
 private:
+    void SetupCurrFunc(const std::vector<std::shared_ptr<ParserProp>>& props);
     void SetupPorts();
 
     static dag::Node<Variant>::PortVar PortFromVar(const Variant& var);
 
 private:
-    std::vector<Variant> m_uniforms;
+    std::shared_ptr<glsl::parser> m_parser = nullptr;
+    glsl::astTU* m_parser_root = nullptr;
 
-    std::vector<Variant> m_funcs;
+    std::vector<std::pair<Variant, bool>> m_funcs;
     int m_curr_func = -1;
+
+    std::vector<Variant> m_global_vars;
+    std::vector<Variant> m_structs;
 
     RTTR_ENABLE(dag::Node<Variant>)
 

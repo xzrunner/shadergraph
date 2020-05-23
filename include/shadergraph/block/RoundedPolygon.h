@@ -30,7 +30,7 @@ float fmod(float x, float y)
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Rounded-Polygon-Node.html
 /////////////////////////////////////////////////
-/// @export RoundedPolygon
+/// @export rounded_polygon
 /////////////////////////////////////////////////
 float rounded_polygon(vec2 uv, float width, float height, float sides, float roundness)
 {

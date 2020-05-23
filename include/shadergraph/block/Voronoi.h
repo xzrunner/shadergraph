@@ -22,7 +22,7 @@ vec2 voronoi_noise_random_vector(vec2 uv, float offset)
 }
 
 /////////////////////////////////////////////////
-/// @export Voronoi
+/// @export voronoi
 /////////////////////////////////////////////////
 float voronoi(vec2 uv, float angle_offset, float cell_density)
 {

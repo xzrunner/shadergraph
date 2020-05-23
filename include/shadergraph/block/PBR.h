@@ -12,6 +12,10 @@ class PBR : public Block
 public:
     PBR() : Block(R"(
 
+/////////////////////////////////////////////////
+/// @export PBR
+/////////////////////////////////////////////////
+
 in vec2 TexCoords;
 in vec3 WorldPos;
 in vec3 Normal;
@@ -70,16 +74,6 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
-/////////////////////////////////////////////////
-/// @export PBR
-/// @uniform   albedo         vec3    Albedo
-/// @uniform   metallic       float   Metallic
-/// @uniform   roughness      float   Roughness
-/// @uniform   ao             float   AO
-/// @uniform   lightPositions vec3[4] LightPositions
-/// @uniform   lightColors    vec3[4] LightColors
-/// @uniform   camPos         vec3    CamPos
-/////////////////////////////////////////////////
 vec3 PBR()
 {
     vec3 N = normalize(Normal);
