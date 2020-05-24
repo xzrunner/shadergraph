@@ -1,7 +1,6 @@
 #pragma once
 
 #include "shadergraph/Block.h"
-#include "shadergraph/CodeParser.h"
 
 namespace shadergraph
 {
