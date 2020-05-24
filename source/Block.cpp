@@ -1,7 +1,7 @@
 #include "shadergraph/Block.h"
 #include "shadergraph/ValueImpl.h"
 #include "shadergraph/ParserProp.h"
-#include "shadergraph/CodeParser.h"
+#include "shadergraph/BlockParser.h"
 #include "shadergraph/CommentParser.h"
 
 #include <glsl-parser/parser.h>
@@ -47,14 +47,14 @@ void Block::Parser(const std::string& str)
     {
         assert(var->type == glsl::astVariable::kGlobal);
         if (var->baseType->builtin) {
-            m_global_vars.push_back(CodeParser::ToVariant(var));
+            m_global_vars.push_back(BlockParser::ToVariant(var));
         }
     }
 
     m_funcs.clear();
     m_funcs.reserve(m_parser_root->functions.size());
     for (auto& func : m_parser_root->functions) {
-        m_funcs.push_back({ CodeParser::ToVariant(func), false });
+        m_funcs.push_back({ BlockParser::ToVariant(func), false });
     }
     m_curr_func = m_funcs.empty() ? -1 : 0;
 

@@ -401,7 +401,7 @@
     <ClInclude Include="..\..\..\..\glsl-parser\util.h">
       <Filter>parser\glsl-parser</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h">
+    <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h">
       <Filter>parser</Filter>
     </ClInclude>
   </ItemGroup>
@@ -443,7 +443,7 @@
     <ClCompile Include="..\..\..\..\glsl-parser\util.cpp">
       <Filter>parser\glsl-parser</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\CodeParser.cpp">
+    <ClCompile Include="..\..\..\source\BlockParser.cpp">
       <Filter>parser</Filter>
     </ClCompile>
   </ItemGroup>

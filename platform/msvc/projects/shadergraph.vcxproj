@@ -96,7 +96,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h" />
     <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h" />
@@ -120,7 +120,7 @@
     <ClCompile Include="..\..\..\source\Block.cpp" />
     <ClCompile Include="..\..\..\source\BlockHelper.cpp" />
     <ClCompile Include="..\..\..\source\block\Time.cpp" />
-    <ClCompile Include="..\..\..\source\CodeParser.cpp" />
+    <ClCompile Include="..\..\..\source\BlockParser.cpp" />
     <ClCompile Include="..\..\..\source\CommentParser.cpp" />
     <ClCompile Include="..\..\..\source\Evaluator.cpp" />
     <ClCompile Include="..\..\..\source\GlobalClock.cpp" />

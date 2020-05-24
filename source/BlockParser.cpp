@@ -1,4 +1,4 @@
-#include "shadergraph/CodeParser.h"
+#include "shadergraph/BlockParser.h"
 #include "shadergraph/ValueImpl.h"
 #include "shadergraph/ParserUtility.h"
 
@@ -614,7 +614,7 @@ struct sourceFile {
 namespace shadergraph
 {
 
-//CodeParser::CodeParser(const std::string& code)
+//BlockParser::BlockParser(const std::string& code)
 //{
 //    glsl::parser p(code.c_str(), "test");
 //    astTU *tu = p.parse(glsl::astTU::kFragment);
@@ -627,14 +627,14 @@ namespace shadergraph
 //    tu->functions;
 //}
 
-std::string CodeParser::Print(glsl::astTU* tu)
+std::string BlockParser::Print(glsl::astTU* tu)
 {
     std::stringstream ss;
     printTU(ss, tu);
     return ss.str();
 }
 
-Variant CodeParser::ToVariant(const glsl::astFunction* var)
+Variant BlockParser::ToVariant(const glsl::astFunction* var)
 {
     Variant ret;
     ret.name = var->name;
@@ -663,7 +663,7 @@ Variant CodeParser::ToVariant(const glsl::astFunction* var)
     return ret;
 }
 
-Variant CodeParser::ToVariant(const glsl::astGlobalVariable* var)
+Variant BlockParser::ToVariant(const glsl::astGlobalVariable* var)
 {
     assert(var->type == glsl::astVariable::kGlobal);
 
@@ -695,7 +695,7 @@ Variant CodeParser::ToVariant(const glsl::astGlobalVariable* var)
     return ret;
 }
 
-Variant CodeParser::ToVariant(const glsl::astStruct* var)
+Variant BlockParser::ToVariant(const glsl::astStruct* var)
 {
     Variant ret;
     ret.name = var->name;
@@ -704,7 +704,7 @@ Variant CodeParser::ToVariant(const glsl::astStruct* var)
     return ret;
 }
 
-ValPtr CodeParser::CreateValue(VarType type)
+ValPtr BlockParser::CreateValue(VarType type)
 {
     ValPtr val = nullptr;
 

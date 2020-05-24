@@ -14,7 +14,7 @@ namespace glsl {
 namespace shadergraph
 {
 
-class CodeParser
+class BlockParser
 {
 public:
     static std::string Print(glsl::astTU* tu);
@@ -26,6 +26,6 @@ public:
 private:
     static ValPtr CreateValue(VarType type);
 
-}; // CodeParser
+}; // BlockParser
 
 }
