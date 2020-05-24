@@ -38,10 +38,15 @@ float rounded_polygon(vec2 uv, float width, float height, float sides, float rou
     const float HALF_PI = 1.570796327;
 
     uv = uv * 2. + vec2(-1.,-1.);
-    float epsilon = 1e-6;
-    uv.x = uv.x / ( width + (width==0?1:0)*epsilon);
-    uv.y = uv.y / ( height + (height==0?1:0)*epsilon);
-    roundness = clamp(roundness, 1e-6, 1.);
+    // fixme: parser
+    //float epsilon = 1e-6;
+    //uv.x = uv.x / ( width + (width==0?1:0)*epsilon);
+    //uv.y = uv.y / ( height + (height==0?1:0)*epsilon);
+    //roundness = clamp(roundness, 1e-6, 1.);
+    float epsilon = 0;
+    uv.x = uv.x / ( width + ((width==0)?1:0)*epsilon);
+    uv.y = uv.y / ( height + ((height==0)?1:0)*epsilon);
+    roundness = clamp(roundness, 0., 1.);
     float i_sides = floor( abs( sides ) );
     float fullAngle = 2. * PI / i_sides;
     float halfAngle = fullAngle / 2.;
@@ -85,7 +90,9 @@ float rounded_polygon(vec2 uv, float width, float height, float sides, float rou
     // Calculate the distance of the polygon center to the chamfer extremity
     float distC = sqrt( distA*distA + distB*distB - 2.*distA*distB*cos( PI - halfAngle * angleRatio ) );
     float ret = uv.x;
-    float chamferZone = ( halfAngle - polaruv.x ) < chamferAngle ? 1 : 0;
+    // fixme: parser
+    //float chamferZone = ( halfAngle - polaruv.x ) < chamferAngle ? 1 : 0;
+    float chamferZone = (( halfAngle - polaruv.x ) < chamferAngle) ? 1 : 0;
     ret = mix( uv.x, polaruv.y / distC, chamferZone );
     // Output this to have the shape mask instead of the distance field
     ret = clamp((1 - ret) / fwidth(ret), 0.0, 1.0);
