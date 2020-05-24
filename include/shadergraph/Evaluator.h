@@ -3,6 +3,7 @@
 #include "shadergraph/typedef.h"
 #include "shadergraph/VarType.h"
 #include "shadergraph/Value.h"
+#include "shadergraph/Variant.h"
 
 #include <dag/Node.h>
 
@@ -12,8 +13,6 @@
 
 namespace shadergraph
 {
-
-struct Variant;
 
 class Evaluator
 {
