@@ -40,6 +40,9 @@ void Block::Parser(const std::string& str)
 
     m_parser = std::make_shared<glsl::parser>(str.c_str(), "");
     m_parser_root = m_parser->parse(glsl::astTU::kFragment);
+    if (!m_parser_root) {
+        return;
+    }
 
     m_global_vars.clear();
     m_global_vars.reserve(m_parser_root->globals.size());
