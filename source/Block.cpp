@@ -1,10 +1,10 @@
 #include "shadergraph/Block.h"
 #include "shadergraph/ValueImpl.h"
 #include "shadergraph/ParserProp.h"
-#include "shadergraph/BlockParser.h"
 #include "shadergraph/CommentParser.h"
+#include "shadergraph/CodeParser.h"
 
-#include <glsl-parser/parser.h>
+#include <cslang/Parser.h>
 
 namespace shadergraph
 {
@@ -38,28 +38,32 @@ void Block::Parser(const std::string& str)
     CommentParser parser(str);
     parser.Parse(props);
 
-    m_parser = std::make_shared<glsl::parser>(str.c_str(), "");
-    m_parser_root = m_parser->parse(glsl::astTU::kFragment);
-    if (!m_parser_root) {
+    cslang::Parser cs_parser(str.c_str());
+    auto root = cslang::ast::DeclarationParser::ParseTranslationUnit(cs_parser);
+    if (!root) {
         return;
     }
 
-    m_global_vars.clear();
-    m_global_vars.reserve(m_parser_root->globals.size());
-    for (auto& var : m_parser_root->globals)
-    {
-        assert(var->type == glsl::astVariable::kGlobal);
-        if (var->baseType->builtin) {
-            m_global_vars.push_back(BlockParser::ToVariant(var));
+	auto p = root->extDecls;
+	while (p)
+	{
+        switch (p->kind)
+        {
+        case cslang::NK_Declaration:
+        {
+            auto var = std::static_pointer_cast<cslang::ast::DeclarationNode>(p);
+            m_global_vars.push_back(CodeParser::ToVariant(var));
         }
-    }
-
-    m_funcs.clear();
-    m_funcs.reserve(m_parser_root->functions.size());
-    for (auto& func : m_parser_root->functions) {
-        m_funcs.push_back({ BlockParser::ToVariant(func), false });
-    }
-    m_curr_func = m_funcs.empty() ? -1 : 0;
+            break;
+        case cslang::NK_Function:
+        {
+            auto var = std::static_pointer_cast<cslang::ast::FunctionNode>(p);
+            m_funcs.push_back({ CodeParser::ToVariant(var), false });
+        }
+            break;
+        }
+		p = p->next;
+	}
 
     SetupCurrFunc(props);
     SetupPorts();

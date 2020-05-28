@@ -1,8 +1,5 @@
 #include "shadergraph/ParserUtility.h"
 
-#include <glsl-parser/ast.h>
-#include <glsl-parser/lexer.h>
-
 #include <assert.h>
 
 namespace shadergraph
@@ -134,59 +131,6 @@ std::string TypeToString(VarType type)
         assert(0);
     }
     return ret;
-}
-
-VarType TypeAstToVar(const glsl::astType* type)
-{
-    if (!type->builtin) {
-        return VarType::Struct;
-    }
-
-    auto bi_type = (glsl::astBuiltin*)type;
-    switch (bi_type->type)
-    {
-    case glsl::kKeyword_void:
-        return VarType::Void;
-    case glsl::kKeyword_bool:
-        return VarType::Bool;
-    case glsl::kKeyword_bvec2:
-        return VarType::Bool2;
-    case glsl::kKeyword_bvec3:
-        return VarType::Bool3;
-    case glsl::kKeyword_bvec4:
-        return VarType::Bool4;
-    case glsl::kKeyword_uint:
-        return VarType::UInt;
-    case glsl::kKeyword_int:
-        return VarType::Int;
-    case glsl::kKeyword_ivec2:
-        return VarType::Int2;
-    case glsl::kKeyword_ivec3:
-        return VarType::Int3;
-    case glsl::kKeyword_ivec4:
-        return VarType::Int4;
-    case glsl::kKeyword_float:
-        return VarType::Float;
-    case glsl::kKeyword_vec2:
-        return VarType::Float2;
-    case glsl::kKeyword_vec3:
-        return VarType::Float3;
-    case glsl::kKeyword_vec4:
-        return VarType::Float4;
-    case glsl::kKeyword_mat2:
-        return VarType::Matrix2;
-    case glsl::kKeyword_mat3:
-        return VarType::Matrix3;
-    case glsl::kKeyword_mat4:
-        return VarType::Matrix4;
-    case glsl::kKeyword_sampler2D:
-        return VarType::Sampler2D;
-    case glsl::kKeyword_samplerCube:
-        return VarType::SamplerCube;
-    default:
-        assert(0);
-        return VarType::Invalid;
-    }
 }
 
 }

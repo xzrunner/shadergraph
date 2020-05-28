@@ -11,11 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\glsl-parser\ast.h" />
-    <ClInclude Include="..\..\..\..\glsl-parser\lexemes.h" />
-    <ClInclude Include="..\..\..\..\glsl-parser\lexer.h" />
-    <ClInclude Include="..\..\..\..\glsl-parser\parser.h" />
-    <ClInclude Include="..\..\..\..\glsl-parser\util.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Block.h" />
     <ClInclude Include="..\..\..\include\shadergraph\BlockHelper.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Add.h" />
@@ -96,7 +91,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h" />
-    <ClInclude Include="..\..\..\include\shadergraph\BlockParser.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h" />
     <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h" />
@@ -113,14 +108,10 @@
     <ClInclude Include="..\..\..\include\shadergraph\VarType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\glsl-parser\ast.cpp" />
-    <ClCompile Include="..\..\..\..\glsl-parser\lexer.cpp" />
-    <ClCompile Include="..\..\..\..\glsl-parser\parser.cpp" />
-    <ClCompile Include="..\..\..\..\glsl-parser\util.cpp" />
     <ClCompile Include="..\..\..\source\Block.cpp" />
     <ClCompile Include="..\..\..\source\BlockHelper.cpp" />
     <ClCompile Include="..\..\..\source\block\Time.cpp" />
-    <ClCompile Include="..\..\..\source\BlockParser.cpp" />
+    <ClCompile Include="..\..\..\source\CodeParser.cpp" />
     <ClCompile Include="..\..\..\source\CommentParser.cpp" />
     <ClCompile Include="..\..\..\source\Evaluator.cpp" />
     <ClCompile Include="..\..\..\source\GlobalClock.cpp" />
@@ -177,7 +168,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\cslang\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -191,7 +182,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\dag\include;..\..\..\..\lexer\include;..\..\..\..\cslang\include;..\..\..\..\guard\include;..\..\..\..\cpputil\include;..\..\..\..\external\rttr\include;..\..\..\..\external\boost\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
