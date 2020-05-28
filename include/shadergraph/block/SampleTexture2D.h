@@ -37,7 +37,7 @@ public:
     {
 		std::string ret;
 
-		ret += "vec4 #rgba# = texture2D(#tex#, #uv#);\n";
+		ret += "vec4 #rgba# = texture(#tex#, #uv#);\n";
 
 		if (!m_exports[static_cast<int>(Output::R)].conns.empty()) {
 			ret += "float #r# = #rgba#.r;\n";
