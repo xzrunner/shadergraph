@@ -12,22 +12,24 @@ class WorleyNoise : public Block
 public:
     WorleyNoise() : Block(R"(
 
-/// @default 0
+/////////////////////////////////////////////////
+/// <u_dist_op>         @enum Euclideanm, Manhattan, Chebyshev
+/// <u_features_mode>   @enum F1, F2, F1_ADD_F2, F2_SUB_F1, F1_MUL_F2, F1_DIV_F2
+/// <u_manhattan_scale> @region 0.01, 0.5
+/// <u_manhattan_scale> @default 0.5
+/// <worley_cells>      @export
+/// <worley_no_cells>   @export
+/// <worley_no_cells>   @function poisson_number          (float)->uint
+/// <worley_no_cells>   @function poisson_uniform_0_1     ()->float
+/// <worley_no_cells>   @function poisson_morton          (uint, uint)->uint
+/// <worley_no_cells>   @function poisson_seeding         (uint)->void
+/////////////////////////////////////////////////
+
 uniform float u_seed;
-
-/// @enum Euclideanm, Manhattan, Chebyshev
-/// @default 0
-uniform int u_dist_op;
-
-/// @enum F1, F2, F1_ADD_F2, F2_SUB_F1, F1_MUL_F2, F1_DIV_F2
-/// @default 0
-uniform int u_features_mode;
-
-/// @region 0.01, 0.5
-/// @default 0.5
+uniform int   u_dist_op;
+uniform int   u_features_mode;
 uniform float u_manhattan_scale;
-
-uniform vec2 u_poisson_random_offset;
+uniform vec2  u_poisson_random_offset;
 
 vec2 _random2(vec2 p)
 {
@@ -51,9 +53,6 @@ float _chebyshev_dist(vec2 diff)
     return max(dx, dy);
 }
 
-/////////////////////////////////////////////////
-/// @export worley_cells
-/////////////////////////////////////////////////
 float worley_cells(vec2 st)
 {
     vec2 i_st = floor(st);
@@ -111,14 +110,6 @@ float worley_cells(vec2 st)
     //return color;
 }
 
-/////////////////////////////////////////////////
-/// @export worley_no_cells
-/// @uniform  u_poisson_random_offset vec2
-/// @function poisson_number          (float)->uint
-/// @function poisson_uniform_0_1     ()->float
-/// @function poisson_morton          (uint, uint)->uint
-/// @function poisson_seeding         (uint)->void
-/////////////////////////////////////////////////
 float worley_no_cells(vec2 st, float frequency)
 {
     uint s = poisson_morton(uint(u_poisson_random_offset.x), uint(u_poisson_random_offset.y));

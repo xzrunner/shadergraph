@@ -30,7 +30,6 @@ protected:
     void Parser(const std::string& str);
 
 private:
-    void SetupCurrFunc(const std::vector<std::shared_ptr<ParserProp>>& props);
     void SetupPorts();
 
     static dag::Node<Variant>::PortVar PortFromVar(const Variant& var);

@@ -12,6 +12,10 @@ class PolarCoordinates : public Block
 public:
     PolarCoordinates() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <polar_coordinates> @export
+/////////////////////////////////////////////////
+
 // proposed solution from
 // http://stackoverflow.com/questions/26070410/robust-atany-x-on-glsl-for-converting-xy-coordinate-to-angle
 // swaps params when |x| <= |y|
@@ -22,9 +26,6 @@ float atan2(float y, float x)
 }
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Polar-Coordinates-Node.html
-/////////////////////////////////////////////////
-/// @export polar_coordinates
-/////////////////////////////////////////////////
 vec2 polar_coordinates(vec2 uv, vec2 center, float radial_scale, float length_scale)
 {
     vec2 delta = uv - center;

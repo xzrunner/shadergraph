@@ -7,11 +7,15 @@
 namespace shadergraph
 {
 
+class CommentParser;
+
 class CodeParser
 {
 public:
-    static Variant ToVariant(const cslang::ast::DeclarationNodePtr& var);
-    static Variant ToVariant(const cslang::ast::FunctionNodePtr& var);
+    static Variant ToVariant(const CommentParser& desc,
+        const cslang::ast::DeclarationNodePtr& src);
+    static Variant ToVariant(const CommentParser& desc,
+        const cslang::ast::FunctionNodePtr& src);
 
 }; // CodeParser
 

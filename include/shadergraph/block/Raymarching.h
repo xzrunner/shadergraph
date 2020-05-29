@@ -12,6 +12,12 @@ class Raymarching : public Block
 public:
     Raymarching() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <raymarching> @export
+/// <raymarching> @function f_scene (vec3, ...)->float
+/// <raymarching> @function f_lighting (vec3, vec3, vec3, float, vec3, vec3)->vec3
+/////////////////////////////////////////////////
+
 const int MAX_MARCHING_STEPS = 255;
 const float MIN_DIST = 0.0;
 const float MAX_DIST = 100.0;
@@ -49,11 +55,6 @@ mat3 viewMatrix(vec3 eye, vec3 center, vec3 up)
     return mat3(s, u, -f);
 }
 
-/////////////////////////////////////////////////
-/// @export raymarching
-/// @function  f_scene (vec3, ...)->float  Scene
-/// @function  f_lighting (vec3, vec3, vec3, float, vec3, vec3)->vec3  Lighting
-/////////////////////////////////////////////////
 vec3 raymarching(vec2 st)
 {
     vec3 dir = ray_dir(45.0, vec2(1, 1), st);

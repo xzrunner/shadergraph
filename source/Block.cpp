@@ -34,9 +34,8 @@ void Block::SetupPorts(const std::vector<Variant>& inputs,
 
 void Block::Parser(const std::string& str)
 {
-    std::vector<std::shared_ptr<ParserProp>> props;
     CommentParser parser(str);
-    parser.Parse(props);
+    parser.Parse();
 
     cslang::Parser cs_parser(str.c_str());
     auto root = cslang::ast::DeclarationParser::ParseTranslationUnit(cs_parser);
@@ -44,67 +43,64 @@ void Block::Parser(const std::string& str)
         return;
     }
 
+    m_curr_func = -1;
+
+    std::set<cslang::NodePtr> unique;
+
 	auto p = root->extDecls;
 	while (p)
 	{
+        if (unique.find(p) != unique.end()) {
+            p = p->next;
+            continue;
+        }
+
         switch (p->kind)
         {
         case cslang::NK_Declaration:
         {
-            auto var = std::static_pointer_cast<cslang::ast::DeclarationNode>(p);
-            m_global_vars.push_back(CodeParser::ToVariant(var));
+            unique.insert(p);
+            auto src = std::static_pointer_cast<cslang::ast::DeclarationNode>(p);
+            auto dst = CodeParser::ToVariant(parser, src);
+            m_global_vars.push_back(dst);
         }
             break;
         case cslang::NK_Function:
         {
-            auto var = std::static_pointer_cast<cslang::ast::FunctionNode>(p);
-            m_funcs.push_back({ CodeParser::ToVariant(var), false });
+            unique.insert(p);
+
+            auto src = std::static_pointer_cast<cslang::ast::FunctionNode>(p);
+            auto dst = CodeParser::ToVariant(parser, src);
+
+            bool is_export = false;
+            auto f_dst = std::static_pointer_cast<FunctionVal>(dst.val);
+            for (auto& prop : f_dst->desc)
+            {
+                if (prop->GetType() == ParserProp::Type::Export)
+                {
+                    if (m_curr_func < 0) {
+                        m_curr_func = m_funcs.size();
+                    }
+                    is_export = true;
+                    break;
+                }
+            }
+
+            m_funcs.push_back({ dst, is_export });
         }
             break;
         }
 		p = p->next;
 	}
-
-    SetupCurrFunc(props);
-    SetupPorts();
-}
-
-void Block::SetupCurrFunc(const std::vector<std::shared_ptr<ParserProp>>& props)
-{
-    if (m_funcs.empty()) {
-        return;
-    }
-
     if (m_funcs.size() == 1) {
         m_curr_func = 0;
-        return;
+    }
+    // fixme
+    if (m_curr_func < 0) {
+        m_curr_func = 0;
     }
 
-    std::vector<std::string> exports;
-    for (auto& prop : props)
-    {
-        if (prop->GetType() == ParserProp::Type::Export)
-        {
-            auto exp = std::static_pointer_cast<PropExport>(prop);
-            exports.push_back(exp->func_name);
-        }
-    }
-
-    m_curr_func = -1;
-    for (int i = 0, n = m_funcs.size(); i < n; ++i)
-    {
-        bool is_export = false;
-        for (auto& name : exports) {
-            if (m_funcs[i].first.name == name) {
-                is_export = true;
-                break;
-            }
-        }
-        if (is_export && m_curr_func < 0) {
-            m_curr_func = i;
-        }
-        m_funcs[i].second = is_export;
-    }
+    SetupPorts();
 }
 
 void Block::SetupPorts()

@@ -12,6 +12,10 @@ class GradientNoise : public Block
 public:
     GradientNoise() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <gradient_noise> @export
+/////////////////////////////////////////////////
+
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Gradient-Noise-Node.html
 
 vec2 gradient_noise_dir(vec2 p)
@@ -23,9 +27,6 @@ vec2 gradient_noise_dir(vec2 p)
     return normalize(vec2(x - floor(x + 0.5), abs(x) - 0.5));
 }
 
-/////////////////////////////////////////////////
-/// @export gradient_noise
-/////////////////////////////////////////////////
 float gradient_noise(vec2 p)
 {
     vec2 ip = floor(p);

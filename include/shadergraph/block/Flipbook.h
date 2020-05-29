@@ -12,6 +12,10 @@ class Flipbook : public Block
 public:
     Flipbook() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <flipbook> @export
+/////////////////////////////////////////////////
+
 // https://stackoverflow.com/questions/7610631/glsl-mod-vs-hlsl-fmod
 float fmod(float x, float y)
 {
@@ -20,9 +24,6 @@ float fmod(float x, float y)
 }
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Flipbook-Node.html
-/////////////////////////////////////////////////
-/// @export flipbook
-/////////////////////////////////////////////////
 vec2 flipbook(vec2 uv, float width, float height, float tile, vec2 invert)
 {
     tile = fmod(tile, width * height);

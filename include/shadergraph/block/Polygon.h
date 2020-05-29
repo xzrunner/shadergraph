@@ -12,6 +12,10 @@ class Polygon : public Block
 public:
     Polygon() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <polygon> @export
+/////////////////////////////////////////////////
+
 // proposed solution from
 // http://stackoverflow.com/questions/26070410/robust-atany-x-on-glsl-for-converting-xy-coordinate-to-angle
 // swaps params when |x| <= |y|
@@ -22,9 +26,6 @@ float atan2(float y, float x)
 }
 
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Polygon-Node.html
-/////////////////////////////////////////////////
-/// @export polygon
-/////////////////////////////////////////////////
 float polygon(vec2 uv, float sides, float width, float height)
 {
     float pi = 3.14159265359;

@@ -25,16 +25,18 @@ namespace CommentToken
 	static const Type CParenthesis  = 1 <<  6; // closing parenthesis: )
 	static const Type OBracket      = 1 <<  7; // opening bracket: [
 	static const Type CBracket      = 1 <<  8; // closing bracket: ]
+    static const Type OAngle        = 1 <<  9; // opening angle: <
+    static const Type CAngle        = 1 << 10; // closing angle: >
 
-    static const Type At            = 1 <<  9; // @
-    static const Type Ret           = 1 << 10; // ->
-    static const Type Equal         = 1 << 11; // =
+    static const Type At            = 1 << 11; // @
+    static const Type Ret           = 1 << 12; // ->
+    static const Type Equal         = 1 << 13; // =
 
-    static const Type Comma         = 1 << 12; // ,
-    static const Type Ellipsis      = 1 << 13; // ...
+    static const Type Comma         = 1 << 14; // ,
+    static const Type Ellipsis      = 1 << 15; // ...
 
-	static const Type Eof           = 1 << 14; // end of file
-	static const Type Eol           = 1 << 15; // end of line
+	static const Type Eof           = 1 << 16; // end of file
+	static const Type Eol           = 1 << 17; // end of line
 }
 
 class CommentTokenizer : public lexer::Tokenizer<CommentToken::Type>
@@ -65,18 +67,26 @@ class CommentParser : public lexer::Parser<CommentToken::Type>
 public:
     CommentParser(const std::string& str);
 
-    void Parse(std::vector<std::shared_ptr<ParserProp>>& props);
+    void Parse();
+
+    std::vector<std::shared_ptr<ParserProp>>
+        QueryProps(const std::string& name) const;
 
 private:
     virtual std::map<CommentToken::Type, std::string>
         TokenNames() const override;
 
-    void ParserDescription(std::vector<std::shared_ptr<ParserProp>>& props);
+    void ParserDescription(const std::string& name);
 
     std::shared_ptr<Value> ParserValue();
 
+    void InsertProp(const std::string& key,
+        const std::shared_ptr<ParserProp>& val);
+
 private:
     CommentTokenizer m_tokenizer;
+
+    std::map<std::string, std::vector<std::shared_ptr<ParserProp>>> m_props;
 
     typedef CommentTokenizer::Token Token;
 

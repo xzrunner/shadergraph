@@ -12,21 +12,16 @@ class fBm : public Block
 public:
     fBm() : Block(R"(
 
-/// @default 0
-uniform int u_octaves;
+/////////////////////////////////////////////////
+/// <u_lacunarity> @default 2.0
+/// <u_gain>       @default 0.5
+/// <fBm> @function f_noise (vec2)->float
+/////////////////////////////////////////////////
 
-/// @default 2
+uniform int   u_octaves;
 uniform float u_lacunarity;
-
-/// @default 0.5
 uniform float u_gain;
 
-/////////////////////////////////////////////////
-/// @uniform   u_octaves     int            Octaves
-/// @uniform   u_lacunarity  float          Lacunarity
-/// @uniform   u_gain        float          Gain
-/// @function  f_noise       (vec2)->float  Noise
-/////////////////////////////////////////////////
 float fBm(vec2 st)
 {
     float ret = 0;

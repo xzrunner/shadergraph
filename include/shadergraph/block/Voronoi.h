@@ -12,6 +12,10 @@ class Voronoi : public Block
 public:
     Voronoi() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <voronoi> @export
+/////////////////////////////////////////////////
+
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Voronoi-Node.html
 
 vec2 voronoi_noise_random_vector(vec2 uv, float offset)
@@ -21,9 +25,6 @@ vec2 voronoi_noise_random_vector(vec2 uv, float offset)
     return vec2(sin(uv.y*+offset)*0.5+0.5, cos(uv.x*offset)*0.5+0.5);
 }
 
-/////////////////////////////////////////////////
-/// @export voronoi
-/////////////////////////////////////////////////
 float voronoi(vec2 uv, float angle_offset, float cell_density)
 {
     vec2 g = floor(uv * cell_density);

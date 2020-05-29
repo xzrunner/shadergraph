@@ -65,6 +65,12 @@ CommentTokenizer::EmitToken()
             case ']':
                 Advance();
                 return Token(CommentToken::CBracket, c, c+1, Offset(c), start_line, start_column);
+            case '<':
+                Advance();
+                return Token(CommentToken::OAngle, c, c + 1, Offset(c), start_line, start_column);
+            case '>':
+                Advance();
+                return Token(CommentToken::CAngle, c, c + 1, Offset(c), start_line, start_column);
             case '@':
                 Advance();
                 return Token(CommentToken::At, c, c + 1, Offset(c), start_line, start_column);
@@ -123,7 +129,7 @@ CommentTokenizer::EmitToken()
 					return Token(CommentToken::Decimal, c, e, Offset(c), start_line, start_column);
 				}
 
-                static const std::string str_separator(Whitespace() + ";{}[](),.#:?+-*/=");
+                static const std::string str_separator(Whitespace() + ";{}[]()<>,.#:?+-*/=");
                 e = ReadUntil(str_separator);
 				if (e == nullptr) {
 					throw lexer::ParserException(start_line, start_column, "Unexpected character: " + std::string(c, 1));
@@ -138,7 +144,7 @@ CommentTokenizer::EmitToken()
 
 const std::string& CommentTokenizer::NumberDelim()
 {
-    static const std::string number_delim(Whitespace() + ",)]}");
+    static const std::string number_delim(Whitespace() + ",)]}>");
     return number_delim;
 }
 
@@ -151,7 +157,7 @@ CommentParser::CommentParser(const std::string& str)
 {
 }
 
-void CommentParser::Parse(std::vector<std::shared_ptr<ParserProp>>& props)
+void CommentParser::Parse()
 {
     Token token = m_tokenizer.PeekToken();
     CommentToken::Type token_type = token.GetType();
@@ -169,22 +175,29 @@ void CommentParser::Parse(std::vector<std::shared_ptr<ParserProp>>& props)
 
         m_tokenizer.NextToken();
         Token token = m_tokenizer.NextToken();
-        if (token.GetType() == CommentToken::At) {
-            ParserDescription(props);
+
+        if (token.GetType() == CommentToken::OAngle)
+        {
+            token = m_tokenizer.NextToken();
+            std::string name = token.Data();
+            Expect(CommentToken::CAngle, token = m_tokenizer.NextToken());
+
+            token = m_tokenizer.NextToken();
+            if (token.GetType() == CommentToken::At) {
+                ParserDescription(name);
+            }
         }
-
-        //m_tokenizer.NextToken();
-
-        //if (token.GetType() == CommentToken::At) {
-        //    ParserDescription(props);
-        //}
-
-        //token = m_tokenizer.PeekToken();
-        //token_type = token.GetType();
 
         token = m_tokenizer.PeekToken();
         token_type = token.GetType();
     }
+}
+
+std::vector<std::shared_ptr<ParserProp>>
+CommentParser::QueryProps(const std::string& name) const
+{
+    auto itr = m_props.find(name);
+    return itr == m_props.end() ? std::vector<std::shared_ptr<ParserProp>>() : itr->second;
 }
 
 std::map<CommentToken::Type, std::string>
@@ -194,7 +207,7 @@ CommentParser::TokenNames() const
 	return names;
 }
 
-void CommentParser::ParserDescription(std::vector<std::shared_ptr<ParserProp>>& props)
+void CommentParser::ParserDescription(const std::string& name)
 {
     Token token;
     Expect(CommentToken::String, token = m_tokenizer.NextToken());
@@ -214,7 +227,7 @@ void CommentParser::ParserDescription(std::vector<std::shared_ptr<ParserProp>>& 
             unif->display_name = token.Data();
         }
 
-        props.push_back(unif);
+        InsertProp(name, unif);
     }
     else if (type == "function")
     {
@@ -243,12 +256,7 @@ void CommentParser::ParserDescription(std::vector<std::shared_ptr<ParserProp>>& 
         token = m_tokenizer.NextToken();
         func->output = StringToType(token.Data());
 
-        token = m_tokenizer.NextToken();
-        if (token.HasType(CommentToken::String)) {
-            func->display_name = token.Data();
-        }
-
-        props.push_back(func);
+        InsertProp(name, func);
     }
     else if (type == "enum")
     {
@@ -262,13 +270,13 @@ void CommentParser::ParserDescription(std::vector<std::shared_ptr<ParserProp>>& 
             token = m_tokenizer.NextToken();
         } while (token.GetType() != CommentToken::Eol && token.GetType() != CommentToken::Eof);
 
-        props.push_back(e);
+        InsertProp(name, e);
     }
     else if (type == "default")
     {
         auto def = std::make_shared<PropDefault>();
         def->val = ParserValue();
-        props.push_back(def);
+        InsertProp(name, def);
     }
     else if (type == "region")
     {
@@ -282,16 +290,12 @@ void CommentParser::ParserDescription(std::vector<std::shared_ptr<ParserProp>>& 
         Expect(CommentToken::Decimal, token = m_tokenizer.NextToken());
         region->max = token.ToFloat<float>();
 
-        props.push_back(region);
+        InsertProp(name, region);
     }
     else if (type == "export")
     {
         auto exp = std::make_shared<PropExport>();
-
-        Expect(CommentToken::String, token = m_tokenizer.NextToken());
-        exp->func_name = token.Data();
-
-        props.push_back(exp);
+        InsertProp(name, exp);
     }
     else if (type == "param")
     {
@@ -308,7 +312,7 @@ void CommentParser::ParserDescription(std::vector<std::shared_ptr<ParserProp>>& 
 
             def->val = ParserValue();
 
-            props.push_back(def);
+            InsertProp(name, def);
 
             Expect(CommentToken::CBracket, token = m_tokenizer.NextToken());
 
@@ -341,6 +345,16 @@ CommentParser::ParserValue()
     }
 
     return ret;
+}
+
+void CommentParser::InsertProp(const std::string& key, const std::shared_ptr<ParserProp>& val)
+{
+    auto itr = m_props.find(key);
+    if (itr == m_props.end()) {
+        m_props.insert({ key, {val} });
+    } else {
+        itr->second.push_back(val);
+    }
 }
 
 }

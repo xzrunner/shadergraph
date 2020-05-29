@@ -240,7 +240,17 @@ std::string Evaluator::GenShaderMainCode() const
                     for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
                     {
                         auto& param = f_val->inputs[i];
-                        if (!inputs[i].conns.empty()) {
+
+                        int in_idx = -1;
+                        for (int j = 0; j < inputs.size(); ++j) {
+                            if (inputs[j].var.type.name == param.name) {
+                                in_idx = j;
+                                break;
+                            }
+                        }
+                        assert(in_idx >= 0);
+
+                        if (!inputs[in_idx].conns.empty()) {
                             str += "#" + param.name + "#";
                         } else {
                             str += GetDefaultValueString(param.type);
@@ -523,10 +533,6 @@ void Evaluator::ResolveFunctions()
         }
 
         auto& funcs = b->GetFunctions();
-
-        auto curr_func = funcs[func_idx];
-        size_t input_idx = std::static_pointer_cast<FunctionVal>(curr_func.first.val)->inputs.size();
-
         for (size_t i = 0, n = funcs.size(); i < n; ++i)
         {
             if (funcs[i].second && b->GetCurrFuncIdx() != i) {
@@ -535,18 +541,29 @@ void Evaluator::ResolveFunctions()
 
             auto f = funcs[i];
             auto f_val = std::static_pointer_cast<FunctionVal>(f.first.val);
-            int idx = input_idx;
             for (auto& d : f_val->desc)
             {
                 if (d->GetType() != ParserProp::Type::Function) {
                     continue;
                 }
 
+                auto prop_f = std::static_pointer_cast<PropFunction>(d);
+
+                int in_idx = -1;
                 auto& inputs = b->GetImports();
-                assert(idx >= 0 && idx < static_cast<int>(inputs.size()));
-                auto& conns = inputs[idx].conns;
+                for (int i = 0, n = inputs.size(); i < n; ++i) {
+                    if (inputs[i].var.type.name == prop_f->name) {
+                        in_idx = i;
+                        break;
+                    }
+                }
+
+                if (in_idx < 0) {
+                    continue;
+                }
+
+                auto& conns = inputs[in_idx].conns;
                 if (conns.empty()) {
-                    ++idx;
                     continue;
                 }
                 assert(conns.size() == 1);
@@ -554,11 +571,9 @@ void Evaluator::ResolveFunctions()
 
                 auto prev_node = conn.node.lock();
                 if (!prev_node) {
-                    ++idx;
                     continue;
                 }
 
-                auto prop_f = std::static_pointer_cast<PropFunction>(d);
                 std::string from = prop_f->name;
                 std::string to = prev_node->GetExports()[conn.idx].var.type.name;
                 for (auto& func : funcs)
@@ -579,8 +594,6 @@ void Evaluator::ResolveFunctions()
                         m_real_funcs.insert({ &func.first, f_code });
                     }
                 }
-
-                ++idx;
             }
         }
     }

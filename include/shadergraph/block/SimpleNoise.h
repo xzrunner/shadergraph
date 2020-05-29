@@ -12,6 +12,10 @@ class SimpleNoise : public Block
 public:
     SimpleNoise() : Block(R"(
 
+/////////////////////////////////////////////////
+/// <simple_noise> @export
+/////////////////////////////////////////////////
+
 // https://docs.unity3d.com/Packages/com.unity.shadergraph@9.0/manual/Simple-Noise-Node.html
 
 float simple_noise_random_value (vec2 uv)
@@ -46,9 +50,6 @@ float simple_noise_value(vec2 uv)
     return t;
 }
 
-/////////////////////////////////////////////////
-/// @export simple_noise
-/////////////////////////////////////////////////
 float simple_noise(vec2 uv, float scale)
 {
     float t = 0.0;

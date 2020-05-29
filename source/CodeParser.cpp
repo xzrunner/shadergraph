@@ -1,5 +1,6 @@
 #include "shadergraph/CodeParser.h"
 #include "shadergraph/ValueImpl.h"
+#include "shadergraph/CommentParser.h"
 
 #include <cslang/GenCode.h>
 
@@ -67,7 +68,7 @@ shadergraph::ValPtr create_value(shadergraph::VarType type)
     return val;
 }
 
-shadergraph::VarType trans_var_type(int cs_type)
+shadergraph::VarType trans_src_type(int cs_type)
 {
     switch (cs_type)
     {
@@ -120,21 +121,22 @@ shadergraph::VarType trans_var_type(int cs_type)
 namespace shadergraph
 {
 
-Variant CodeParser::ToVariant(const cslang::ast::DeclarationNodePtr& var)
+Variant CodeParser::ToVariant(const CommentParser& desc,
+                              const cslang::ast::DeclarationNodePtr& src)
 {
     bool is_uniform = false;
-    if (var->specs->tyQuals)
+    if (src->specs->tyQuals)
     {
-        auto storage = std::static_pointer_cast<cslang::ast::TokenNode>(var->specs->tyQuals)->token;
+        auto storage = std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tyQuals)->token;
         if (storage == cslang::TK_UNIFORM) {
             is_uniform = true;
         }
     }
 
-    auto type = trans_var_type(std::static_pointer_cast<cslang::ast::TokenNode>(var->specs->tySpecs)->token);
+    auto type = trans_src_type(std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tySpecs)->token);
 
     std::string name;
-    auto initDec = std::static_pointer_cast<cslang::ast::InitDeclaratorNode>(var->initDecs);
+    auto initDec = std::static_pointer_cast<cslang::ast::InitDeclaratorNode>(src->initDecs);
     switch (initDec->dec->kind)
     {
     case cslang::NK_NameDeclarator:
@@ -167,9 +169,15 @@ Variant CodeParser::ToVariant(const cslang::ast::DeclarationNodePtr& var)
 
         auto unif = std::make_shared<UniformVal>();
         unif->var.name = name;
-        //unif->desc = m_desc;
+        unif->desc     = desc.QueryProps(name);
         unif->var.type = type;
         unif->var.val  = val;
+        for (auto& d : unif->desc) {
+            if (d->GetType() == ParserProp::Type::Default) {
+                unif->var.val = std::static_pointer_cast<PropDefault>(d)->val;
+                break;
+            }
+        }
         ret.val = unif;
     }
     else
@@ -181,16 +189,18 @@ Variant CodeParser::ToVariant(const cslang::ast::DeclarationNodePtr& var)
     return ret;
 }
 
-Variant CodeParser::ToVariant(const cslang::ast::FunctionNodePtr& func)
+Variant CodeParser::ToVariant(const CommentParser& desc,
+                              const cslang::ast::FunctionNodePtr& func)
 {
     Variant ret;
     ret.name = func->fdec->dec->id;
     ret.type = VarType::Function;
 
-    auto f_var = std::make_shared<FunctionVal>();
+    auto f_src = std::make_shared<FunctionVal>();
     auto ret_token = std::static_pointer_cast<cslang::ast::TokenNode>(func->specs->tySpecs)->token;
-    f_var->output.type = trans_var_type(ret_token);
-    f_var->output.name = "ret";
+    f_src->output.type = trans_src_type(ret_token);
+    f_src->output.name = "ret";
+    f_src->desc = desc.QueryProps(ret.name);
 
     // params
     if (func->fdec->paramTyList)
@@ -198,20 +208,20 @@ Variant CodeParser::ToVariant(const cslang::ast::FunctionNodePtr& func)
         auto p = func->fdec->paramTyList->paramDecls;
         while (p)
         {
-            Variant var;
+            Variant src;
             auto p_decl = std::static_pointer_cast<cslang::ast::ParameterDeclarationNode>(p);
-            var.type = trans_var_type(std::static_pointer_cast<cslang::ast::TokenNode>(p_decl->specs->tySpecs)->token);
-            var.name = p_decl->dec->id;
-            f_var->inputs.push_back(var);
+            src.type = trans_src_type(std::static_pointer_cast<cslang::ast::TokenNode>(p_decl->specs->tySpecs)->token);
+            src.name = p_decl->dec->id;
+            f_src->inputs.push_back(src);
             p = p->next;
         }
     }
 
     std::stringstream ss;
     cslang::GenFunction(ss, func);
-    f_var->code = ss.str();
+    f_src->code = ss.str();
 
-    ret.val = f_var;
+    ret.val = f_src;
 
     return ret;
 }

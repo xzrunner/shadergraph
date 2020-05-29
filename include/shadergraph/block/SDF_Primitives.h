@@ -13,9 +13,10 @@ public:
     SDF_Primitives() : Block(R"(
 
 /////////////////////////////////////////////////
-/// @export sdSphere
-/// @param [s=0.5]
+/// <sdSphere> @export
+/// <sdSphere> @param [s=0.5]
 /////////////////////////////////////////////////
+
 float sdSphere(vec3 p, float s)
 {
     return length(p) - s;
