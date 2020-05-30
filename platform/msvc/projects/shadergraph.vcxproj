@@ -126,7 +126,7 @@
     <None Include="..\..\..\include\shadergraph\block\Float.parm.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>1.shadergraph</ProjectName>
+    <ProjectName>0.shadergraph</ProjectName>
     <ProjectGuid>{AA04F36C-3055-477E-BD99-E39C745B3321}</ProjectGuid>
     <RootNamespace>shadergraph</RootNamespace>
     <Keyword>Win32Proj</Keyword>
