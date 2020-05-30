@@ -157,20 +157,61 @@ std::string Evaluator::GenShaderGlobalVarsCode() const
                 auto v_array = std::static_pointer_cast<ArrayVal>(v.val);
                 int num = v_array->items.size();
                 if (num > 0) {
-                    code += cpputil::StringHelper::Format("%s %s[%d];",
+                    code += cpputil::StringHelper::Format("%s %s[%d];\n",
                         TypeToString(v_array->type).c_str(), v.name.c_str(), num);
                 }
             }
             else
             {
-                code += TypeToString(v.type) + " " + v.name + ";\n";
+                if (v.val)
+                {
+                    switch (v.type)
+                    {
+                    case VarType::Int:
+                    {
+                        auto i_val = std::static_pointer_cast<IntVal>(v.val);
+                        code += cpputil::StringHelper::Format("%s %s = %d;\n", TypeToString(v.type).c_str(), v.name.c_str(), i_val->x);
+                    }
+                        break;
+
+                    case VarType::Float:
+                    {
+                        auto f_val = std::static_pointer_cast<FloatVal>(v.val);
+                        code += cpputil::StringHelper::Format("%s %s = %f;\n", TypeToString(v.type).c_str(), v.name.c_str(), f_val->x);
+                    }
+                        break;
+
+                    case VarType::Float2:
+                    {
+                        auto f2_val = std::static_pointer_cast<Float2Val>(v.val);
+                        code += cpputil::StringHelper::Format("%s %s = vec2(%f, %f);\n", TypeToString(v.type).c_str(), v.name.c_str(), f2_val->xy[0], f2_val->xy[1]);
+                    }
+                        break;
+
+                    case VarType::Float3:
+                    {
+                        auto f3_val = std::static_pointer_cast<Float3Val>(v.val);
+                        code += cpputil::StringHelper::Format("%s %s = vec3(%f, %f, %f);\n", TypeToString(v.type).c_str(), v.name.c_str(), f3_val->xyz[0], f3_val->xyz[1], f3_val->xyz[2]);
+                    }
+                        break;
+
+                    default:
+                        assert(0);
+                    }
+                }
+                else
+                {
+                    code += TypeToString(v.type) + " " + v.name + ";\n";
+                }
             }
             unique.insert(var.name);
         }
     }
+
     if (!code.empty()) {
         code += "\n";
     }
+
     return code;
 }
 

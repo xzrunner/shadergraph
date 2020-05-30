@@ -3,6 +3,7 @@
 #include "shadergraph/CommentParser.h"
 
 #include <cslang/GenCode.h>
+#include <cslang/EvalAST.h>
 
 #include <sstream>
 
@@ -135,6 +136,7 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
 
     auto type = trans_src_type(std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tySpecs)->token);
 
+    ValPtr val = nullptr;
     std::string name;
     auto initDec = std::static_pointer_cast<cslang::ast::InitDeclaratorNode>(src->initDecs);
     switch (initDec->dec->kind)
@@ -147,6 +149,13 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
     {
         auto decl = std::static_pointer_cast<cslang::ast::ArrayDeclaratorNode>(initDec->dec);
         name = decl->dec->id;
+
+        auto array_v = std::make_shared<ArrayVal>();
+        array_v->type = type;
+        array_v->items.resize(decl->expr->val.i[0]);
+
+        type = VarType::Array;
+        val = array_v;
     }
         break;
 
@@ -160,9 +169,51 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
         assert(0);
     }
 
+    if (initDec->init)
+    {
+        if (!val) {
+            val = create_value(type);
+        }
+        assert(initDec->init->lbrace == 0);
+        auto init_v = cslang::EvalExpression(initDec->init->expr);
+        switch (type)
+        {
+        case VarType::Int:
+        {
+            assert(init_v.type == cslang::VarType::Int);
+            std::static_pointer_cast<IntVal>(val)->x = init_v.i;
+        }
+            break;
+
+        case VarType::Float:
+        {
+            switch (init_v.type)
+            {
+            case cslang::VarType::Int:
+                std::static_pointer_cast<FloatVal>(val)->x = init_v.i;
+                break;
+
+            case cslang::VarType::Float:
+                std::static_pointer_cast<FloatVal>(val)->x = init_v.f;
+                break;
+
+            case cslang::VarType::Double:
+                std::static_pointer_cast<FloatVal>(val)->x = init_v.d;
+                break;
+
+            default:
+                assert(0);
+            }
+        }
+            break;
+
+        default:
+            assert(0);
+        }
+    }
+
     Variant ret;
     ret.name = name;
-    auto val = create_value(type);
     if (is_uniform)
     {
         ret.type = VarType::Uniform;
