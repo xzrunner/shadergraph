@@ -125,11 +125,17 @@ std::string Evaluator::GenShaderHeaderCode() const
 std::string Evaluator::GenShaderGlobalVarsCode() const
 {
     std::string code;
+
+    std::set<std::string> unique;
     for (auto& b : m_blocks)
     {
         auto& vars = b->GetVariants();
         for (auto& var : vars)
         {
+            if (unique.find(var.name) != unique.end()) {
+                continue;
+            }
+
             bool uniform = false;
             Variant v;
             if (var.type == VarType::Uniform) {
@@ -159,6 +165,7 @@ std::string Evaluator::GenShaderGlobalVarsCode() const
             {
                 code += TypeToString(v.type) + " " + v.name + ";\n";
             }
+            unique.insert(var.name);
         }
     }
     if (!code.empty()) {
@@ -171,11 +178,16 @@ std::string Evaluator::GenShaderFuncsCode() const
 {
     std::string code;
 
+    std::set<std::string> unique;
     for (auto& b : m_blocks)
     {
         auto& funcs = b->GetFunctions();
         for (size_t i = 0, n = funcs.size(); i < n; ++i)
         {
+            if (unique.find(funcs[i].first.name) != unique.end()) {
+                continue;
+            }
+
             if (funcs[i].second && b->GetCurrFuncIdx() != i) {
                 continue;
             }
@@ -190,6 +202,8 @@ std::string Evaluator::GenShaderFuncsCode() const
             } else {
                 f_code = f_val->code;
             }
+
+            unique.insert(funcs[i].first.name);
 
             code += f_code;
         }
