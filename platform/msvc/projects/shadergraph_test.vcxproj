@@ -28,7 +28,7 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>0.shadergraph_test</ProjectName>
+    <ProjectName>shadergraph_test</ProjectName>
     <ProjectGuid>{A3401E6F-4982-4B24-809A-821414322A4A}</ProjectGuid>
     <RootNamespace>shadergraph_test</RootNamespace>
     <Keyword>Win32Proj</Keyword>

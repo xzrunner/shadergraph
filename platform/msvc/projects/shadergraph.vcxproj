@@ -79,7 +79,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleGradient.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexture2D.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Saturation.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Primitives.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Sphere.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SimpleNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Spherize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Split.h" />
@@ -132,7 +134,7 @@
     <None Include="..\..\..\include\shadergraph\block\Float.parm.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>0.shadergraph</ProjectName>
+    <ProjectName>shadergraph</ProjectName>
     <ProjectGuid>{AA04F36C-3055-477E-BD99-E39C745B3321}</ProjectGuid>
     <RootNamespace>shadergraph</RootNamespace>
     <Keyword>Win32Proj</Keyword>

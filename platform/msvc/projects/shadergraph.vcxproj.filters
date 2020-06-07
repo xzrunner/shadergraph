@@ -389,6 +389,15 @@
     <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h">
       <Filter>parser</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Sphere.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF.h">
+      <Filter>blocks\master</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SubGraph.h">
+      <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Input.h">
       <Filter>blocks\utility\tools</Filter>
     </ClInclude>
