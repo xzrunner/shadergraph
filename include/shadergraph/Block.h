@@ -34,7 +34,7 @@ private:
 
     static dag::Node<Variant>::PortVar PortFromVar(const Variant& var);
 
-private:
+protected:
     std::vector<std::pair<Variant, bool>> m_funcs;
     int m_curr_func = -1;
 

@@ -48,6 +48,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Float4.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Float4.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\FragmentShader.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Input.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Input.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Output.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Output.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SubGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\GradientNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Hue.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Int.h" />
@@ -110,6 +115,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp" />
     <ClCompile Include="..\..\..\source\BlockHelper.cpp" />
+    <ClCompile Include="..\..\..\source\block\SubGraph.cpp" />
     <ClCompile Include="..\..\..\source\block\Time.cpp" />
     <ClCompile Include="..\..\..\source\CodeParser.cpp" />
     <ClCompile Include="..\..\..\source\CommentParser.cpp" />

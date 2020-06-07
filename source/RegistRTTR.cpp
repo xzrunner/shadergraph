@@ -1,4 +1,5 @@
 #include "shadergraph/Block.h"
+#include "shadergraph/Variant.h"
 
 #define EXE_FILEPATH "shadergraph/node_include_gen.h"
 #include "shadergraph/node_regist_cfg.h"
@@ -33,6 +34,40 @@ rttr::registration::class_<shadergraph::Block>("shadergraph::Block")
 #define EXE_FILEPATH "shadergraph/node_rttr_gen.h"
 #include "shadergraph/node_regist_cfg.h"
 #undef EXE_FILEPATH
+
+rttr::registration::enumeration<shadergraph::VarType>("sg_var_type")
+(
+    REGIST_ENUM_ITEM(shadergraph::VarType::Invalid,     "invalid",     "Invalid"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Dynamic,     "dynamic",     "Dynamic"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Void,        "void",        "Void"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Bool,        "bool",        "Bool"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Bool2,       "bvec2",       "Bool2"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Bool3,       "bvec3",       "Bool3"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Bool4,       "bvec4",       "Bool4"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::UInt,        "uint",        "UInt"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Int,         "int",         "Int"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Int2,        "ivec2",       "Int2"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Int3,        "ivec3",       "Int3"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Int4,        "ivec4",       "Int4"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Float,       "float",       "Float"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Float2,      "vec2",        "Float2"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Float3,      "vec3",        "Float3"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Float4,      "vec4",        "Float4"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Matrix2,     "mat2",        "Matrix2"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Matrix3,     "mat3",        "Matrix3"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Matrix4,     "mat4",        "Matrix4"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Sampler2D,   "sampler2D",   "Sampler2D"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::SamplerCube, "samplerCube", "SamplerCube"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Array,       "array",       "Array"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Struct,      "struct",      "Struct"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Uniform,     "uniform",     "Uniform"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::Function,    "function",    "Function")
+);
+
+rttr::registration::class_<shadergraph::Variant>("sg_variant")
+	.property("Type", &shadergraph::Variant::type)
+	.property("Name", &shadergraph::Variant::name)
+;
 
 rttr::registration::enumeration<shadergraph::block::Blend::Mode>("sg_blend_mode")
 (

@@ -310,6 +310,19 @@
 #define PARM_NODE_NAME custom_block
 #include EXE_FILEPATH
 
+#define PARM_NODE_TYPE Input
+#define PARM_NODE_NAME input
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE Output
+#define PARM_NODE_NAME output
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SubGraph
+#define PARM_NODE_NAME sub_graph
+#include EXE_FILEPATH
+
 //////////////////////////////////////////////////////////////////////////
 // uv
 //////////////////////////////////////////////////////////////////////////

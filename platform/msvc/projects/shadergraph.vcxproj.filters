@@ -103,6 +103,9 @@
     <Filter Include="blocks\input\texture">
       <UniqueIdentifier>{fed04059-8dce-479c-8c04-6ae9125f5d75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\procedural\sdf\primitive">
+      <UniqueIdentifier>{c9934821-3bcf-41a9-9538-0a8fc9293957}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -386,6 +389,18 @@
     <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h">
       <Filter>parser</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Input.h">
+      <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Output.h">
+      <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Input.parm.h">
+      <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Output.parm.h">
+      <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
@@ -415,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\CodeParser.cpp">
       <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\block\SubGraph.cpp">
+      <Filter>blocks\utility\tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
