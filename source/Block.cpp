@@ -76,13 +76,9 @@ void Block::Parser(const std::string& str)
             auto f_dst = std::static_pointer_cast<FunctionVal>(dst.val);
             for (auto& prop : f_dst->desc)
             {
-                if (prop->GetType() == ParserProp::Type::Export)
-                {
-                    if (m_curr_func < 0) {
-                        m_curr_func = m_funcs.size();
-                    }
+                auto type = prop->GetType();
+                if (type == ParserProp::Type::Export) {
                     is_export = true;
-                    break;
                 }
             }
 
@@ -92,8 +88,17 @@ void Block::Parser(const std::string& str)
         }
 		p = p->next;
 	}
+
+    // set curr_func idx
     if (m_funcs.size() == 1) {
         m_curr_func = 0;
+    } else {
+        for (int i = 0, n = m_funcs.size(); i < n; ++i) {
+            if (m_funcs[i].second) {
+                m_curr_func = i;
+                break;
+            }
+        }
     }
     // fixme
     if (m_curr_func < 0) {
@@ -142,6 +147,10 @@ void Block::SetupPorts()
         m_imports.push_back(port);
     }
 
+    if (m_funcs.empty()) {
+        return;
+    }
+
     assert(m_curr_func >= 0 && m_curr_func < static_cast<int>(m_funcs.size()));
     auto func = m_funcs[m_curr_func];
     auto f_val = std::static_pointer_cast<FunctionVal>(func.first.val);
@@ -159,6 +168,15 @@ void Block::SetupPorts()
             port.full_name = f_prop->name;
             port.type.name = f_prop->name;
             port.type.type = VarType::Function;
+
+            auto f_val = std::make_shared<FunctionVal>();
+            f_val->output.type = f_prop->output;
+            f_val->inputs.resize(f_prop->inputs.size());
+            for (int i = 0, n = f_prop->inputs.size(); i < n; ++i) {
+                f_val->inputs[i].type = f_prop->inputs[i];
+            }
+            port.type.val = f_val;
+
             m_imports.push_back(port);
         }
     }
