@@ -17,6 +17,4 @@ TEST_CASE("test")
     auto code = eval.GenShaderCode();
 
     printf("%s\n", code.c_str());
-
-    int zz = 0;
 }

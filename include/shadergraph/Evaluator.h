@@ -35,12 +35,12 @@ public:
     VarType QueryRealType(const Variant* var) const;
     std::string QueryRealName(const Variant* var) const;
 
-private:
     std::string GenShaderHeaderCode() const;
     std::string GenShaderGlobalVarsCode() const;
     std::string GenShaderFuncsCode() const;
     std::string GenShaderMainCode() const;
 
+private:
     void Clear();
 
     void Sort(const std::vector<BlockPtr>& blocks);

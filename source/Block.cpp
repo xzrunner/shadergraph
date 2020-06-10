@@ -173,7 +173,8 @@ void Block::SetupPorts()
             f_val->output.type = f_prop->output;
             f_val->inputs.resize(f_prop->inputs.size());
             for (int i = 0, n = f_prop->inputs.size(); i < n; ++i) {
-                f_val->inputs[i].type = f_prop->inputs[i];
+                f_val->inputs[i].type = f_prop->inputs[i].first;
+                f_val->inputs[i].name = f_prop->inputs[i].second;
             }
             port.type.val = f_val;
 

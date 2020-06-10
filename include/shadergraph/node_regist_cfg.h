@@ -192,6 +192,11 @@
 #define PARM_NODE_NAME raymarching
 #include EXE_FILEPATH
 
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF
+#define PARM_NODE_NAME sdf
+#include EXE_FILEPATH
+
 //////////////////////////////////////////////////////////////////////////
 // math
 //////////////////////////////////////////////////////////////////////////
@@ -248,6 +253,11 @@
 #include EXE_FILEPATH
 
 // sdf
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Sphere
+#define PARM_NODE_NAME sdf_sphere
+#include EXE_FILEPATH
 
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE SDF_Primitives

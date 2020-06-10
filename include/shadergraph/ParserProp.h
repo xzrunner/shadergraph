@@ -41,7 +41,7 @@ struct PropFunction : public ParserProp
     std::string name;
     std::string display_name;
 
-    std::vector<VarType> inputs;
+    std::vector<std::pair<VarType, std::string>> inputs;
     VarType output;
 
     bool defalut_params = false;

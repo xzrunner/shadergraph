@@ -247,7 +247,14 @@ void CommentParser::ParserDescription(const std::string& name)
                 if (token.HasType(CommentToken::Ellipsis)) {
                     func->defalut_params = true;
                 } else {
-                    func->inputs.push_back(StringToType(token.Data()));
+                    auto type = StringToType(token.Data());
+                    std::string name;
+                    Token token = m_tokenizer.PeekToken();
+                    if (token.GetType() == CommentToken::String) {
+                        name = token.Data();
+                        m_tokenizer.NextToken();    // skip name
+                    }
+                    func->inputs.push_back({ type, name });
                 }
             }
         } while (true);

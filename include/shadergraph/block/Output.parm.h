@@ -2,4 +2,4 @@
 #error "You must define PARAM_INFO macro before include this file"
 #endif
 
-PARAM_INFO(Type, shadergraph::VarType, type, m_type, ())
+PARAM_INFO(VarType, shadergraph::VarType, var_type, m_var_type, ())

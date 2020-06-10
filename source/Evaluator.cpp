@@ -43,7 +43,12 @@ std::string Evaluator::GenShaderCode() const
     ret += GenShaderFuncsCode();
 
     // main()
-    ret += GenShaderMainCode();
+    ret += cpputil::StringHelper::Format(R"(
+void main()
+{
+%s
+}
+	)", GenShaderMainCode().c_str());
 
     // version
     if (!ret.empty()) {
@@ -340,12 +345,7 @@ std::string Evaluator::GenShaderMainCode() const
         }
     }
 
-    return cpputil::StringHelper::Format(R"(
-void main()
-{
-%s
-}
-	)", code.c_str());
+    return code;
 }
 
 void Evaluator::Clear()

@@ -15,56 +15,41 @@ namespace shadergraph
 namespace block
 {
 
-void SubGraph::Setup(const std::vector<Variant>& inputs,
-                     const std::vector<Variant>& outputs)
+std::string SubGraph::GetHeader(const Evaluator& eval) const
 {
-    std::vector<shadergraph::Block::Port> imports, exports;
-    imports.reserve(inputs.size());
-    for (auto i : inputs)
-    {
-        shadergraph::Variant var;
-        var.type = i.type;
-        var.name = i.name;
-
-        dag::Node<shadergraph::Variant>::Port port;
-        port.var.type = var;
-        port.var.full_name = i.name;
-        imports.push_back(port);
-    }
-    exports.reserve(outputs.size());
-    for (auto o : outputs)
-    {
-        shadergraph::Variant var;
-        var.type = o.type;
-        var.name = o.name;
-
-        dag::Node<shadergraph::Variant>::Port port;
-        port.var.type = var;
-        port.var.full_name = o.name;
-        exports.push_back(port);
-    }
-    SetImports(imports);
-    SetExports(exports);
+    return GenCode();
 }
 
-void SubGraph::Build()
+void SubGraph::Setup(const std::shared_ptr<dag::Graph<Variant>>& graph,
+                     const std::vector<Variant>& inputs, const std::vector<Variant>& outputs)
 {
+    m_graph = graph;
+
+    auto vars2ports = [](std::vector<dag::Node<Variant>::Port>& dst, const std::vector<Variant>& src) {
+        dst.reserve(src.size());
+        for (auto v : src)
+        {
+            Variant var;
+            var.type = v.type;
+            var.name = v.name;
+
+            dag::Node<Variant>::Port port;
+            port.var.type = var;
+            port.var.full_name = v.name;
+            dst.push_back(port);
+        }
+    };
+
+    std::vector<dag::Node<Variant>::Port> imports, exports;
+    vars2ports(imports, inputs);
+    vars2ports(exports, outputs);
+    SetImports(imports);
+    SetExports(exports);
+
     auto f_val = std::make_shared<FunctionVal>();
-
-    f_val->code = GenCode();
-
-    for (auto& i : m_inputs)
-    {
-        shadergraph::Variant var;
-        var.type = i->GetType();
-        var.name = i->GetName();
-        f_val->inputs.push_back(var);
-    }
-    if (!m_outputs.empty())
-    {
-        shadergraph::Variant var;
-        var.type = m_outputs[0]->GetType();
-        f_val->output = var;
+    f_val->inputs = inputs;
+    if (!outputs.empty()) {
+        f_val->output = outputs[0];
     }
 
     Variant var;
@@ -73,43 +58,68 @@ void SubGraph::Build()
     var.val = f_val;
     m_funcs.clear();
     m_funcs.push_back({ var, true });
+
+    if (!outputs.empty()) {
+        auto& func = outputs.back();
+        assert(func.type == VarType::Function);
+        m_func_name = func.name;
+    }
 }
 
 std::string SubGraph::GenCode() const
 {
-    if (m_outputs.empty()) {
+    std::shared_ptr<Block> ret_node = nullptr;
+    assert(!m_exports.empty());
+    for (auto& node : m_graph->GetAllNodes()) {
+        if (node.second->get_type() == rttr::type::get<Output>() &&
+            std::static_pointer_cast<Output>(node.second)->GetVarType() != VarType::Function) {
+            ret_node = std::static_pointer_cast<Block>(node.second);
+            break;
+        }
+    }
+
+    if (!ret_node) {
         return "";
     }
 
     Evaluator eval;
-    eval.Rebuild(m_outputs[0]);
-    return eval.GenShaderCode();
-}
+    eval.Rebuild(ret_node);
 
-//Variant SubGraph::BlockToVariant(const Block& block)
+    std::string ret = eval.GenShaderFuncsCode();
+    ret += "\n";
+
+    std::string params_str;
+    for (int i = 0, n = m_imports.size(); i < n; ++i)
+    {
+        auto& param = m_imports[i];
+        params_str += TypeToString(param.var.type.type);
+        params_str += " ";
+        params_str += param.var.type.name;
+        if (i != n - 1) {
+            params_str += ", ";
+        }
+    }
+
+    ret += cpputil::StringHelper::Format(R"(
+%s %s(%s)
+{
+%s
+return ret;
+}
+)", TypeToString(m_exports[0].var.type.type).c_str(), m_func_name.c_str(), params_str.c_str(), eval.GenShaderMainCode().c_str());
+    return ret;
+
+
+//    return cpputil::StringHelper::Format(R"(
+//%s
+//
+//float f_scene(vec3 _out)
 //{
-//    Variant ret;
-//    ret.name = block.GetName();
-//
-//    auto type = block.get_type();
-//    if (type == rttr::type::get<block::Bool>()) {
-//        ret.type = VarType::Bool;
-//    } else if (type == rttr::type::get<block::Int>()) {
-//        ret.type = VarType::Int;
-//    } else if (type == rttr::type::get<block::Float>()) {
-//        ret.type = VarType::Float;
-//    } else if (type == rttr::type::get<block::Float2>()) {
-//        ret.type = VarType::Float2;
-//    } else if (type == rttr::type::get<block::Float3>()) {
-//        ret.type = VarType::Float3;
-//    } else if (type == rttr::type::get<block::Float4>()) {
-//        ret.type = VarType::Float4;
-//    } else {
-//        assert(0);
-//    }
-//
-//    return ret;
+//%s
+//return ret;
 //}
+//	)", eval.GenShaderFuncsCode().c_str(), eval.GenShaderMainCode().c_str());
+}
 
 }
 }

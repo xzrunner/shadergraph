@@ -8,6 +8,9 @@
 
 namespace shadergraph
 {
+
+struct FunctionVal;
+
 namespace block
 {
 
@@ -19,21 +22,18 @@ class SubGraph : public Block
 public:
     SubGraph() {}
 
-    void Setup(const std::vector<Variant>& inputs,
-        const std::vector<Variant>& outputs);
+    virtual std::string GetHeader(const Evaluator& eval) const;
 
-    void Build();
+    void Setup(const std::shared_ptr<dag::Graph<Variant>>& graph,
+        const std::vector<Variant>& inputs, const std::vector<Variant>& outputs);
 
 private:
     std::string GenCode() const;
 
-    //static Variant BlockToVariant(const Block& block);
-
 private:
-    std::vector<std::shared_ptr<Input>> m_inputs;
-    std::vector<std::shared_ptr<Output>> m_outputs;
+    std::shared_ptr<dag::Graph<Variant>> m_graph = nullptr;
 
-    dag::Graph<Variant> m_graph;
+    std::string m_func_name;
 
     RTTR_ENABLE(Block)
 
