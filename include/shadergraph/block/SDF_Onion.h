@@ -9,21 +9,21 @@ namespace shadergraph
 namespace block
 {
 
-class SDF_Sphere : public Block
+class SDF_Onion : public Block
 {
 public:
-    SDF_Sphere() : Block(R"(
+    SDF_Onion() : Block(R"(
 
-float sdSphere(vec3 p, float s)
+float opOnion(in float sdf, in float thickness)
 {
-    return length(p) - s;
+    return abs(sdf) - thickness;
 }
 
 )") {}
 
     RTTR_ENABLE(Block)
 
-}; // SDF_Sphere
+}; // SDF_Onion
 
 }
 }

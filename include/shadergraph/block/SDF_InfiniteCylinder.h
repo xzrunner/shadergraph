@@ -9,21 +9,21 @@ namespace shadergraph
 namespace block
 {
 
-class SDF_Sphere : public Block
+class SDF_InfiniteCylinder : public Block
 {
 public:
-    SDF_Sphere() : Block(R"(
+    SDF_InfiniteCylinder() : Block(R"(
 
-float sdSphere(vec3 p, float s)
+float sdCylinder(vec3 p, vec3 c)
 {
-    return length(p) - s;
+    return length(p.xz - c.xy) - c.z;
 }
 
 )") {}
 
     RTTR_ENABLE(Block)
 
-}; // SDF_Sphere
+}; // SDF_InfiniteCylinder
 
 }
 }

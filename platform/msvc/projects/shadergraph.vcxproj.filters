@@ -106,6 +106,9 @@
     <Filter Include="blocks\procedural\sdf\primitive">
       <UniqueIdentifier>{c9934821-3bcf-41a9-9538-0a8fc9293957}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\procedural\sdf\operation">
+      <UniqueIdentifier>{4f0ee9bf-9784-4f54-81b5-88f067963019}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -409,6 +412,96 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\Output.parm.h">
       <Filter>blocks\utility\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Box.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_RoundBox.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Torus.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedTorus.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Link.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_InfiniteCylinder.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Cone.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_BoundCone.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_InfiniteCone.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Plane.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_HexagonalPrism.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_TriangularPrism.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Capsule.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_VerticalCapsule.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCylinder.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCylinder2.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_RoundedCylinder.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCone.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCone2.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_SolidAngle.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_RoundCone.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_RoundCone2.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Ellipsoid.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Rhombus.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Octahedron.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Octahedron2.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Pyramid.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Triangle.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Quad.h">
+      <Filter>blocks\procedural\sdf\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Onion.h">
+      <Filter>blocks\procedural\sdf\operation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

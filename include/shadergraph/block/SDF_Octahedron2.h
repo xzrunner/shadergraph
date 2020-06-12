@@ -9,21 +9,22 @@ namespace shadergraph
 namespace block
 {
 
-class SDF_Sphere : public Block
+class SDF_Octahedron2 : public Block
 {
 public:
-    SDF_Sphere() : Block(R"(
+    SDF_Octahedron2() : Block(R"(
 
-float sdSphere(vec3 p, float s)
+float sdOctahedron(vec3 p, float s)
 {
-    return length(p) - s;
+    p = abs(p);
+    return (p.x + p.y + p.z - s) * 0.57735027;
 }
 
 )") {}
 
     RTTR_ENABLE(Block)
 
-}; // SDF_Sphere
+}; // SDF_Octahedron2
 
 }
 }

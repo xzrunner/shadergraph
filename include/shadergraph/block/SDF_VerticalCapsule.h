@@ -9,21 +9,22 @@ namespace shadergraph
 namespace block
 {
 
-class SDF_Sphere : public Block
+class SDF_VerticalCapsule : public Block
 {
 public:
-    SDF_Sphere() : Block(R"(
+    SDF_VerticalCapsule() : Block(R"(
 
-float sdSphere(vec3 p, float s)
+float sdVerticalCapsule(vec3 p, float h, float r)
 {
-    return length(p) - s;
+    p.y -= clamp(p.y, 0.0, h);
+    return length(p) - r;
 }
 
 )") {}
 
     RTTR_ENABLE(Block)
 
-}; // SDF_Sphere
+}; // SDF_VerticalCapsule
 
 }
 }

@@ -1,3 +1,5 @@
+// from https://iquilezles.org/www/articles/distfunctions/distfunctions.htm
+
 #pragma once
 
 #include "shadergraph/Block.h"

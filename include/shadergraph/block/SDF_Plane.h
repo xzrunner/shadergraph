@@ -9,21 +9,22 @@ namespace shadergraph
 namespace block
 {
 
-class SDF_Sphere : public Block
+class SDF_Plane : public Block
 {
 public:
-    SDF_Sphere() : Block(R"(
+    SDF_Plane() : Block(R"(
 
-float sdSphere(vec3 p, float s)
+float sdPlane(vec3 p, vec3 n, float h)
 {
-    return length(p) - s;
+    // n must be normalized
+    return dot(p, n) + h;
 }
 
 )") {}
 
     RTTR_ENABLE(Block)
 
-}; // SDF_Sphere
+}; // SDF_Plane
 
 }
 }

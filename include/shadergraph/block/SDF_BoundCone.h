@@ -9,21 +9,22 @@ namespace shadergraph
 namespace block
 {
 
-class SDF_Sphere : public Block
+class SDF_BoundCone : public Block
 {
 public:
-    SDF_Sphere() : Block(R"(
+    SDF_BoundCone() : Block(R"(
 
-float sdSphere(vec3 p, float s)
+float sdCone(vec3 p, vec2 c, float h)
 {
-    return length(p) - s;
+    float q = length(p.xz);
+    return max(dot(c.xy, vec2(q, p.y)), -h - p.y);
 }
 
 )") {}
 
     RTTR_ENABLE(Block)
 
-}; // SDF_Sphere
+}; // SDF_BoundCone
 
 }
 }
