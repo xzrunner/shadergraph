@@ -411,13 +411,14 @@ void Evaluator::Concatenate()
                 has_dynamic = true;
                 if (!o.conns.empty())
                 {
-                    assert(o.conns.size() == 1);
-                    auto& conn = o.conns[0];
-                    auto real_type = conn.node.lock()->GetImports()[conn.idx].var.type.type;
-                    //m_real_types.insert({ &o.var.type, real_type });
-                    m_real_types[&o.var.type] = real_type;
-                    if (real_type > max_type) {
-                        max_type = real_type;
+                    for (auto& conn : o.conns)
+                    {
+                        auto real_type = conn.node.lock()->GetImports()[conn.idx].var.type.type;
+                        //m_real_types.insert({ &o.var.type, real_type });
+                        m_real_types[&o.var.type] = real_type;
+                        if (real_type > max_type) {
+                            max_type = real_type;
+                        }
                     }
                 }
             }
