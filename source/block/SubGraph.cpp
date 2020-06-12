@@ -100,25 +100,26 @@ std::string SubGraph::GenCode() const
         }
     }
 
+    assert(!ret_node->GetImports().empty());
+    auto& ret_conns = ret_node->GetImports()[0].conns;
+    if (ret_conns.empty()) {
+        return "";
+    }
+    assert(ret_conns.size() == 1);
+    auto ret_conn = ret_conns[0];
+    
+    auto ret_type_str = TypeToString(m_exports[0].var.type.type);
+    auto main_str = eval.GenShaderMainCode();
+    std::string ret_var_name = ret_conn.node.lock()->GetExports()[ret_conn.idx].var.type.name;
+
     ret += cpputil::StringHelper::Format(R"(
 %s %s(%s)
 {
 %s
-return ret;
+return %s;
 }
-)", TypeToString(m_exports[0].var.type.type).c_str(), m_func_name.c_str(), params_str.c_str(), eval.GenShaderMainCode().c_str());
+)", ret_type_str.c_str(), m_func_name.c_str(), params_str.c_str(), main_str.c_str(), ret_var_name.c_str());
     return ret;
-
-
-//    return cpputil::StringHelper::Format(R"(
-//%s
-//
-//float f_scene(vec3 _out)
-//{
-//%s
-//return ret;
-//}
-//	)", eval.GenShaderFuncsCode().c_str(), eval.GenShaderMainCode().c_str());
 }
 
 }
