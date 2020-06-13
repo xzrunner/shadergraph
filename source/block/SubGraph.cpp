@@ -110,7 +110,7 @@ std::string SubGraph::GenCode() const
     
     auto ret_type_str = TypeToString(m_exports[0].var.type.type);
     auto main_str = eval.GenShaderMainCode();
-    std::string ret_var_name = ret_conn.node.lock()->GetExports()[ret_conn.idx].var.type.name;
+    std::string ret_var_name = eval.QueryRealName(&ret_conn.node.lock()->GetExports()[ret_conn.idx].var.type);
 
     ret += cpputil::StringHelper::Format(R"(
 %s %s(%s)
