@@ -109,6 +109,18 @@
     <Filter Include="blocks\procedural\sdf\operation">
       <UniqueIdentifier>{4f0ee9bf-9784-4f54-81b5-88f067963019}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\procedural\sdf\operation\alterations">
+      <UniqueIdentifier>{67dab2b8-f724-4f46-8f52-daba29f2e1b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\procedural\sdf\operation\combinations">
+      <UniqueIdentifier>{3b558ce8-b32b-49f5-8e0c-6814c7b0df49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\procedural\sdf\operation\positioning">
+      <UniqueIdentifier>{743d4332-b7fe-40d0-b03b-01ade4ef48e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="blocks\procedural\sdf\operation\deformations">
+      <UniqueIdentifier>{a7a8f133-5fd1-49ce-84dd-12e51888b7a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -501,7 +513,64 @@
       <Filter>blocks\procedural\sdf\primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Onion.h">
-      <Filter>blocks\procedural\sdf\operation</Filter>
+      <Filter>blocks\procedural\sdf\operation\alterations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Intersection.h">
+      <Filter>blocks\procedural\sdf\operation\combinations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Subtraction.h">
+      <Filter>blocks\procedural\sdf\operation\combinations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Union.h">
+      <Filter>blocks\procedural\sdf\operation\combinations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Elongation.h">
+      <Filter>blocks\procedural\sdf\operation\alterations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Elongation2.h">
+      <Filter>blocks\procedural\sdf\operation\alterations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Rounding.h">
+      <Filter>blocks\procedural\sdf\operation\alterations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Extrusion.h">
+      <Filter>blocks\procedural\sdf\operation\alterations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Revolution.h">
+      <Filter>blocks\procedural\sdf\operation\alterations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_SmoothUnion.h">
+      <Filter>blocks\procedural\sdf\operation\combinations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_SmoothSubtraction.h">
+      <Filter>blocks\procedural\sdf\operation\combinations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_SmoothIntersection.h">
+      <Filter>blocks\procedural\sdf\operation\combinations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Scale.h">
+      <Filter>blocks\procedural\sdf\operation\positioning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_SymmetryX.h">
+      <Filter>blocks\procedural\sdf\operation\positioning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_SymmetryXZ.h">
+      <Filter>blocks\procedural\sdf\operation\positioning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_InfiniteRepetition.h">
+      <Filter>blocks\procedural\sdf\operation\positioning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_FiniteRepetition.h">
+      <Filter>blocks\procedural\sdf\operation\positioning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Displacement.h">
+      <Filter>blocks\procedural\sdf\operation\deformations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Twist.h">
+      <Filter>blocks\procedural\sdf\operation\deformations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Bend.h">
+      <Filter>blocks\procedural\sdf\operation\deformations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

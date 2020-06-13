@@ -409,9 +409,106 @@
 #define PARM_NODE_NAME sdf_quad
 #include EXE_FILEPATH
 
+// op
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Elongation
+#define PARM_NODE_NAME sdf_elongation
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Elongation2
+#define PARM_NODE_NAME sdf_elongation2
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Rounding
+#define PARM_NODE_NAME sdf_rounding
+#include EXE_FILEPATH
+
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE SDF_Onion
 #define PARM_NODE_NAME sdf_onion
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Extrusion
+#define PARM_NODE_NAME sdf_extrusion
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Revolution
+#define PARM_NODE_NAME sdf_revolution
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Union
+#define PARM_NODE_NAME sdf_union
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Subtraction
+#define PARM_NODE_NAME sdf_subtraction
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Intersection
+#define PARM_NODE_NAME sdf_intersection
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_SmoothUnion
+#define PARM_NODE_NAME sdf_smooth_union
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_SmoothSubtraction
+#define PARM_NODE_NAME sdf_smooth_subtraction
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_SmoothIntersection
+#define PARM_NODE_NAME sdf_smooth_intersection
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Scale
+#define PARM_NODE_NAME sdf_scale
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_SymmetryX
+#define PARM_NODE_NAME sdf_symmetry_x
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_SymmetryXZ
+#define PARM_NODE_NAME sdf_symmetry_xz
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_InfiniteRepetition
+#define PARM_NODE_NAME sdf_infinite_repetition
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_FiniteRepetition
+#define PARM_NODE_NAME sdf_finite_repetition
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Displacement
+#define PARM_NODE_NAME sdf_displacement
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Twist
+#define PARM_NODE_NAME sdf_twist
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SDF_Bend
+#define PARM_NODE_NAME sdf_bend
 #include EXE_FILEPATH
 
 // shapes
