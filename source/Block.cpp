@@ -34,6 +34,12 @@ void Block::SetupPorts(const std::vector<Variant>& inputs,
 
 void Block::Parser(const std::string& str)
 {
+    // reset
+    m_funcs.clear();
+    m_curr_func = -1;
+    m_global_vars.clear();
+    m_structs.clear();
+
     CommentParser parser(str);
     parser.Parse();
 
