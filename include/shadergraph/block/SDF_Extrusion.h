@@ -20,7 +20,7 @@ public:
 
 float opExtrusion(in vec3 p, in float h)
 {
-    float d = f_primitive(p.xy)
+    float d = f_primitive(p.xy);
     vec2 w = vec2(d, abs(p.z) - h);
     return min(max(w.x, w.y), 0.0) + length(max(w, 0.0));
 }
@@ -31,4 +31,5 @@ float opExtrusion(in vec3 p, in float h)
 
 }; // SDF_Extrusion
 
+}
 }
