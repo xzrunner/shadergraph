@@ -190,7 +190,7 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
             switch (init_v.type)
             {
             case cslang::VarType::Int:
-                std::static_pointer_cast<FloatVal>(val)->x = init_v.i;
+                std::static_pointer_cast<FloatVal>(val)->x = static_cast<float>(init_v.i);
                 break;
 
             case cslang::VarType::Float:
@@ -198,7 +198,7 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
                 break;
 
             case cslang::VarType::Double:
-                std::static_pointer_cast<FloatVal>(val)->x = init_v.d;
+                std::static_pointer_cast<FloatVal>(val)->x = static_cast<float>(init_v.d);
                 break;
 
             default:
