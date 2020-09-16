@@ -572,6 +572,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Bend.h">
       <Filter>blocks\procedural\sdf\operation\deformations</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SelectiveColor.h">
+      <Filter>blocks\artistic\filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

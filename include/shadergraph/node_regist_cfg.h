@@ -49,6 +49,12 @@
 #define PARM_NODE_NAME blend
 #include EXE_FILEPATH
 
+// filter
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SelectiveColor
+#define PARM_NODE_NAME selective_color
+#include EXE_FILEPATH
+
 // mask
 
 #define PARM_NODE_TYPE ChannelMask
