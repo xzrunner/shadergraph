@@ -36,7 +36,7 @@ public:
     std::string QueryRealName(const Variant* var) const;
 
     std::string GenShaderHeaderCode() const;
-    std::string GenShaderGlobalVarsCode() const;
+    std::string GenShaderGlobalVarsCode(bool only_uniform) const;
     std::string GenShaderFuncsCode() const;
     std::string GenShaderMainCode() const;
 

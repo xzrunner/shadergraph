@@ -37,7 +37,16 @@ std::string Evaluator::GenShaderCode() const
     ret += GenShaderHeaderCode();
 
     // global variants
-    ret += GenShaderGlobalVarsCode();
+    ret += GenShaderGlobalVarsCode(false);
+
+    // ubo
+    auto ubo = GenShaderGlobalVarsCode(true);
+    if (!ubo.empty()) 
+    {
+        ret += "\nuniform UBO {\n";
+        ret += ubo;
+        ret += "};\n";
+    }
 
     // functions
     ret += GenShaderFuncsCode();
@@ -127,7 +136,7 @@ std::string Evaluator::GenShaderHeaderCode() const
     return code;
 }
 
-std::string Evaluator::GenShaderGlobalVarsCode() const
+std::string Evaluator::GenShaderGlobalVarsCode(bool only_uniform) const
 {
     std::string code;
 
@@ -153,9 +162,14 @@ std::string Evaluator::GenShaderGlobalVarsCode() const
                 continue;
             }
 
-            if (uniform) {
-                code += "uniform ";
+            if ((only_uniform && !uniform) ||
+                (!only_uniform && uniform)) {
+                continue;
             }
+
+            //if (uniform) {
+            //    code += "uniform ";
+            //}
 
             if (v.type == VarType::Array)
             {
@@ -168,7 +182,7 @@ std::string Evaluator::GenShaderGlobalVarsCode() const
             }
             else
             {
-                if (v.val)
+                if (v.val && !uniform)
                 {
                     switch (v.type)
                     {
