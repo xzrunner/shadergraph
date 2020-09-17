@@ -68,7 +68,19 @@ void Block::Parser(const std::string& str)
             unique.insert(p);
             auto src = std::static_pointer_cast<cslang::ast::DeclarationNode>(p);
             auto dst = CodeParser::ToVariant(parser, src);
-            m_global_vars.push_back(dst);
+            if (dst.type != VarType::Invalid) 
+            {
+                // ubo
+                if (dst.type == VarType::Struct)
+                {
+                    auto st_val = std::static_pointer_cast<StructVal>(dst.val);
+                    std::copy(st_val->children.begin(), st_val->children.end(), std::back_inserter(m_global_vars));
+                }
+                else
+                {
+                    m_global_vars.push_back(dst);
+                }
+            }
         }
             break;
         case cslang::NK_Function:

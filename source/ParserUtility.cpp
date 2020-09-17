@@ -126,11 +126,23 @@ std::string TypeToString(VarType type)
     case VarType::Array:
         // todo
         break;
+    case VarType::Uniform:
+        ret = "Uniform";
+        break;
 
     default:
         assert(0);
     }
     return ret;
+}
+
+std::string TypeToString(const Variant& var)
+{
+    if (var.type == VarType::Struct) {
+        return var.name;
+    } else {
+        return TypeToString(var.type);
+    }
 }
 
 }

@@ -93,6 +93,8 @@ Evaluator::CalcUniformValues() const
             // read default value
             dst.val = src.val;
 
+            assert(src.type == VarType::Uniform);
+
             // calc input value
             assert(dst.type == VarType::Uniform);
             auto u_val = std::static_pointer_cast<UniformVal>(dst.val);
@@ -220,7 +222,7 @@ std::string Evaluator::GenShaderGlobalVarsCode(bool only_uniform) const
                 }
                 else
                 {
-                    code += TypeToString(v.type) + " " + v.name + ";\n";
+                    code += TypeToString(v) + " " + v.name + ";\n";
                 }
             }
             unique.insert(var.name);

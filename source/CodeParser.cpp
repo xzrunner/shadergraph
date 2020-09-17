@@ -111,6 +111,10 @@ shadergraph::VarType trans_src_type(int cs_type)
         return shadergraph::VarType::Sampler2D;
     case cslang::TK_SAMPLER_CUBE:
         return shadergraph::VarType::SamplerCube;
+
+    case cslang::TK_STRUCT:
+        return shadergraph::VarType::Struct;
+
     default:
         assert(0);
         return shadergraph::VarType::Invalid;
@@ -121,11 +125,77 @@ shadergraph::VarType trans_src_type(int cs_type)
 
 namespace shadergraph
 {
-
+    
 Variant CodeParser::ToVariant(const CommentParser& desc,
                               const cslang::ast::DeclarationNodePtr& src)
 {
+    VarType type = VarType::Invalid;
+    std::string name;
+    ValPtr val = nullptr;
+
     bool is_uniform = false;
+
+    switch (src->specs->tySpecs->kind)
+    {
+    case cslang::NK_EnumSpecifier:
+    case cslang::NK_StructSpecifier:
+    case cslang::NK_UnionSpecifier:
+        return Variant();
+
+    case cslang::NK_UniformSpecifier:
+    {
+        auto struct_node = std::static_pointer_cast<cslang::ast::StructSpecifierNode>(src->specs->tySpecs);
+
+        type = VarType::Struct;
+
+        name = struct_node->id;
+
+        auto st_val = std::make_shared<StructVal>();
+        st_val->type_name = name;
+
+        auto member = struct_node->next;
+        while (member)
+        {
+            Variant child;
+
+            child.type = VarType::Uniform;
+
+            auto unif = std::make_shared<UniformVal>();
+
+            assert(member->kind == cslang::NK_StructDeclaration);
+            auto st_decl = std::static_pointer_cast<cslang::ast::StructDeclarationNode>(member);
+
+            unif->var.type = trans_src_type(std::static_pointer_cast<cslang::ast::TokenNode>(st_decl->specs->tySpecs)->token);
+
+            assert(st_decl->stDecs->kind == cslang::NK_StructDeclarator);
+            unif->var.name = std::static_pointer_cast<cslang::ast::StructDeclaratorNode>(st_decl->stDecs)->dec->id;
+            child.name = unif->var.name;
+
+            child.val = unif;
+
+            st_val->children.push_back(child);
+
+            member = member->next;
+        }
+        val = st_val;
+    }
+        break;
+
+    case cslang::NK_TypedefName:
+        return Variant();
+
+    case cslang::NK_NameDeclarator:
+    {
+        auto decl_node = std::static_pointer_cast<cslang::ast::DeclaratorNode>(src->specs->tySpecs);
+
+        Variant ret;
+        ret.type = VarType::Struct;
+        ret.name = decl_node->id;
+        return ret;
+    }
+        break;
+    }
+
     if (src->specs->tyQuals)
     {
         auto storage = std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tyQuals)->token;
@@ -133,82 +203,88 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
             is_uniform = true;
         }
     }
-
-    auto type = trans_src_type(std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tySpecs)->token);
-
-    ValPtr val = nullptr;
-    std::string name;
-    auto initDec = std::static_pointer_cast<cslang::ast::InitDeclaratorNode>(src->initDecs);
-    switch (initDec->dec->kind)
+    
+    switch (src->specs->tySpecs->kind)
     {
-    case cslang::NK_NameDeclarator:
-        name = initDec->dec->id;
+    case cslang::NK_Token:
+        type = trans_src_type(std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tySpecs)->token);
         break;
-
-    case cslang::NK_ArrayDeclarator:
-    {
-        auto decl = std::static_pointer_cast<cslang::ast::ArrayDeclaratorNode>(initDec->dec);
-        name = decl->dec->id;
-
-        auto array_v = std::make_shared<ArrayVal>();
-        array_v->type = type;
-        array_v->items.resize(decl->expr->val.i[0]);
-
-        type = VarType::Array;
-        val = array_v;
-    }
-        break;
-
-    //case NK_FunctionDeclarator:
-    //    break;
-
-    //case NK_PointerDeclarator:
-    //    break;
-
-    default:
-        assert(0);
     }
 
-    if (initDec->init)
+    if (src->initDecs)
     {
-        if (!val) {
-            val = create_value(type);
-        }
-        assert(initDec->init->lbrace == 0);
-        auto init_v = cslang::EvalExpression(initDec->init->expr);
-        switch (type)
+        auto initDec = std::static_pointer_cast<cslang::ast::InitDeclaratorNode>(src->initDecs);
+        switch (initDec->dec->kind)
         {
-        case VarType::Int:
+        case cslang::NK_NameDeclarator:
+            name = initDec->dec->id;
+            break;
+
+        case cslang::NK_ArrayDeclarator:
         {
-            assert(init_v.type == cslang::VarType::Int);
-            std::static_pointer_cast<IntVal>(val)->x = init_v.i;
+            auto decl = std::static_pointer_cast<cslang::ast::ArrayDeclaratorNode>(initDec->dec);
+            name = decl->dec->id;
+
+            auto array_v = std::make_shared<ArrayVal>();
+            array_v->type = type;
+            array_v->items.resize(decl->expr->val.i[0]);
+
+            type = VarType::Array;
+            val = array_v;
         }
             break;
 
-        case VarType::Float:
+        //case NK_FunctionDeclarator:
+        //    break;
+
+        //case NK_PointerDeclarator:
+        //    break;
+
+        default:
+            assert(0);
+        }
+
+        if (initDec->init)
         {
-            switch (init_v.type)
+            if (!val) {
+                val = create_value(type);
+            }
+            assert(initDec->init->lbrace == 0);
+            auto init_v = cslang::EvalExpression(initDec->init->expr);
+            switch (type)
             {
-            case cslang::VarType::Int:
-                std::static_pointer_cast<FloatVal>(val)->x = static_cast<float>(init_v.i);
+            case VarType::Int:
+            {
+                assert(init_v.type == cslang::VarType::Int);
+                std::static_pointer_cast<IntVal>(val)->x = init_v.i;
+            }
                 break;
 
-            case cslang::VarType::Float:
-                std::static_pointer_cast<FloatVal>(val)->x = init_v.f;
-                break;
+            case VarType::Float:
+            {
+                switch (init_v.type)
+                {
+                case cslang::VarType::Int:
+                    std::static_pointer_cast<FloatVal>(val)->x = static_cast<float>(init_v.i);
+                    break;
 
-            case cslang::VarType::Double:
-                std::static_pointer_cast<FloatVal>(val)->x = static_cast<float>(init_v.d);
+                case cslang::VarType::Float:
+                    std::static_pointer_cast<FloatVal>(val)->x = init_v.f;
+                    break;
+
+                case cslang::VarType::Double:
+                    std::static_pointer_cast<FloatVal>(val)->x = static_cast<float>(init_v.d);
+                    break;
+
+                default:
+                    assert(0);
+                }
+            }
                 break;
 
             default:
                 assert(0);
             }
-        }
-            break;
-
-        default:
-            assert(0);
         }
     }
 
