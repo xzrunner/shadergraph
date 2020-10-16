@@ -1,12 +1,19 @@
 #include "shadergraph/BlockHelper.h"
+#include "shadergraph/Evaluator.h"
 
 #include <stdarg.h>
 
 namespace shadergraph
 {
 
-VarType BlockHelper::ResolveType(const dag::Node<Variant>::Port& p)
+VarType BlockHelper::ResolveType(const Evaluator& eval,
+                                 const dag::Node<Variant>::Port& p)
 {
+    auto type = eval.QueryRealType(&p.var.type);
+    if (type != VarType::Invalid && type != VarType::Dynamic) {
+        return type;
+    }
+
     if (p.conns.empty()) {
         return VarType::Invalid;
     }
@@ -14,14 +21,23 @@ VarType BlockHelper::ResolveType(const dag::Node<Variant>::Port& p)
     assert(p.conns.size() == 1);
     auto node = p.conns[0].node.lock();
     int idx = p.conns[0].idx;
-    return node ? node->GetExports()[idx].var.type.type : VarType::Invalid;
+    if (!node) {
+        return VarType::Invalid;
+    }
+    type = node->GetExports()[idx].var.type.type;
+    if (type == VarType::Dynamic) {
+        return eval.QueryRealType(&node->GetExports()[idx].var.type);
+    } else {
+        return type;
+    }
 }
 
-VarType BlockHelper::ResolveBinOpRetType(const dag::Node<Variant>::Port& a,
+VarType BlockHelper::ResolveBinOpRetType(const Evaluator& eval,
+                                         const dag::Node<Variant>::Port& a,
                                          const dag::Node<Variant>::Port& b)
 {
-    auto type_a = ResolveType(a);
-    auto type_b = ResolveType(b);
+    auto type_a = ResolveType(eval, a);
+    auto type_b = ResolveType(eval, b);
     if (type_a == VarType::Invalid &&
         type_b == VarType::Invalid) {
         return VarType::Invalid;

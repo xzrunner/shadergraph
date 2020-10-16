@@ -36,7 +36,10 @@ public:
             }
         }
 
-        auto type = BlockHelper::ResolveBinOpRetType(m_imports[0], m_imports[1]);
+        auto type = eval.QueryRealType(&m_exports[0].var.type);
+        if (type == VarType::Invalid || type == VarType::Dynamic) {
+            type = BlockHelper::ResolveBinOpRetType(eval, m_imports[0], m_imports[1]);
+        }
         assert(type != VarType::Invalid);
         return cpputil::StringHelper::Format("%s #mul# = %s;",
             TypeToString(type).c_str(),
