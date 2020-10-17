@@ -17,6 +17,7 @@ public:
             { VarType::Float2,    "uv" },
         }, {
             { VarType::Float4, "rgba" },
+            { VarType::Float3, "rgb" },
             { VarType::Float,  "r" },
             { VarType::Float,  "g" },
             { VarType::Float,  "b" },
@@ -27,6 +28,7 @@ public:
     enum class Output
     {
         RGBA,
+        RGB,
         R,
         G,
         B,
@@ -38,6 +40,7 @@ public:
 		std::string ret;
 
 		ret += "vec4 #rgba# = texture(#tex#, #uv#);\n";
+        ret += "vec3 #rgb# = #rgba#.rgb;\n";
 
 		if (!m_exports[static_cast<int>(Output::R)].conns.empty()) {
 			ret += "float #r# = #rgba#.r;\n";
