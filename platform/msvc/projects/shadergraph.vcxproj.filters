@@ -608,6 +608,9 @@
     <ClCompile Include="..\..\..\source\block\SubGraph.cpp">
       <Filter>blocks\utility\tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\block\CustomBlock.cpp">
+      <Filter>blocks\utility\tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\shadergraph\block\Float.parm.h">

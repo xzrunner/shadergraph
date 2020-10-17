@@ -14,7 +14,7 @@ class CustomBlock : public Block
 public:
     CustomBlock() {}
 
-    void SetCode(const std::string& code) { Parser(code); }
+    void SetCode(const std::string& code);
     const std::string& GetCode() const { return m_code; }
 
     RTTR_ENABLE(Block)
