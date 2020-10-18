@@ -20,7 +20,13 @@ public:
     static constexpr char* const DELTA_TIME_STR = "u_delta_time";
 
 public:
-    Time()
+    Time() : Block(BlockHelper::StringFormat(R"(
+uniform vec4 %s;
+uniform vec4 %s;
+uniform vec4 %s;
+uniform vec4 %s;
+)", TIME_STR, SIN_TIME_STR, COS_TIME_STR, DELTA_TIME_STR)
+)
     {
         SetupPorts({
         }, {
@@ -33,16 +39,6 @@ public:
         Init();
     }
     virtual ~Time();
-
-    virtual std::string GetHeader(const Evaluator& eval) const
-    {
-        return BlockHelper::StringFormat(R"(
-uniform vec4 #%s#;
-uniform vec4 #%s#;
-uniform vec4 #%s#;
-uniform vec4 #%s#;
-)", TIME_STR, SIN_TIME_STR, COS_TIME_STR, DELTA_TIME_STR);
-    }
 
 private:
     void Init();
