@@ -14,10 +14,10 @@ namespace block
 class Time : public Block
 {
 public:
-    static constexpr char* const TIME_STR       = "u_time";
-    static constexpr char* const SIN_TIME_STR   = "u_sin_time";
-    static constexpr char* const COS_TIME_STR   = "u_cos_time";
-    static constexpr char* const DELTA_TIME_STR = "u_delta_time";
+    static constexpr char* const TIME_STR       = "time";
+    static constexpr char* const SIN_TIME_STR   = "sin_time";
+    static constexpr char* const COS_TIME_STR   = "cos_time";
+    static constexpr char* const DELTA_TIME_STR = "delta_time";
 
 public:
     Time() : Block(BlockHelper::StringFormat(R"(
