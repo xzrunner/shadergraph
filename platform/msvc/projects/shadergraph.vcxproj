@@ -19,6 +19,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Bool.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Bool.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\CrossProduct.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\DotProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Bend.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCone.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.h" />

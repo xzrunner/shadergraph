@@ -121,6 +121,9 @@
     <Filter Include="blocks\procedural\sdf\operation\deformations">
       <UniqueIdentifier>{a7a8f133-5fd1-49ce-84dd-12e51888b7a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="blocks\math\vector">
+      <UniqueIdentifier>{6ad8a09b-4aed-4773-a15d-3adfc81d45da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\shadergraph\Block.h">
@@ -574,6 +577,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\SelectiveColor.h">
       <Filter>blocks\artistic\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\DotProduct.h">
+      <Filter>blocks\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\CrossProduct.h">
+      <Filter>blocks\math\vector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

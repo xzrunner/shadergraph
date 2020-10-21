@@ -207,6 +207,8 @@
 // math
 //////////////////////////////////////////////////////////////////////////
 
+// basic
+
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE Add
 #define PARM_NODE_NAME add
@@ -225,6 +227,18 @@
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE Divide
 #define PARM_NODE_NAME div
+#include EXE_FILEPATH
+
+// vector
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE DotProduct
+#define PARM_NODE_NAME dot_product
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE CrossProduct
+#define PARM_NODE_NAME cross_product
 #include EXE_FILEPATH
 
 //////////////////////////////////////////////////////////////////////////
