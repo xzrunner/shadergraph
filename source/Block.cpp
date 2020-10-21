@@ -30,6 +30,9 @@ void Block::SetupPorts(const std::vector<Variant>& inputs,
         m_exports[i].var.type = outputs[i];
         m_exports[i].var.full_name = outputs[i].name;
     }
+
+    m_default_in_vals.resize(inputs.size());
+    m_default_out_vals.resize(outputs.size());
 }
 
 void Block::Parser(const std::string& str)
@@ -143,6 +146,9 @@ void Block::SetupPorts()
     m_imports.clear();
     m_exports.clear();
 
+    m_default_in_vals.clear();
+    m_default_out_vals.clear();
+
     for (auto& var : m_global_vars)
     {
         dag::Node<Variant>::PortVar port;
@@ -164,6 +170,7 @@ void Block::SetupPorts()
 
         m_imports.push_back(port);
     }
+    m_default_in_vals.resize(m_imports.size());
 
     if (m_funcs.empty()) {
         return;
@@ -200,12 +207,17 @@ void Block::SetupPorts()
         }
     }
 
+    m_default_in_vals.resize(m_imports.size());
+    m_default_out_vals.resize(m_exports.size());
+
     if (f_val->output.type == VarType::Void) {
         m_exports.clear();
     } else {
         m_exports.push_back(PortFromVar(f_val->output));
     }
     m_exports.push_back(PortFromVar(func.first));
+
+    m_default_out_vals.resize(m_exports.size());
 }
 
 dag::Node<Variant>::PortVar

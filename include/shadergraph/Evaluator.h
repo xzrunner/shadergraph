@@ -53,6 +53,9 @@ private:
 
     void Rename(std::string& str, const Block& block) const;
 
+    std::shared_ptr<Value> ValueTrans(const Variant& var, VarType type) const;
+    std::string VariantToString(const Variant& var, VarType type) const;
+
     static void GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& dst);
 
     static Variant CalcValue(const dag::Node<Variant>::PortAddr& conn);

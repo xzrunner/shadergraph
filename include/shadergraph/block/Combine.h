@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Block.h"
+#include "shadergraph/ValueImpl.h"
 
 namespace shadergraph
 {
@@ -13,15 +14,20 @@ public:
     Combine()
     {
         SetupPorts({
-            { VarType::Float, "r", "0" },
-            { VarType::Float, "g", "0" },
-            { VarType::Float, "b", "0" },
-            { VarType::Float, "a", "1" }
+            { VarType::Float, "r" },
+            { VarType::Float, "g" },
+            { VarType::Float, "b" },
+            { VarType::Float, "a" }
         }, {
             { VarType::Float4, "rgba" },
             { VarType::Float3, "rgb" },
             { VarType::Float2, "rg" }
         });
+
+        m_default_in_vals[0] = Variant(VarType::Float, "", std::make_shared<FloatVal>(0.0f));
+        m_default_in_vals[1] = Variant(VarType::Float, "", std::make_shared<FloatVal>(0.0f));
+        m_default_in_vals[2] = Variant(VarType::Float, "", std::make_shared<FloatVal>(0.0f));
+        m_default_in_vals[3] = Variant(VarType::Float, "", std::make_shared<FloatVal>(1.0f));
     }
 
     enum class Output

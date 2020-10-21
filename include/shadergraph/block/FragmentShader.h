@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Block.h"
+#include "shadergraph/ValueImpl.h"
 
 namespace shadergraph
 {
@@ -13,13 +14,20 @@ public:
     FragmentShader()
     {
         SetupPorts({
-            { VarType::Float4, "rgba", "vec4(0, 0, 0, 1)" },
-            { VarType::Float3, "rgb",  "vec3(0, 0, 0)" },
-            { VarType::Float2, "rg",   "vec2(0, 0)" },
-            { VarType::Float,  "grey", "0" }
+            { VarType::Float4, "rgba"},
+            { VarType::Float3, "rgb"},
+            { VarType::Float2, "rg"},
+            { VarType::Float,  "grey"}
         }, {
-            { VarType::Float4, "col", "FragColor" }
+            { VarType::Float4, "col" }
         });
+
+        m_default_in_vals[0] = Variant(VarType::Float4, "", std::make_shared<Float4Val>(0.0f, 0.0f, 0.0f, 1.0f));
+        m_default_in_vals[1] = Variant(VarType::Float3, "", std::make_shared<Float3Val>(0.0f, 0.0f, 0.0f));
+        m_default_in_vals[2] = Variant(VarType::Float2, "", std::make_shared<Float2Val>(0.0f, 0.0f));
+        m_default_in_vals[3] = Variant(VarType::Float, "", std::make_shared<FloatVal>(0.0f));
+
+        m_default_out_vals[0] = Variant(VarType::String, "", std::make_shared<StringVal>("FragColor"));
     }
 
     enum class Input

@@ -3,6 +3,7 @@
 #include "shadergraph/Block.h"
 #include "shadergraph/BlockHelper.h"
 #include "shadergraph/ParserUtility.h"
+#include "shadergraph/ValueImpl.h"
 
 #include <cpputil/StringHelper.h>
 
@@ -17,11 +18,14 @@ public:
     Subtract()
     {
         SetupPorts({
-            { VarType::Dynamic, "a", "0" },
-            { VarType::Dynamic, "b", "0" }
+            { VarType::Dynamic, "a" },
+            { VarType::Dynamic, "b" }
         }, {
             { VarType::Dynamic, "sub" }
         });
+
+        m_default_in_vals[0] = Variant(VarType::Int, "", std::make_shared<IntVal>(0));
+        m_default_in_vals[1] = Variant(VarType::Int, "", std::make_shared<IntVal>(0));
     }
     virtual std::string GetBody(const Evaluator& eval) const override
     {

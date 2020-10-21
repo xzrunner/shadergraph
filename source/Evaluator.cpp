@@ -318,7 +318,7 @@ std::string Evaluator::GenShaderMainCode() const
                         auto& param = f_val->inputs[i];
 
                         int in_idx = -1;
-                        for (int j = 0; j < inputs.size(); ++j) {
+                        for (size_t j = 0, m = inputs.size(); j < m; ++j) {
                             if (inputs[j].var.type.name == param.name) {
                                 in_idx = j;
                                 break;
@@ -446,14 +446,14 @@ void Evaluator::Concatenate()
         {
             for (auto& i : b->GetImports()) {
                 if (i.var.type.type == VarType::Dynamic) {
-                    assert(!i.var.type.val);
+                    //assert(!i.var.type.val);
                     //m_real_types.insert({ &i.var.type, max_type });
                     m_real_types[&i.var.type] = max_type;
                 }
             }
             for (auto& o : b->GetExports()) {
                 if (o.var.type.type == VarType::Dynamic) {
-                    assert(!o.var.type.val);
+                    //assert(!o.var.type.val);
                     //m_real_types.insert({ &o.var.type, max_type });
                     m_real_types[&o.var.type] = max_type;
                 }
@@ -490,16 +490,10 @@ void Evaluator::Concatenate()
             auto f_type = f_var.type;
             auto t_type = t_var.type;
             if (f_type == VarType::Dynamic) {
-                auto itr = m_real_types.find(&f_var);
-                if (itr != m_real_types.end()) {
-                    f_type = itr->second;
-                }
+                f_type = QueryRealType(&f_var);
             }
             if (t_type == VarType::Dynamic) {
-                auto itr = m_real_types.find(&t_var);
-                if (itr != m_real_types.end()) {
-                    t_type = itr->second;
-                }
+                t_type = QueryRealType(&t_var);
             }
 
             if (f_type != t_type && f_type != VarType::Dynamic && t_type != VarType::Dynamic)
@@ -675,14 +669,21 @@ void Evaluator::ResolveVariants()
 {
     for (auto& b : m_blocks)
     {
-        for (auto& o : b->GetExports())
+        for (int i = 0, n = b->GetExports().size(); i < n; ++i)
         {
+            auto& o = b->GetExports()[i];
             if (o.conns.empty()) {
                 continue;
             }
 
             auto& var = o.var.type;
-            std::string name = var.default_name.empty() ? var.name : var.default_name;
+            auto name = var.name;
+
+            auto& default_outs = b->GetDefaultOutValues();
+            if (default_outs[i].val && default_outs[i].type == VarType::String) {
+                name = std::static_pointer_cast<StringVal>(default_outs[i].val)->str;
+            }
+
             auto itr = m_symbols.find(name);
             if (itr == m_symbols.end())
             {
@@ -709,27 +710,187 @@ void Evaluator::ResolveVariants()
 
 void Evaluator::Rename(std::string& str, const Block& block) const
 {
-    for (auto& i : block.GetImports())
+    for (int i = 0, n = block.GetImports().size(); i < n; ++i)
     {
-        const auto f = "#" + i.var.type.name + "#";
-        std::string t = i.var.type.default_name.empty() ?
-            i.var.type.name : i.var.type.default_name;
-        auto itr = m_real_names.find(&i.var.type);
+        auto& p = block.GetImports()[i];
+        const auto f = "#" + p.var.type.name + "#";
+        std::string t = p.var.type.name;
+        auto itr = m_real_names.find(&p.var.type);
         if (itr != m_real_names.end()) {
             t = itr->second;
+        }
+
+        if (p.conns.empty()) 
+        {
+            auto& default_vals = block.GetDefaultInValues();
+            if (!default_vals[i].val) {
+                continue;
+            }
+
+            auto type = p.var.type.type;
+            if (type == VarType::Invalid || type == VarType::Dynamic) {
+                type = QueryRealType(&p.var.type);
+            }
+            t = VariantToString(default_vals[i], type);
         }
         cpputil::StringHelper::ReplaceAll(str, f, t);
     }
-    for (auto& o : block.GetExports())
+    for (int i = 0, n = block.GetExports().size(); i < n; ++i)
     {
-        const auto f = "#" + o.var.type.name + "#";
-        std::string t = o.var.type.default_name.empty() ?
-            o.var.type.name : o.var.type.default_name;
-        auto itr = m_real_names.find(&o.var.type);
+        auto& p = block.GetExports()[i];
+        const auto f = "#" + p.var.type.name + "#";
+        std::string t = p.var.type.name;
+        auto itr = m_real_names.find(&p.var.type);
         if (itr != m_real_names.end()) {
             t = itr->second;
         }
+
+        if (p.conns.empty()) 
+        {
+            auto& default_vals = block.GetDefaultOutValues();
+            if (!default_vals[i].val) {
+                continue;
+            }
+
+            auto type = p.var.type.type;
+            if (type == VarType::Invalid || type == VarType::Dynamic) {
+                type = QueryRealType(&p.var.type);
+            }
+            t = VariantToString(default_vals[i], type);
+        }
         cpputil::StringHelper::ReplaceAll(str, f, t);
+    }
+}
+
+std::shared_ptr<Value> 
+Evaluator::ValueTrans(const Variant& var, VarType type) const
+{
+    if (var.type == type) {
+        return var.val;
+    }
+
+    std::shared_ptr<Value> ret = nullptr;
+    switch (var.type)
+    {
+    case VarType::Int:
+    {
+        int i = std::static_pointer_cast<IntVal>(var.val)->x;
+        float f = static_cast<float>(i);
+        switch (type)
+        {
+        case VarType::Int2:
+            ret = std::make_shared<Int2Val>(i, i);
+            break;
+        case VarType::Int3:
+            ret = std::make_shared<Int3Val>(i, i, i);
+            break;
+        case VarType::Int4:
+            ret = std::make_shared<Int4Val>(i, i, i, i);
+            break;
+        case VarType::Float:
+            ret = std::make_shared<FloatVal>(f);
+            break;
+        case VarType::Float2:
+            ret = std::make_shared<Float2Val>(f, f);
+            break;
+        case VarType::Float3:
+            ret = std::make_shared<Float3Val>(f, f, f);
+            break;
+        case VarType::Float4:
+            ret = std::make_shared<Float4Val>(f, f, f, f);
+            break;
+        default:
+            assert(0);
+        }
+    }
+        break;
+    case VarType::Float:
+    {
+        float f = std::static_pointer_cast<FloatVal>(var.val)->x;
+        switch (type)
+        {
+        case VarType::Float2:
+            ret = std::make_shared<Float2Val>(f, f);
+            break;
+        case VarType::Float3:
+            ret = std::make_shared<Float3Val>(f, f, f);
+            break;
+        case VarType::Float4:
+            ret = std::make_shared<Float4Val>(f, f, f, f);
+            break;
+        default:
+            assert(0);
+        }
+    }
+        break;
+    default:
+        assert(0);
+    }
+
+    assert(ret);
+    return ret;
+}
+
+std::string Evaluator::VariantToString(const Variant& var, VarType type) const
+{
+    if (var.type == VarType::String) {
+        return std::static_pointer_cast<StringVal>(var.val)->str;
+    }
+
+    auto val = ValueTrans(var, type);
+    switch (type)
+    {
+    //case VarType::Bool:
+    //    return "false";
+    //case VarType::Bool2:
+    //    return "bvec2(false, false)";
+    //case VarType::Bool3:
+    //    return "bvec3(false, false, false)";
+    //case VarType::Bool4:
+    //    return "bvec4(false, false, false, false)";
+    case VarType::UInt:
+    case VarType::Int:
+        return std::to_string(std::static_pointer_cast<IntVal>(val)->x).c_str();
+    case VarType::Int2:
+    {
+        auto v = std::static_pointer_cast<Int2Val>(val);
+        return cpputil::StringHelper::Format("ivec2(%s, %s)",
+            std::to_string(v->xy[0]), std::to_string(v->xy[1]).c_str());
+    }
+    case VarType::Int3:
+    {
+        auto v = std::static_pointer_cast<Int3Val>(val);
+        return cpputil::StringHelper::Format("ivec3(%s, %s, %s)",
+            std::to_string(v->xyz[0]).c_str(), std::to_string(v->xyz[1]).c_str(), std::to_string(v->xyz[2]).c_str());
+    }
+    case VarType::Int4:
+    {
+        auto v = std::static_pointer_cast<Int4Val>(val);
+        return cpputil::StringHelper::Format("ivec4(%s, %s, %s, %s)",
+            std::to_string(v->xyzw[0]).c_str(), std::to_string(v->xyzw[1]).c_str(), std::to_string(v->xyzw[2]).c_str(), std::to_string(v->xyzw[3]).c_str());
+    }
+    case VarType::Float:
+        return std::to_string(std::static_pointer_cast<FloatVal>(val)->x).c_str();
+    case VarType::Float2:
+    {
+        auto v = std::static_pointer_cast<Float2Val>(val);
+        return cpputil::StringHelper::Format("vec2(%s, %s)",
+            std::to_string(v->xy[0]).c_str(), std::to_string(v->xy[1]).c_str());
+    }
+    case VarType::Float3:
+    {
+        auto v = std::static_pointer_cast<Float3Val>(val);
+        return cpputil::StringHelper::Format("vec3(%s, %s, %s)",
+            std::to_string(v->xyz[0]).c_str(), std::to_string(v->xyz[1]).c_str(), std::to_string(v->xyz[2]).c_str());
+    }
+    case VarType::Float4:
+    {
+        auto v = std::static_pointer_cast<Float4Val>(val);
+        return cpputil::StringHelper::Format("vec4(%s, %s, %s, %s)",
+            std::to_string(v->xyzw[0]).c_str(), std::to_string(v->xyzw[1]).c_str(), std::to_string(v->xyzw[2]).c_str(), std::to_string(v->xyzw[3]).c_str());
+    }
+    default:
+        return "";
     }
 }
 

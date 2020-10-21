@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/Block.h"
+#include "shadergraph/ValueImpl.h"
 
 namespace shadergraph
 {
@@ -14,8 +15,10 @@ public:
     {
         SetupPorts({
         }, {
-            { VarType::Float2, "uv", "TexCoord" }
+            { VarType::Float2, "uv"}
         });
+
+        m_default_out_vals[0] = Variant(VarType::String, "", std::make_shared<StringVal>("TexCoord"));
     }
 
     virtual std::string GetHeader(const Evaluator& eval) const override {

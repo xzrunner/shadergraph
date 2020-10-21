@@ -35,6 +35,8 @@ enum class VarType
     Sampler2D,
     SamplerCube,
 
+    String,
+
     Array,
     Struct,
     Uniform,
