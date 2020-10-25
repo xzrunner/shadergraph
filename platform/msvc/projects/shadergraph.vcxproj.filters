@@ -578,11 +578,17 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\SelectiveColor.h">
       <Filter>blocks\artistic\filter</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ViewDir.h">
+      <Filter>blocks\input\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\DotProduct.h">
       <Filter>blocks\math\vector</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\shadergraph\block\CrossProduct.h">
       <Filter>blocks\math\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\VarNames.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -619,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\block\CustomBlock.cpp">
       <Filter>blocks\utility\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\VarNames.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

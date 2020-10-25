@@ -147,6 +147,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Twirl.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\UV.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ViewDir.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\Value.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Variant.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ValueImpl.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\VarNames.h" />
     <ClInclude Include="..\..\..\include\shadergraph\VarType.h" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +184,7 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ShaderGraph.cpp" />
+    <ClCompile Include="..\..\..\source\VarNames.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\shadergraph\block\Float.parm.h" />
