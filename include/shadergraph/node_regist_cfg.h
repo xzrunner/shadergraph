@@ -212,6 +212,28 @@
 // math
 //////////////////////////////////////////////////////////////////////////
 
+// advanced
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Absolute
+#define PARM_NODE_NAME absolute
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Length
+#define PARM_NODE_NAME length
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Negate
+#define PARM_NODE_NAME negate
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Normalize
+#define PARM_NODE_NAME normalize
+#include EXE_FILEPATH
+
 // basic
 
 #define NO_PARM_FILEPATH
