@@ -590,6 +590,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\VarNames.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\TypeQualifier.h">
+      <Filter>dataset\var</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

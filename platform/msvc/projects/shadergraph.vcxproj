@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\ParserUtility.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ShaderGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\typedef.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\TypeQualifier.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Value.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Variant.h" />
     <ClInclude Include="..\..\..\include\shadergraph\ValueImpl.h" />

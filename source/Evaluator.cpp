@@ -222,6 +222,27 @@ std::string Evaluator::GenShaderGlobalVarsCode(bool only_uniform) const
                 }
                 else
                 {
+                    switch (v.qualifier)
+                    {
+                    case TypeQualifier::Const:
+                        code += "const ";
+                        break;
+                    case TypeQualifier::Input:
+                        code += "in ";
+                        break;
+                    case TypeQualifier::Output:
+                        code += "out ";
+                        break;
+                    case TypeQualifier::Attribute:
+                        code += "attribute ";
+                        break;
+                    case TypeQualifier::Volatile:
+                        code += "volatile ";
+                        break;
+                    case TypeQualifier::Varying:
+                        code += "varying ";
+                        break;
+                    }
                     code += TypeToString(v) + " " + v.name + ";\n";
                 }
             }

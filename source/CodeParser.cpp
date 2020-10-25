@@ -196,11 +196,33 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
         break;
     }
 
+    TypeQualifier qualifier = TypeQualifier::Null;
     if (src->specs->tyQuals)
     {
         auto storage = std::static_pointer_cast<cslang::ast::TokenNode>(src->specs->tyQuals)->token;
-        if (storage == cslang::TK_UNIFORM) {
+        switch (storage)
+        {
+        case cslang::TK_UNIFORM:
             is_uniform = true;
+            break;
+        case cslang::TK_CONST:
+            qualifier = TypeQualifier::Const;
+            break;
+        case cslang::TK_IN:
+            qualifier = TypeQualifier::Input;
+            break;
+        case cslang::TK_OUT:
+            qualifier = TypeQualifier::Output;
+            break;
+        case cslang::TK_ATTRIBUTE:
+            qualifier = TypeQualifier::Attribute;
+            break;
+        case cslang::TK_VOLATILE:
+            qualifier = TypeQualifier::Volatile;
+            break;
+        case cslang::TK_VARYING:
+            qualifier = TypeQualifier::Varying;
+            break;
         }
     }
     
@@ -290,6 +312,7 @@ Variant CodeParser::ToVariant(const CommentParser& desc,
 
     Variant ret;
     ret.name = name;
+    ret.qualifier = qualifier;
     if (is_uniform)
     {
         ret.type = VarType::Uniform;

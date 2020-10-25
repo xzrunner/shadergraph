@@ -2,6 +2,7 @@
 
 #include "shadergraph/VarType.h"
 #include "shadergraph/Value.h"
+#include "shadergraph/TypeQualifier.h"
 
 #include <string>
 
@@ -18,9 +19,9 @@ struct Variant
     VarType     type = VarType::Invalid;
     std::string name;
 
-    std::shared_ptr<Value> val = nullptr;
+    TypeQualifier qualifier = TypeQualifier::Null;
 
-    bool is_const = false;
+    std::shared_ptr<Value> val = nullptr;
 
 }; // Variant
 
