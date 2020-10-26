@@ -208,7 +208,6 @@ void Block::SetupPorts()
     }
 
     m_default_in_vals.resize(m_imports.size());
-    m_default_out_vals.resize(m_exports.size());
 
     if (f_val->output.type == VarType::Void) {
         m_exports.clear();
