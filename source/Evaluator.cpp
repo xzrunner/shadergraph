@@ -297,92 +297,27 @@ std::string Evaluator::GenShaderFuncsCode() const
 
 std::string Evaluator::GenShaderMainCode() const
 {
-    std::string code;
-    std::queue<dag::Node<Variant>::PortAddr> buf;
-    buf.push({ m_block, -1 });
-    std::set<BlockPtr> unique;
-    while (!buf.empty())
+    std::string ret;
+    for (auto& b : m_blocks)
     {
-        auto c = buf.front(); buf.pop();
-        auto b = std::static_pointer_cast<Block>(c.node.lock());
-        assert(b);
-        if (unique.find(b) != unique.end()) {
-            continue;
-        }
-        unique.insert(b);
-
         auto str = b->GetBody(*this);
-        if (str.empty() && c.idx >= 0)
+        if (str.empty()) 
         {
             auto& outputs = b->GetExports();
-            assert(c.idx >= 0 && c.idx < static_cast<int>(outputs.size()));
-            auto& var = outputs[c.idx].var.type;
-            if (var.type != VarType::Function)
-            {
-                auto& funcs = b->GetFunctions();
-                auto func_idx = b->GetCurrFuncIdx();
-                if (func_idx >= 0 && func_idx < static_cast<int>(funcs.size()))
-                {
-                    auto func = funcs[func_idx];
-                    assert(func.first.type == VarType::Function);
-                    auto f_val = std::static_pointer_cast<FunctionVal>(func.first.val);
-
-                    auto& inputs = b->GetImports();
-
-                    auto& outputs = b->GetExports();
-                    assert(c.idx >= 0 && c.idx < static_cast<int>(outputs.size()));
-                    auto& output = outputs[c.idx];
-                    str += TypeToString(var.type) + " #" + output.var.type.name + "# = ";
-                    str += func.first.name + "(";
-                    for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
-                    {
-                        auto& param = f_val->inputs[i];
-
-                        int in_idx = -1;
-                        for (size_t j = 0, m = inputs.size(); j < m; ++j) {
-                            if (inputs[j].var.type.name == param.name) {
-                                in_idx = j;
-                                break;
-                            }
-                        }
-                        assert(in_idx >= 0);
-
-                        if (!inputs[in_idx].conns.empty()) {
-                            str += "#" + param.name + "#";
-                        } else {
-                            str += GetDefaultValueString(param.type);
-                        }
-
-                        if (i != n - 1) {
-                            str += ", ";
-                        }
-                    }
-                    str += ");\n";
+            for (int i = 0, n = outputs.size(); i < n; ++i) {
+                if (!outputs[i].conns.empty()) {
+                    str = ResolveFuncCall(*b, i);
+                    break;
                 }
             }
         }
 
-        if (!str.empty())
-        {
+        if (!str.empty()) {
             Rename(str, *b);
-            code = str + "\n" + code;
-        }
-
-        for (auto& port : b->GetImports()) {
-            for (auto& conn : port.conns) {
-                if (port.var.type.type == VarType::Uniform) {
-                    continue;
-                }
-                if (port.var.type.type == VarType::Function &&
-                    b != m_block) {
-                    continue;
-                }
-                buf.push(conn);
-            }
+            ret.append(str + "\n");
         }
     }
-
-    return code;
+    return ret;
 }
 
 void Evaluator::Clear()
@@ -913,6 +848,60 @@ std::string Evaluator::VariantToString(const Variant& var, VarType type) const
     default:
         return "";
     }
+}
+
+std::string Evaluator::ResolveFuncCall(const Block& block, size_t out_idx) const
+{
+    std::string ret;
+
+    auto& outputs = block.GetExports();
+    assert(out_idx >= 0 && out_idx < static_cast<int>(outputs.size()));
+    auto& var = outputs[out_idx].var.type;
+    if (var.type == VarType::Function) {
+        return ret;
+    }
+
+    auto& funcs = block.GetFunctions();
+    auto func_idx = block.GetCurrFuncIdx();
+    if (func_idx < 0 || func_idx >= static_cast<int>(funcs.size())) {
+        return ret;
+    }
+
+    auto func = funcs[func_idx];
+    assert(func.first.type == VarType::Function);
+    auto f_val = std::static_pointer_cast<FunctionVal>(func.first.val);
+
+    auto& inputs = block.GetImports();
+
+    auto& output = outputs[out_idx];
+    ret += TypeToString(var.type) + " #" + output.var.type.name + "# = ";
+    ret += func.first.name + "(";
+    for (int i = 0, n = f_val->inputs.size(); i < n; ++i)
+    {
+        auto& param = f_val->inputs[i];
+
+        int in_idx = -1;
+        for (size_t j = 0, m = inputs.size(); j < m; ++j) {
+            if (inputs[j].var.type.name == param.name) {
+                in_idx = j;
+                break;
+            }
+        }
+        assert(in_idx >= 0);
+
+        if (!inputs[in_idx].conns.empty()) {
+            ret += "#" + param.name + "#";
+        } else {
+            ret += GetDefaultValueString(param.type);
+        }
+
+        if (i != n - 1) {
+            ret += ", ";
+        }
+    }
+    ret += ");\n";
+
+    return ret;
 }
 
 void Evaluator::GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& dst)
