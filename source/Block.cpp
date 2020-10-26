@@ -16,6 +16,22 @@ Block::Block(const std::string& str)
     }
 }
 
+void Block::SetImports(const std::vector<Port>& ports)
+{
+    dag::Node<Variant>::SetImports(ports);
+
+    m_default_in_vals.clear();
+    m_default_in_vals.resize(ports.size());
+}
+
+void Block::SetExports(const std::vector<Port>& ports)
+{
+    dag::Node<Variant>::SetExports(ports);
+
+    m_default_out_vals.clear();
+    m_default_out_vals.resize(ports.size());
+}
+
 void Block::SetupPorts(const std::vector<Variant>& inputs,
                        const std::vector<Variant>& outputs)
 {

@@ -16,6 +16,9 @@ public:
     Block() {}
     Block(const std::string& str);
 
+    virtual void SetImports(const std::vector<Port>& ports);
+    virtual void SetExports(const std::vector<Port>& ports);
+
     virtual std::string GetHeader(const Evaluator& eval) const { return ""; }
     virtual std::string GetBody(const Evaluator& eval)   const { return ""; }
 
