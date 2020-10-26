@@ -40,8 +40,10 @@ public:
 		std::string ret;
 
 		ret += "vec4 #rgba# = texture(#tex#, #uv#);\n";
-        ret += "vec3 #rgb# = #rgba#.rgb;\n";
 
+        if (!m_exports[static_cast<int>(Output::RGB)].conns.empty()) {
+            ret += "vec3 #rgb# = #rgba#.rgb;\n";
+        }
 		if (!m_exports[static_cast<int>(Output::R)].conns.empty()) {
 			ret += "float #r# = #rgba#.r;\n";
 		}
