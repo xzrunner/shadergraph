@@ -14,7 +14,7 @@ public:
 
 vec3 normal_unpack(vec4 _in)
 {
-    vec4 _out;
+    vec3 _out;
     vec4 packed_normal = _in;
     packed_normal.w *= packed_normal.x;
     _out.xy = packed_normal.wy * 2.0 - 1.0;
