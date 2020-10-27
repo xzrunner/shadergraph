@@ -65,6 +65,7 @@ rttr::registration::enumeration<shadergraph::VarType>("sg_var_type")
 );
 
 rttr::registration::class_<shadergraph::Variant>("sg_variant")
+    .constructor<>()
 	.property("Type", &shadergraph::Variant::type)
 	.property("Name", &shadergraph::Variant::name)
 ;
