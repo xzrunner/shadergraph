@@ -16,6 +16,11 @@ struct Variant
         const std::shared_ptr<Value>& v = nullptr)
         : type(t), name(n), val(v) {}
 
+    bool operator == (const Variant& v) const {
+        return v.type == type && v.name == name 
+            && v.qualifier == qualifier && v.val == val;
+    }
+
     VarType     type = VarType::Invalid;
     std::string name;
 
