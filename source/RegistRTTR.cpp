@@ -58,6 +58,7 @@ rttr::registration::enumeration<shadergraph::VarType>("sg_var_type")
     REGIST_ENUM_ITEM(shadergraph::VarType::Matrix4,     "mat4",        "Matrix4"),
     REGIST_ENUM_ITEM(shadergraph::VarType::Sampler2D,   "sampler2D",   "Sampler2D"),
     REGIST_ENUM_ITEM(shadergraph::VarType::SamplerCube, "samplerCube", "SamplerCube"),
+    REGIST_ENUM_ITEM(shadergraph::VarType::String,      "string",      "String"),
     REGIST_ENUM_ITEM(shadergraph::VarType::Array,       "array",       "Array"),
     REGIST_ENUM_ITEM(shadergraph::VarType::Struct,      "struct",      "Struct"),
     REGIST_ENUM_ITEM(shadergraph::VarType::Uniform,     "uniform",     "Uniform"),
