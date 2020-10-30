@@ -608,6 +608,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Normalize.h">
       <Filter>blocks\math\advanced</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\EvalVar.h">
+      <Filter>system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
@@ -646,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\VarNames.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\EvalVar.cpp">
+      <Filter>system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

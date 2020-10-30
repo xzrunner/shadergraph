@@ -158,6 +158,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\CodeParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\CommentParser.h" />
     <ClInclude Include="..\..\..\include\shadergraph\Evaluator.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\EvalVar.h" />
     <ClInclude Include="..\..\..\include\shadergraph\GlobalClock.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node_include_gen.h" />
     <ClInclude Include="..\..\..\include\shadergraph\node_regist_cfg.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="..\..\..\source\CodeParser.cpp" />
     <ClCompile Include="..\..\..\source\CommentParser.cpp" />
     <ClCompile Include="..\..\..\source\Evaluator.cpp" />
+    <ClCompile Include="..\..\..\source\EvalVar.cpp" />
     <ClCompile Include="..\..\..\source\GlobalClock.cpp" />
     <ClCompile Include="..\..\..\source\ParserUtility.cpp" />
     <ClCompile Include="..\..\..\source\RegistRTTR.cpp">
