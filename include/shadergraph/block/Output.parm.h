@@ -3,3 +3,4 @@
 #endif
 
 PARAM_INFO(VarType, shadergraph::VarType, var_type, m_var_type, ())
+PARAM_INFO(VarName, std::string,          var_name, m_var_name, ())
