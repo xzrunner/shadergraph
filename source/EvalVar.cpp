@@ -12,7 +12,7 @@ namespace shadergraph
 std::shared_ptr<Value> 
 EvalVar::ValueTrans(const Variant& var, VarType type)
 {
-    if (var.type == type) {
+    if (var.type == type || type == VarType::Dynamic) {
         return var.val;
     }
 
