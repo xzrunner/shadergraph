@@ -100,7 +100,13 @@ rttr::registration::enumeration<shadergraph::block::Blend::Mode>("sg_blend_mode"
 rttr::registration::enumeration<shadergraph::block::NormalBlend::Mode>("sg_normal_blend_mode")
 (
     REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Default,    "default",    "Default"),
-    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Reoriented, "reoriented", "Reoriented")
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Reoriented, "reoriented", "Reoriented"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Linear,     "linear",     "Linear"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Overlay,    "overlay",    "Overlay"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::PartialDerivative, "pd",  "PartialDerivative"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Whiteout,   "whiteout",   "Whiteout"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::UDN,        "udn",        "UDN"),
+    REGIST_ENUM_ITEM(shadergraph::block::NormalBlend::Mode::Unity,      "unity",      "Unity")
 );
 
 rttr::registration::enumeration<shadergraph::block::ColorspaceConversion::ColorType>("sg_normal_colorspace_conversion_color_type")
