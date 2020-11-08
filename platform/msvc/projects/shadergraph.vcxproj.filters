@@ -614,6 +614,12 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalFromHeight.h">
       <Filter>blocks\artistic\normal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.h">
+      <Filter>blocks\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.parm.h">
+      <Filter>blocks\input\texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

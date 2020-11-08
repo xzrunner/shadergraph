@@ -26,6 +26,8 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Negate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalFromHeight.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Normalize.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Bend.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCone.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ChannelMask.h" />

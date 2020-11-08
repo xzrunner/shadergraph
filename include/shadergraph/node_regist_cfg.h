@@ -185,6 +185,10 @@
 
 // texture
 
+#define PARM_NODE_TYPE SampleTexNoTile
+#define PARM_NODE_NAME sample_tex_no_tile
+#include EXE_FILEPATH
+
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE SampleTexture2D
 #define PARM_NODE_NAME sample_texture2d

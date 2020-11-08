@@ -133,6 +133,12 @@ rttr::registration::enumeration<shadergraph::block::Constant::Mode>("sg_normal_c
     REGIST_ENUM_ITEM(shadergraph::block::Constant::Mode::SQRT2, "sqrt2", "SQRT2")
 );
 
+rttr::registration::enumeration<shadergraph::block::SampleTexNoTile::ImplType>("sg_sample_tex_no_tile_impl")
+(
+    REGIST_ENUM_ITEM(shadergraph::block::SampleTexNoTile::ImplType::Impl0, "impl0", "Impl0"),
+    REGIST_ENUM_ITEM(shadergraph::block::SampleTexNoTile::ImplType::Impl1, "impl1", "Impl1")
+);
+
 }
 
 namespace shadergraph
