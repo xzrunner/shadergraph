@@ -30,6 +30,16 @@ void Evaluator::Rebuild(const BlockPtr& block)
     Concatenate();
 }
 
+bool Evaluator::HasBlock(const BlockPtr& block) const
+{
+    for (auto& b : m_blocks) {
+        if (b == block) {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::string Evaluator::GenShaderCode() const
 {
     std::string ret;

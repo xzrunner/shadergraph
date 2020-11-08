@@ -29,6 +29,8 @@ public:
 
     void Rebuild(const BlockPtr& block);
 
+    bool HasBlock(const BlockPtr& block) const;
+
     std::string GenShaderCode() const;
     std::vector<Uniform> CalcUniformValues() const;
 
