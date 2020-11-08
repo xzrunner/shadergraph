@@ -620,6 +620,18 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.parm.h">
       <Filter>blocks\input\texture</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexMultiProj.h">
+      <Filter>blocks\input\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Power.h">
+      <Filter>blocks\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\SquareRoot.h">
+      <Filter>blocks\math\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\Position.h">
+      <Filter>blocks\input\geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

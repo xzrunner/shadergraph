@@ -26,6 +26,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Negate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalFromHeight.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Normalize.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Position.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\Power.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexMultiProj.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Bend.h" />
@@ -111,6 +114,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Union.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_VerticalCapsule.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SelectiveColor.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\SquareRoot.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SubGraph.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\GradientNoise.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Hue.h" />

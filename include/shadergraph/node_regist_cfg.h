@@ -162,6 +162,11 @@
 // geometry
 
 #define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Position
+#define PARM_NODE_NAME pos
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE TexCoords
 #define PARM_NODE_NAME tex_coords
 #include EXE_FILEPATH
@@ -184,6 +189,11 @@
 #include EXE_FILEPATH
 
 // texture
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SampleTexMultiProj
+#define PARM_NODE_NAME sample_tex_multi_proj
+#include EXE_FILEPATH
 
 #define PARM_NODE_TYPE SampleTexNoTile
 #define PARM_NODE_NAME sample_tex_no_tile
@@ -263,6 +273,16 @@
 #define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE Divide
 #define PARM_NODE_NAME div
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE Power
+#define PARM_NODE_NAME pow
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE SquareRoot
+#define PARM_NODE_NAME sqrt
 #include EXE_FILEPATH
 
 // vector
