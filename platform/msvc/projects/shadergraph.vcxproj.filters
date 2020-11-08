@@ -611,6 +611,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\EvalVar.h">
       <Filter>system</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalFromHeight.h">
+      <Filter>blocks\artistic\normal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

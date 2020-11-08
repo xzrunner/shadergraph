@@ -73,6 +73,11 @@
 #include EXE_FILEPATH
 
 #define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE NormalFromHeight
+#define PARM_NODE_NAME normal_from_height
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE NormalReconstructZ
 #define PARM_NODE_NAME normal_reconstruct_z
 #include EXE_FILEPATH

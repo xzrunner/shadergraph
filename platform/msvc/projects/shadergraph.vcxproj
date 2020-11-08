@@ -24,6 +24,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\DotProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Length.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Negate.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\NormalFromHeight.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Normalize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_Bend.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SDF_CappedCone.h" />
