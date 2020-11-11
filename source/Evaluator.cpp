@@ -9,6 +9,8 @@
 #include "shadergraph/block/Float.h"
 #include "shadergraph/block/Split.h"
 #include "shadergraph/block/Time.h"
+#include "shadergraph/block/VertexAttribute.h"
+#include "shadergraph/block/VertToFrag.h"
 
 #include <dag/Graph.h>
 #include <cpputil/StringHelper.h>
@@ -40,12 +42,19 @@ bool Evaluator::HasBlock(const BlockPtr& block) const
     return false;
 }
 
-std::string Evaluator::GenShaderCode() const
+void Evaluator::AddBlock(const BlockPtr& block)
+{
+    if (!HasBlock(block)) {
+        m_blocks.push_back(block);
+    }
+}
+
+std::string Evaluator::GenShaderCode(ShaderType shader_type) const
 {
     std::string ret;
 
     // header
-    ret += GenShaderHeaderCode();
+    ret += GenShaderHeaderCode(shader_type);
 
     // global variants
     ret += GenShaderGlobalVarsCode(false);
@@ -68,7 +77,7 @@ void main()
 {
 %s
 }
-	)", GenShaderMainCode().c_str());
+	)", GenShaderMainCode(shader_type).c_str());
 
     // version
     if (!ret.empty()) {
@@ -136,10 +145,41 @@ std::string Evaluator::QueryRealName(const Variant* var) const
     return itr == m_real_names.end() ? var->name : itr->second;
 }
 
-std::string Evaluator::GenShaderHeaderCode() const
+std::string Evaluator::GenShaderHeaderCode(ShaderType shader_type) const
 {
     std::string code;
-    for (auto& b : m_blocks) {
+    for (auto& b : m_blocks) 
+    {
+        auto block_type = b->get_type();
+        // skip VertexAttribute
+        if (shader_type != ShaderType::Vert && block_type == rttr::type::get<block::VertexAttribute>()) {
+            continue;
+        }
+
+        if (block_type == rttr::type::get<block::VertToFrag>())
+        {
+            Evaluator eval;
+            eval.Rebuild(b);
+            auto vt = eval.QueryRealType(&b->GetImports()[0].var.type);
+            if (vt != VarType::Invalid && vt != VarType::Dynamic) 
+            {
+                auto var_name = std::static_pointer_cast<block::VertToFrag>(b)->GetVarName();
+                auto var_type = TypeToString(vt);
+                switch (shader_type)
+                {
+                case ShaderType::Vert:
+                    code += cpputil::StringHelper::Format("out %s %s;\n", var_type.c_str(), var_name.c_str());
+                    break;
+                case ShaderType::Frag:
+                    code += cpputil::StringHelper::Format("in %s %s;\n", var_type.c_str(), var_name.c_str());
+                    break;
+                default:
+                    assert(0);
+                }
+            }
+            continue;
+        }
+
         auto str = b->GetHeader(*this);
         if (!str.empty()) {
             Rename(str, *b);
@@ -306,11 +346,36 @@ std::string Evaluator::GenShaderFuncsCode() const
     return code;
 }
 
-std::string Evaluator::GenShaderMainCode() const
+std::string Evaluator::GenShaderMainCode(ShaderType shader_type) const
 {
     std::string ret;
     for (auto& b : m_blocks)
     {
+        auto block_type = b->get_type();
+
+        // gen vert2frag for vert
+        if (shader_type == ShaderType::Vert && block_type == rttr::type::get<block::VertToFrag>()) 
+        {
+            auto& conns = b->GetImports()[0].conns;
+            if (conns.empty()) {
+                continue;
+            }
+
+            Evaluator eval;
+            eval.Rebuild(b);
+            auto vt = eval.QueryRealType(&b->GetImports()[0].var.type);
+
+            auto dst = std::static_pointer_cast<block::VertToFrag>(b)->GetVarName();
+
+            auto node = conns[0].node.lock();
+            int idx = conns[0].idx;
+            auto src = eval.QueryRealName(&node->GetExports()[idx].var.type);
+
+            ret += cpputil::StringHelper::Format("%s = %s;", dst.c_str(), src.c_str());
+
+            continue;
+        }
+
         auto str = b->GetBody(*this);
         if (str.empty()) 
         {
@@ -636,6 +701,7 @@ void Evaluator::ResolveVariants()
 {
     for (auto& b : m_blocks)
     {
+        auto block_type = b->get_type();
         for (int i = 0, n = b->GetExports().size(); i < n; ++i)
         {
             auto& o = b->GetExports()[i];
@@ -649,6 +715,12 @@ void Evaluator::ResolveVariants()
             auto& default_outs = b->GetDefaultOutValues();
             if (default_outs[i].val && default_outs[i].type == VarType::String) {
                 name = std::static_pointer_cast<StringVal>(default_outs[i].val)->str;
+            }
+
+            if (block_type == rttr::type::get<block::VertexAttribute>()) {
+                name = std::static_pointer_cast<block::VertexAttribute>(b)->GetVarName();
+            } else if (block_type == rttr::type::get<block::VertToFrag>()) {
+                name = std::static_pointer_cast<block::VertToFrag>(b)->GetVarName();
             }
 
             auto itr = m_symbols.find(name);

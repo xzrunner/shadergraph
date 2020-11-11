@@ -632,6 +632,21 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Position.h">
       <Filter>blocks\input\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertexShader.h">
+      <Filter>blocks\utility\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertToFrag.h">
+      <Filter>blocks\utility\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertToFrag.parm.h">
+      <Filter>blocks\utility\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertexAttribute.h">
+      <Filter>blocks\utility\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertexAttribute.parm.h">
+      <Filter>blocks\utility\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

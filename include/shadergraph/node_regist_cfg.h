@@ -633,8 +633,21 @@
 // shader
 
 #define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE VertexShader
+#define PARM_NODE_NAME vert_shader
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
 #define PARM_NODE_TYPE FragmentShader
 #define PARM_NODE_NAME frag_shader
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE VertToFrag
+#define PARM_NODE_NAME vert_to_frag
+#include EXE_FILEPATH
+
+#define PARM_NODE_TYPE VertexAttribute
+#define PARM_NODE_NAME vert_attr
 #include EXE_FILEPATH
 
 // tools

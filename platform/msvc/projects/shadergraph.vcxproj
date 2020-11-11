@@ -158,6 +158,11 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Time.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Twirl.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\UV.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertexAttribute.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertexAttribute.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertexShader.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertToFrag.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\VertToFrag.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ViewDir.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h" />

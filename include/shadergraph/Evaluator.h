@@ -24,23 +24,30 @@ public:
         ValPtr      val = nullptr;
     };
 
+    enum class ShaderType
+    {
+        Vert,
+        Frag,
+    };
+
 public:
     Evaluator() {}
 
     void Rebuild(const BlockPtr& block);
 
     bool HasBlock(const BlockPtr& block) const;
+    void AddBlock(const BlockPtr& block);
 
-    std::string GenShaderCode() const;
+    std::string GenShaderCode(ShaderType shader_type) const;
     std::vector<Uniform> CalcUniformValues() const;
 
     VarType QueryRealType(const Variant* var) const;
     std::string QueryRealName(const Variant* var) const;
 
-    std::string GenShaderHeaderCode() const;
+    std::string GenShaderHeaderCode(ShaderType shader_type) const;
     std::string GenShaderGlobalVarsCode(bool only_uniform) const;
     std::string GenShaderFuncsCode() const;
-    std::string GenShaderMainCode() const;
+    std::string GenShaderMainCode(ShaderType shader_type) const;
 
 private:
     void Clear();
