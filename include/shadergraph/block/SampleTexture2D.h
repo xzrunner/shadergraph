@@ -38,25 +38,44 @@ public:
     virtual std::string GetBody(const Evaluator& eval) const override
     {
 		std::string ret;
-
-		ret += "vec4 #rgba# = texture(#tex#, #uv#);\n";
-
+        if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
+            ret += "vec4 #rgba# = texture(#tex#, #uv#);\n";
+        }
         if (!m_exports[static_cast<int>(Output::RGB)].conns.empty()) {
-            ret += "vec3 #rgb# = #rgba#.rgb;\n";
+            if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
+                ret += "vec3 #rgb# = #rgba#.rgb;\n";
+            } else {
+                ret += "vec3 #rgb# = texture(#tex#, #uv#).rgb;\n";
+            }
         }
 		if (!m_exports[static_cast<int>(Output::R)].conns.empty()) {
-			ret += "float #r# = #rgba#.r;\n";
+            if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
+                ret += "float #r# = #rgba#.r;\n";
+            } else {
+                ret += "float #r# = texture(#tex#, #uv#).r;\n";
+            }
 		}
 		if (!m_exports[static_cast<int>(Output::G)].conns.empty()) {
-			ret += "float #g# = #rgba#.g;\n";
+            if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
+                ret += "float #g# = #rgba#.g;\n";
+            } else {
+                ret += "float #g# = texture(#tex#, #uv#).g;\n";
+            }
 		}
 		if (!m_exports[static_cast<int>(Output::B)].conns.empty()) {
-			ret += "float #b# = #rgba#.b;\n";
+            if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
+                ret += "float #b# = #rgba#.b;\n";
+            } else {
+                ret += "float #b# = texture(#tex#, #uv#).b;\n";
+            }
 		}
 		if (!m_exports[static_cast<int>(Output::A)].conns.empty()) {
-			ret += "float #a# = #rgba#.a;\n";
+            if (!m_exports[static_cast<int>(Output::RGBA)].conns.empty()) {
+                ret += "float #a# = #rgba#.a;\n";
+            } else {
+                ret += "float #a# = texture(#tex#, #uv#).a;\n";
+            }
 		}
-
 		return ret;
     }
 
