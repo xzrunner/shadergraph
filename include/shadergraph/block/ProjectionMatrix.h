@@ -10,6 +10,9 @@ namespace block
 class ProjectionMatrix : public Block
 {
 public:
+    static constexpr char* const VAR_NAME = "projection";
+
+public:
     ProjectionMatrix()
     {
         SetupPorts({
@@ -17,11 +20,11 @@ public:
             { VarType::Matrix4, "_out" }
         });
 
-        m_default_out_vals[0] = Variant(VarType::String, "", std::make_shared<StringVal>("projection"));
+        m_default_out_vals[0] = Variant(VarType::String, "", std::make_shared<StringVal>(VAR_NAME));
 
         auto unif = std::make_shared<UniformVal>();
         unif->var.type = VarType::Matrix4;
-        unif->var.name = "projection";
+        unif->var.name = VAR_NAME;
 
         Variant var;
         var.type = VarType::Uniform;
