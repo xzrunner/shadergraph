@@ -276,7 +276,7 @@ vec4 selective_color(vec4 color)
         color.xyz     = vib(color.xyz, bk_adj_vib * smoothstep(0.5f, 0.0f, max_value));
     }
 
-    return vec4(color.xyz, 1.0f);
+    return color;
 }
 
 )") {}
