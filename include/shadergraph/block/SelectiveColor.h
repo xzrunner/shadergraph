@@ -18,8 +18,8 @@ public:
 /// <selective_color> @export
 /////////////////////////////////////////////////
 
-uniform int corr_method;    // 0 Absolute, 1 0Relative
-uniform int corr_method2;   // 0 Absolute, 1 0Relative
+uniform int corr_method;    // 0 Absolute, 1 Relative
+uniform int corr_method2;   // 0 Absolute, 1 Relative
 
 // Reds
 uniform float r_adj_cya;
