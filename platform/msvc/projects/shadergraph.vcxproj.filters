@@ -656,6 +656,9 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\ProjectionMatrix.h">
       <Filter>blocks\input\matrix</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorBalance.h">
+      <Filter>blocks\artistic\filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">

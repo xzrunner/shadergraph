@@ -20,6 +20,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\Blend.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Bool.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Bool.parm.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ColorBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\CrossProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\DotProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Length.h" />
