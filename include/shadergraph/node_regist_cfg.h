@@ -188,6 +188,23 @@
 #define PARM_NODE_NAME blackbody
 #include EXE_FILEPATH
 
+// matrix
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE ModelMatrix
+#define PARM_NODE_NAME model_mat
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE ProjectionMatrix
+#define PARM_NODE_NAME proj_mat
+#include EXE_FILEPATH
+
+#define NO_PARM_FILEPATH
+#define PARM_NODE_TYPE ViewMatrix
+#define PARM_NODE_NAME view_mat
+#include EXE_FILEPATH
+
 // texture
 
 #define NO_PARM_FILEPATH

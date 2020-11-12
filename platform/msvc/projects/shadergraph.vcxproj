@@ -23,11 +23,13 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\CrossProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\DotProduct.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Length.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ModelMatrix.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Negate.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\NormalFromHeight.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Normalize.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Position.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Power.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ProjectionMatrix.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexMultiProj.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\SampleTexNoTile.parm.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\VertToFrag.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\VertToFrag.parm.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\ViewDir.h" />
+    <ClInclude Include="..\..\..\include\shadergraph\block\ViewMatrix.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\Voronoi.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WhiteBalance.h" />
     <ClInclude Include="..\..\..\include\shadergraph\block\WorleyNoise.h" />

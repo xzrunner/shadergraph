@@ -647,6 +647,15 @@
     <ClInclude Include="..\..\..\include\shadergraph\block\VertexAttribute.parm.h">
       <Filter>blocks\utility\shader</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ModelMatrix.h">
+      <Filter>blocks\input\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ViewMatrix.h">
+      <Filter>blocks\input\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shadergraph\block\ProjectionMatrix.h">
+      <Filter>blocks\input\matrix</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Block.cpp">
