@@ -30,9 +30,20 @@ vec3 compute_normal_sobel_filter(sampler2D heightmap, vec2 position, float heigh
     return normalize(vec3(-x, 1.0, y));
 }
 
+vec3 compute_normal_central_difference(sampler2D heightmap, vec2 position, float height_exaggeration)
+{
+    vec2 tex_sz_inv = 1.0 / textureSize(heightmap, 0);
+    float leftHeight = texture(heightmap, position - vec2(1.0, 0.0) * tex_sz_inv).r * height_exaggeration;
+    float rightHeight = texture(heightmap, position + vec2(1.0, 0.0) * tex_sz_inv).r * height_exaggeration;
+    float bottomHeight = texture(heightmap, position - vec2(0.0, 1.0) * tex_sz_inv).r * height_exaggeration;
+    float topHeight = texture(heightmap, position + vec2(0.0, 1.0) * tex_sz_inv).r * height_exaggeration;
+    return normalize(vec3(leftHeight - rightHeight, 2.0, bottomHeight - topHeight));
+}
+
 vec3 normal_from_height(sampler2D heightmap, vec2 texcoord, float height_exaggeration)
 {
-    return compute_normal_sobel_filter(heightmap, texcoord, height_exaggeration);
+//    return compute_normal_sobel_filter(heightmap, texcoord, height_exaggeration);
+    return compute_normal_central_difference(heightmap, texcoord, height_exaggeration);
 }
 
 )") {}
