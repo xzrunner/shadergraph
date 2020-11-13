@@ -30,11 +30,26 @@ public:
         );
     }
 
+    void SetIndex(int index) { m_index = index; }
+    int GetIndex() const { return m_index; }
+
+    void SetVarType(const VarType& type) 
+    { 
+        m_exports[0].var.type.type = type;
+        m_var_type = type; 
+    }
+    const VarType& GetVarType() const { return m_var_type; }
+
+    void SetVarName(const std::string& name) { m_var_name = name; }
+    const std::string& GetVarName() const { return m_var_name; }
+
     RTTR_ENABLE(Block)
 
+#define NOT_GEN_SETTER_GETTER_FUNC
 #define PARM_FILEPATH "shadergraph/block/VertexAttribute.parm.h"
 #include <dag/node_parms_gen.h>
 #undef PARM_FILEPATH
+#undef NOT_GEN_SETTER_GETTER_FUNC
 
 }; // VertexAttribute
 
