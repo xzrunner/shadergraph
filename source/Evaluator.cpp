@@ -18,9 +18,13 @@
 namespace shadergraph
 {
 
-void Evaluator::Rebuild(const BlockPtr& block)
+void Evaluator::Rebuild(const BlockPtr& block, const std::vector<std::string>& used_symbols)
 {
     Clear();
+
+    for (auto& s : used_symbols) {
+        m_symbols.insert(s);
+    }
 
     m_block = block;
 

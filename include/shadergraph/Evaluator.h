@@ -33,7 +33,8 @@ public:
 public:
     Evaluator() {}
 
-    void Rebuild(const BlockPtr& block);
+    void Rebuild(const BlockPtr& block, 
+        const std::vector<std::string>& used_symbols = std::vector<std::string>());
 
     bool HasBlock(const BlockPtr& block) const;
     void AddBlock(const BlockPtr& block);
