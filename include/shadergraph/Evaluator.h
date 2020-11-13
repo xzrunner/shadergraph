@@ -36,6 +36,8 @@ public:
     void Rebuild(const BlockPtr& block, 
         const std::vector<std::string>& used_symbols = std::vector<std::string>());
 
+    void GetTextureSymbols(std::vector<std::string>& tex_symbols) const;
+
     bool HasBlock(const BlockPtr& block) const;
     void AddBlock(const BlockPtr& block);
 

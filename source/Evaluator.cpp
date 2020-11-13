@@ -36,6 +36,17 @@ void Evaluator::Rebuild(const BlockPtr& block, const std::vector<std::string>& u
     Concatenate();
 }
 
+void Evaluator::GetTextureSymbols(std::vector<std::string>& tex_symbols) const
+{
+    for (auto& itr : m_real_names)
+    {
+        if (itr.first->type == VarType::Sampler2D ||
+            itr.first->type == VarType::SamplerCube) {
+            tex_symbols.push_back(itr.second);
+        }
+    }
+}
+
 bool Evaluator::HasBlock(const BlockPtr& block) const
 {
     for (auto& b : m_blocks) {
