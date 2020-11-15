@@ -33,10 +33,7 @@ public:
 public:
     Evaluator() {}
 
-    void Rebuild(const BlockPtr& block, 
-        const std::vector<std::string>& used_symbols = std::vector<std::string>());
-
-    void GetTextureSymbols(std::vector<std::string>& tex_symbols) const;
+    void Rebuild(const BlockPtr& block);
 
     bool HasBlock(const BlockPtr& block) const;
     void AddBlock(const BlockPtr& block);
@@ -72,12 +69,38 @@ private:
     static Variant CalcValue(const dag::Node<Variant>::PortAddr& conn);
 
 private:
+    struct VarNames
+    {
+        void Init(const std::unordered_map<const Variant*, std::string>& vars)
+        {
+            var2name = vars;
+
+            used.clear();
+            for (auto& itr : vars) {
+                used.insert(itr.second);
+            }
+        }
+
+        void Clear()
+        {
+            used.clear();
+            var2name.clear();
+        }
+
+        void Insert(const Variant* var, const std::string& name) {
+            used.insert(name);
+            var2name.insert({ var, name });
+        }
+
+        std::set<std::string> used;
+        std::unordered_map<const Variant*, std::string> var2name;
+    };
+
+private:
     BlockPtr m_block = nullptr;
     std::vector<BlockPtr> m_blocks;
 
-    std::set<std::string> m_symbols;
-
-    std::unordered_map<const Variant*, std::string> m_real_names;
+    VarNames m_real_names;
     std::unordered_map<const Variant*, std::string> m_real_funcs;
 
     std::unordered_map<const Variant*, VarType> m_real_types;

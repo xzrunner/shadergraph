@@ -18,13 +18,9 @@
 namespace shadergraph
 {
 
-void Evaluator::Rebuild(const BlockPtr& block, const std::vector<std::string>& used_symbols)
+void Evaluator::Rebuild(const BlockPtr& block)
 {
     Clear();
-
-    for (auto& s : used_symbols) {
-        m_symbols.insert(s);
-    }
 
     m_block = block;
 
@@ -34,17 +30,6 @@ void Evaluator::Rebuild(const BlockPtr& block, const std::vector<std::string>& u
     Sort(blocks);
     Resolve();
     Concatenate();
-}
-
-void Evaluator::GetTextureSymbols(std::vector<std::string>& tex_symbols) const
-{
-    for (auto& itr : m_real_names)
-    {
-        if (itr.first->type == VarType::Sampler2D ||
-            itr.first->type == VarType::SamplerCube) {
-            tex_symbols.push_back(itr.second);
-        }
-    }
 }
 
 bool Evaluator::HasBlock(const BlockPtr& block) const
@@ -156,8 +141,8 @@ VarType Evaluator::QueryRealType(const Variant* var) const
 
 std::string Evaluator::QueryRealName(const Variant* var) const
 {
-    auto itr = m_real_names.find(var);
-    return itr == m_real_names.end() ? var->name : itr->second;
+    auto itr = m_real_names.var2name.find(var);
+    return itr == m_real_names.var2name.end() ? var->name : itr->second;
 }
 
 std::string Evaluator::GenShaderHeaderCode(ShaderType shader_type) const
@@ -415,8 +400,7 @@ void Evaluator::Clear()
 {
     m_block.reset();
     m_blocks.clear();
-    m_symbols.clear();
-    m_real_names.clear();
+    m_real_names.Clear();
 }
 
 void Evaluator::Sort(const std::vector<BlockPtr>& blocks)
@@ -523,15 +507,15 @@ void Evaluator::Concatenate()
             assert(from);
             auto& f_var = from->GetExports()[conn.idx].var.type;
             auto& t_var = const_cast<Variant&>(i.var.type);
-            auto f_itr = m_real_names.find(&f_var);
-            if (f_itr == m_real_names.end()) {
+            auto f_itr = m_real_names.var2name.find(&f_var);
+            if (f_itr == m_real_names.var2name.end()) {
                 continue;
             }
-            auto t_itr = m_real_names.find(&t_var);
-            if (t_itr != m_real_names.end()) {
+            auto t_itr = m_real_names.var2name.find(&t_var);
+            if (t_itr != m_real_names.var2name.end()) {
                 t_itr->second = f_itr->second;
             } else {
-                m_real_names.insert({ &t_var, f_itr->second });
+                m_real_names.Insert(&t_var, f_itr->second);
             }
 
             auto f_type = f_var.type;
@@ -567,8 +551,8 @@ void Evaluator::Concatenate()
 
                 if (f_idx >= 0 && t_idx >= 0)
                 {
-                    auto itr = m_real_names.find(&t_var);
-                    assert(itr != m_real_names.end());
+                    auto itr = m_real_names.var2name.find(&t_var);
+                    assert(itr != m_real_names.var2name.end());
                     if (f_idx > t_idx)
                     {
                         assert(t_idx >= 0 && t_idx <= 2);
@@ -725,6 +709,10 @@ void Evaluator::ResolveVariants()
             }
 
             auto& var = o.var.type;
+            if (m_real_names.var2name.find(&var) != m_real_names.var2name.end()) {
+                continue;
+            }
+
             auto name = var.name;
 
             auto& default_outs = b->GetDefaultOutValues();
@@ -738,22 +726,20 @@ void Evaluator::ResolveVariants()
                 name = std::static_pointer_cast<block::VertToFrag>(b)->GetVarName();
             }
 
-            auto itr = m_symbols.find(name);
-            if (itr == m_symbols.end())
+            auto itr = m_real_names.used.find(name);
+            if (itr == m_real_names.used.end())
             {
-                m_real_names.insert({ &var, name });
-                m_symbols.insert(name);
+                m_real_names.Insert(&var, name);
             }
             else
             {
                 int idx = 0;
                 do {
                     auto _name = name + std::to_string(idx++);
-                    auto itr = m_symbols.find(_name);
-                    if (itr == m_symbols.end())
+                    auto itr = m_real_names.used.find(_name);
+                    if (itr == m_real_names.used.end())
                     {
-                        m_real_names.insert({ &var, _name });
-                        m_symbols.insert(_name);
+                        m_real_names.Insert(&var, _name);
                         break;
                     }
                 } while (true);
@@ -769,8 +755,8 @@ void Evaluator::Rename(std::string& str, const Block& block) const
         auto& p = block.GetImports()[i];
         const auto f = "#" + p.var.type.name + "#";
         std::string t = p.var.type.name;
-        auto itr = m_real_names.find(&p.var.type);
-        if (itr != m_real_names.end()) {
+        auto itr = m_real_names.var2name.find(&p.var.type);
+        if (itr != m_real_names.var2name.end()) {
             t = itr->second;
         }
 
@@ -794,8 +780,8 @@ void Evaluator::Rename(std::string& str, const Block& block) const
         auto& p = block.GetExports()[i];
         const auto f = "#" + p.var.type.name + "#";
         std::string t = p.var.type.name;
-        auto itr = m_real_names.find(&p.var.type);
-        if (itr != m_real_names.end()) {
+        auto itr = m_real_names.var2name.find(&p.var.type);
+        if (itr != m_real_names.var2name.end()) {
             t = itr->second;
         }
 
