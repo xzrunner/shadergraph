@@ -49,6 +49,8 @@ public:
     std::string GenShaderFuncsCode() const;
     std::string GenShaderMainCode(ShaderType shader_type) const;
 
+    bool IsEmpty() const { return m_blocks.empty(); }
+
 private:
     void Clear();
 
