@@ -12,6 +12,8 @@
 #include "shadergraph/block/VertexAttribute.h"
 #include "shadergraph/block/VertToFrag.h"
 
+#include "shadergraph/block/Input.h"
+
 #include <dag/Graph.h>
 #include <cpputil/StringHelper.h>
 
@@ -724,6 +726,17 @@ void Evaluator::ResolveVariants()
                 name = std::static_pointer_cast<block::VertexAttribute>(b)->GetVarName();
             } else if (block_type == rttr::type::get<block::VertToFrag>()) {
                 name = std::static_pointer_cast<block::VertToFrag>(b)->GetVarName();
+            } else if (block_type == rttr::type::get<block::Input>()) {
+                name = std::static_pointer_cast<block::Input>(b)->GetVarName();
+                if (!b->GetImports()[0].conns.empty()) 
+                {
+                    assert(b->GetImports()[0].conns.size() == 1);
+                    auto node = b->GetImports()[0].conns[0].node.lock();
+                    int idx = b->GetImports()[0].conns[0].idx;
+                    auto& v = node->GetExports()[idx].var.type;
+                    m_real_names.Insert(&var, v.name);
+                    continue;
+                }
             }
 
             auto itr = m_real_names.used.find(name);
