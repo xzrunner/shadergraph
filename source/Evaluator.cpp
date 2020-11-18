@@ -778,7 +778,7 @@ void Evaluator::Rename(std::string& str, const Block& block) const
     for (int i = 0, n = block.GetExports().size(); i < n; ++i)
     {
         auto& p = block.GetExports()[i];
-        const auto f = "#" + p.var.type.name + "#";
+        const auto f = "#" + p.var.full_name + "#";
         std::string t = p.var.type.name;
         auto itr = m_real_names.var2name.find(&p.var.type);
         if (itr != m_real_names.var2name.end()) {
