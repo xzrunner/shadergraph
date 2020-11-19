@@ -21,16 +21,16 @@ public:
         });
     }
 
-    virtual std::string GetHeader(const Evaluator& eval) const override
-    {
-        std::string ret;
-        if (m_var_type != VarType::Invalid) {
-            ret = cpputil::StringHelper::Format(
-                "uniform %s %s;", TypeToString(m_var_type).c_str(), m_var_name.c_str()
-            );
-        }
-        return ret;
-    }
+    //virtual std::string GetHeader(const Evaluator& eval) const override
+    //{
+    //    std::string ret;
+    //    if (m_var_type != VarType::Invalid) {
+    //        ret = cpputil::StringHelper::Format(
+    //            "uniform %s %s;", TypeToString(m_var_type).c_str(), m_var_name.c_str()
+    //        );
+    //    }
+    //    return ret;
+    //}
 
     void SetVarType(const VarType& type) { m_var_type = type; }
     const VarType& GetVarType() const { return m_var_type; }
