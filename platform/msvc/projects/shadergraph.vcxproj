@@ -194,6 +194,7 @@
     <ClCompile Include="..\..\..\source\Block.cpp" />
     <ClCompile Include="..\..\..\source\BlockHelper.cpp" />
     <ClCompile Include="..\..\..\source\block\CustomBlock.cpp" />
+    <ClCompile Include="..\..\..\source\block\Input.cpp" />
     <ClCompile Include="..\..\..\source\block\SubGraph.cpp" />
     <ClCompile Include="..\..\..\source\block\Time.cpp" />
     <ClCompile Include="..\..\..\source\CodeParser.cpp" />

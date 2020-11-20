@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shadergraph/VarType.h"
+#include "shadergraph/Block.h"
 
 #include <string>
 
@@ -17,6 +18,8 @@ public:
 	static std::string VariantToString(const Variant& var, VarType type);
 
 	static std::string GetDefaultValueString(VarType type);
+
+	static Variant Calc(const Block::Port& in_port);
 
 }; // EvalVar
 

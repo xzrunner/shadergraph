@@ -32,14 +32,14 @@ public:
     //    return ret;
     //}
 
-    void SetVarType(const VarType& type) { m_var_type = type; }
+    void SetVarType(const VarType& type);
     const VarType& GetVarType() const { return m_var_type; }
 
-    void SetVarName(const std::string& name) {
-        m_var_name = name;
-        m_exports[0].var.type.name = name;
-    }
+    void SetVarName(const std::string& name);
     const std::string& GetVarName() const { return m_var_name; }
+
+private:
+    void ResetVariants();
 
     RTTR_ENABLE(Block)
 

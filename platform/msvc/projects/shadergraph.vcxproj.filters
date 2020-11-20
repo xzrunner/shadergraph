@@ -701,6 +701,9 @@
     <ClCompile Include="..\..\..\source\EvalVar.cpp">
       <Filter>system</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\block\Input.cpp">
+      <Filter>blocks\utility\tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\shadergraph\block\Float.parm.h">

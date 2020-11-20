@@ -1,6 +1,7 @@
 #include "shadergraph/EvalVar.h"
 #include "shadergraph/Variant.h"
 #include "shadergraph/ValueImpl.h"
+#include "shadergraph/block/Float2.h"
 
 #include <cpputil/StringHelper.h>
 
@@ -179,6 +180,32 @@ std::string EvalVar::GetDefaultValueString(VarType type)
     default:
         return "";
     }
+}
+
+Variant EvalVar::Calc(const Block::Port& in_port)
+{
+    Variant ret;
+
+    auto& conns = in_port.conns;
+    if (conns.empty()) {
+        return ret;
+    }
+
+    assert(conns.size() == 1);
+    auto node = conns[0].node.lock();
+    if (!node) {
+        return ret;
+    }
+
+    ret = node->GetExports()[0].var.type;
+
+    if (node->get_type() == rttr::type::get<block::Float2>())
+    {
+        auto v = std::static_pointer_cast<block::Float2>(node)->GetValue();
+        ret.val = std::make_shared<Float2Val>(v.x, v.y);
+    }
+
+    return ret;
 }
 
 }

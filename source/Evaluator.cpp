@@ -728,15 +728,6 @@ void Evaluator::ResolveVariants()
                 name = std::static_pointer_cast<block::VertToFrag>(b)->GetVarName();
             } else if (block_type == rttr::type::get<block::Input>()) {
                 name = std::static_pointer_cast<block::Input>(b)->GetVarName();
-                if (!b->GetImports()[0].conns.empty()) 
-                {
-                    assert(b->GetImports()[0].conns.size() == 1);
-                    auto node = b->GetImports()[0].conns[0].node.lock();
-                    int idx = b->GetImports()[0].conns[0].idx;
-                    auto& v = node->GetExports()[idx].var.type;
-                    m_real_names.Insert(&var, v.name);
-                    continue;
-                }
             }
 
             auto itr = m_real_names.used.find(name);
@@ -886,6 +877,12 @@ void Evaluator::GetAntecedentNodes(const BlockPtr& src, std::vector<BlockPtr>& d
         }
         unique.insert(n);
         dst.push_back(n);
+
+        // cut off Input node
+        if (n->get_type() == rttr::type::get<block::Input>()) {
+            continue;
+        }
+
         for (auto& port : n->GetImports()) {
             for (auto& conn : port.conns) {
                 buf.push(std::static_pointer_cast<Block>(conn.node.lock()));
