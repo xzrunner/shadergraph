@@ -53,6 +53,10 @@ void Evaluator::AddBlock(const BlockPtr& block)
 
 std::string Evaluator::GenShaderCode(ShaderType shader_type) const
 {
+    if (m_blocks.empty()) {
+        return "";
+    }
+
     std::string ret;
 
     // header
